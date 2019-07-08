@@ -113,6 +113,17 @@ stress.data.ours[ten.per.cent.list,"lnCVR.sc.ours.10"] <- NA
 stress.data.ours[thirty.per.cent.list,"lnCVR.sc.ours.30"] <- NA
 stress.data.ours[fifty.per.cent.list,"lnCVR.sc.ours.50"] <- NA
 
+
+# saving dataset
+write.xlsx(stress.data.ours,
+           "data_re-extraction/clean_data/EyckDev_stress_clean_effect_sizes_sp_corrected_reduction_ours.xlsx",
+           sheetName="Sheet1",col.names=TRUE, row.names=F,
+           append=FALSE, showNA=TRUE, password=NULL)
+
+# database with the corrected data from our pilot re-extraction
+stress.data <- read.xlsx("data_re-extraction/clean_data/EyckDev_stress_clean_effect_sizes_sp_corrected_reduction.xlsx",
+                         colNames=T,sheet = 1)
+
 ##############################################################
 # -------------------------- BRMS -------------------------- #
 ##############################################################
