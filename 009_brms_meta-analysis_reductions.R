@@ -121,8 +121,8 @@ load("data_re-extraction/clean_data/phylo_cor.Rdata") #phylo_cor
 #            append=FALSE, showNA=TRUE, password=NULL)
 
 # database with the corrected data from our pilot re-extraction
-stress.data <- read.xlsx("data_re-extraction/clean_data/EyckDev_stress_clean_effect_sizes_sp_corrected_reduction_ours.xlsx",
-                         colNames=T,sheet = 1)
+stress.data.ours <- read.xlsx("data_re-extraction/clean_data/EyckDev_stress_clean_effect_sizes_sp_corrected_reduction_ours.xlsx",
+                              colNames=T,sheet = 1)
 
 ##############################################################
 # -------------------------- BRMS -------------------------- #
