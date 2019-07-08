@@ -57,71 +57,71 @@ load("data_re-extraction/clean_data/phylo_cor.Rdata") #phylo_cor
 # Reducing dataset
 ##############################################################
 
-# since we are running our analyses in R version 3.5.1, it is
-# still possible to use set.seed() to make the randomization
-# reproducible (though they may have fixed this bug already!)
-
-set.seed(2+13) #KL+PG
-
-# we want to make the following data reductions: 10%, 30% and 50%
-# We are going to based our reduction in the whole dataset,
-# which contains 684 effect sizes, despite that changes slightly
-# from 674 to 681 depending on whether it is based on lnRR,
-# lnVR or lnCVR
-
-ten.per.cent <- round(length(stress.data.ours$SMDH.sc.ours)*0.10,0)
-thirty.per.cent <- round(length(stress.data.ours$SMDH.sc.ours)*0.30,0)
-fifty.per.cent <- round(length(stress.data.ours$SMDH.sc.ours)*0.50,0)
-
-# let's first reset the row names to have them from 1:nrow()
-# and make choosing them randomly easier, also, it looks neater
-rownames(stress.data.ours) <- NULL
-
-
-# randomly choosing 10, 30 and 50% of the effect sizes 
-ten.per.cent.list <- base::sample(c(1:nrow(stress.data.ours)),
-                                  ten.per.cent)
-
-thirty.per.cent.list <- base::sample(c(1:nrow(stress.data.ours)),
-                                     thirty.per.cent)
-
-fifty.per.cent.list <- base::sample(c(1:nrow(stress.data.ours)),
-                                    fifty.per.cent)
-
-
-# removing those randomly selected effect sizes from the database
-# They way we are setting the randomization makes sure that the
-# same esID is removed for both lnRR and lnCVR. This makes sense
-# because what we are trying to simulate is a scenario where
-# an X% of the data is non ratio scale, and that's why lnRR and
-# lnCVR could not be calculated, something that does not affect
-# the lnVR
-
-# duplicating variables to be selectively emptied
-stress.data.ours$lnRR.sc.ours.10 <- stress.data.ours$lnRR.sc.ours
-stress.data.ours$lnRR.sc.ours.30 <- stress.data.ours$lnRR.sc.ours
-stress.data.ours$lnRR.sc.ours.50 <- stress.data.ours$lnRR.sc.ours
-stress.data.ours$lnCVR.sc.ours.10 <- stress.data.ours$lnCVR.sc.ours
-stress.data.ours$lnCVR.sc.ours.30 <- stress.data.ours$lnCVR.sc.ours
-stress.data.ours$lnCVR.sc.ours.50 <- stress.data.ours$lnCVR.sc.ours
-
-# selectively reducing varibles
-stress.data.ours[ten.per.cent.list,"lnRR.sc.ours.10"] <- NA
-stress.data.ours[thirty.per.cent.list,"lnRR.sc.ours.30"] <- NA
-stress.data.ours[fifty.per.cent.list,"lnRR.sc.ours.50"] <- NA
-stress.data.ours[ten.per.cent.list,"lnCVR.sc.ours.10"] <- NA
-stress.data.ours[thirty.per.cent.list,"lnCVR.sc.ours.30"] <- NA
-stress.data.ours[fifty.per.cent.list,"lnCVR.sc.ours.50"] <- NA
-
-
-# saving dataset
-write.xlsx(stress.data.ours,
-           "data_re-extraction/clean_data/EyckDev_stress_clean_effect_sizes_sp_corrected_reduction_ours.xlsx",
-           sheetName="Sheet1",col.names=TRUE, row.names=F,
-           append=FALSE, showNA=TRUE, password=NULL)
+# # since we are running our analyses in R version 3.5.1, it is
+# # still possible to use set.seed() to make the randomization
+# # reproducible (though they may have fixed this bug already!)
+# 
+# set.seed(2+13) #KL+PG
+# 
+# # we want to make the following data reductions: 10%, 30% and 50%
+# # We are going to based our reduction in the whole dataset,
+# # which contains 684 effect sizes, despite that changes slightly
+# # from 674 to 681 depending on whether it is based on lnRR,
+# # lnVR or lnCVR
+# 
+# ten.per.cent <- round(length(stress.data.ours$SMDH.sc.ours)*0.10,0)
+# thirty.per.cent <- round(length(stress.data.ours$SMDH.sc.ours)*0.30,0)
+# fifty.per.cent <- round(length(stress.data.ours$SMDH.sc.ours)*0.50,0)
+# 
+# # let's first reset the row names to have them from 1:nrow()
+# # and make choosing them randomly easier, also, it looks neater
+# rownames(stress.data.ours) <- NULL
+# 
+# 
+# # randomly choosing 10, 30 and 50% of the effect sizes 
+# ten.per.cent.list <- base::sample(c(1:nrow(stress.data.ours)),
+#                                   ten.per.cent)
+# 
+# thirty.per.cent.list <- base::sample(c(1:nrow(stress.data.ours)),
+#                                      thirty.per.cent)
+# 
+# fifty.per.cent.list <- base::sample(c(1:nrow(stress.data.ours)),
+#                                     fifty.per.cent)
+# 
+# 
+# # removing those randomly selected effect sizes from the database
+# # They way we are setting the randomization makes sure that the
+# # same esID is removed for both lnRR and lnCVR. This makes sense
+# # because what we are trying to simulate is a scenario where
+# # an X% of the data is non ratio scale, and that's why lnRR and
+# # lnCVR could not be calculated, something that does not affect
+# # the lnVR
+# 
+# # duplicating variables to be selectively emptied
+# stress.data.ours$lnRR.sc.ours.10 <- stress.data.ours$lnRR.sc.ours
+# stress.data.ours$lnRR.sc.ours.30 <- stress.data.ours$lnRR.sc.ours
+# stress.data.ours$lnRR.sc.ours.50 <- stress.data.ours$lnRR.sc.ours
+# stress.data.ours$lnCVR.sc.ours.10 <- stress.data.ours$lnCVR.sc.ours
+# stress.data.ours$lnCVR.sc.ours.30 <- stress.data.ours$lnCVR.sc.ours
+# stress.data.ours$lnCVR.sc.ours.50 <- stress.data.ours$lnCVR.sc.ours
+# 
+# # selectively reducing varibles
+# stress.data.ours[ten.per.cent.list,"lnRR.sc.ours.10"] <- NA
+# stress.data.ours[thirty.per.cent.list,"lnRR.sc.ours.30"] <- NA
+# stress.data.ours[fifty.per.cent.list,"lnRR.sc.ours.50"] <- NA
+# stress.data.ours[ten.per.cent.list,"lnCVR.sc.ours.10"] <- NA
+# stress.data.ours[thirty.per.cent.list,"lnCVR.sc.ours.30"] <- NA
+# stress.data.ours[fifty.per.cent.list,"lnCVR.sc.ours.50"] <- NA
+# 
+# 
+# # saving dataset
+# write.xlsx(stress.data.ours,
+#            "data_re-extraction/clean_data/EyckDev_stress_clean_effect_sizes_sp_corrected_reduction_ours.xlsx",
+#            sheetName="Sheet1",col.names=TRUE, row.names=F,
+#            append=FALSE, showNA=TRUE, password=NULL)
 
 # database with the corrected data from our pilot re-extraction
-stress.data <- read.xlsx("data_re-extraction/clean_data/EyckDev_stress_clean_effect_sizes_sp_corrected_reduction.xlsx",
+stress.data <- read.xlsx("data_re-extraction/clean_data/EyckDev_stress_clean_effect_sizes_sp_corrected_reduction_ours.xlsx",
                          colNames=T,sheet = 1)
 
 ##############################################################
