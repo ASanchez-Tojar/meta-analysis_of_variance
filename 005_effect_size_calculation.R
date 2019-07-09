@@ -364,17 +364,13 @@ stress.data.lnVR<-escalc(measure="VR",
                          append=TRUE)
 
 stress.data.lnVR <- as.data.frame(stress.data.lnVR)
-stress.data.lnVR$lnVR.HE <- stress.data.lnVR$lnVR*stress.data.lnVR$sign.inversion.HE
-stress.data.lnVR$lnVR.ours <- stress.data.lnVR$lnVR*stress.data.lnVR$sign.inversion.ours
-
-stress.data.lnVR.red <- stress.data.lnVR[,c("esID","lnVR.HE","lnVR.ours","lnVR.sv")]
+stress.data.lnVR.red <- stress.data.lnVR[,c("esID","lnVR","lnVR.sv")]
 
 # adding the effect sizes for which metafor produces the following error:
 # Warning message:
 #   In escalc.default(measure = "VR", n1i = N.treat, n2i = N.control,  :
 #                       Some 'yi' and/or 'vi' values equal to +-Inf. Recoded to NAs.
-
-esID.to.doublecheck <- c(esID.to.doublecheck,stress.data.lnVR.red[is.na(stress.data.lnVR.red$lnVR.HE),"esID"])
+esID.to.doublecheck <- c(esID.to.doublecheck,stress.data.lnVR.red[is.na(stress.data.lnVR.red$lnVR),"esID"])
 
 
 
@@ -395,13 +391,9 @@ stress.data.lnVR.sc<-escalc(measure="VR",
                             append=TRUE)
 
 stress.data.lnVR.sc <- as.data.frame(stress.data.lnVR.sc)
-stress.data.lnVR.sc$lnVR.sc.HE <- stress.data.lnVR.sc$lnVR*stress.data.lnVR.sc$sign.inversion.HE
-stress.data.lnVR.sc$lnVR.sc.ours <- stress.data.lnVR.sc$lnVR*stress.data.lnVR.sc$sign.inversion.ours
 
-colnames(stress.data.lnVR.sc)[colnames(stress.data.lnVR.sc)=="lnVR.sv"] <- "lnVR.sc.sv"
-
-stress.data.lnVR.sc.red <- stress.data.lnVR.sc[,c("esID","lnVR.sc.HE","lnVR.sc.ours","lnVR.sc.sv")]
-
+stress.data.lnVR.sc.red <- stress.data.lnVR.sc[,c("esID","lnVR","lnVR.sv")]
+names(stress.data.lnVR.sc.red) <- c("esID","lnVR.sc","lnVR.sc.sv")
 
 
 ##############################################################
@@ -422,17 +414,13 @@ stress.data.lnCVR<-escalc(measure="CVR",
                           append=TRUE)
 
 stress.data.lnCVR <- as.data.frame(stress.data.lnCVR)
-stress.data.lnCVR$lnCVR.HE <- stress.data.lnCVR$lnCVR*stress.data.lnCVR$sign.inversion.HE
-stress.data.lnCVR$lnCVR.ours <- stress.data.lnCVR$lnCVR*stress.data.lnCVR$sign.inversion.ours
-
-stress.data.lnCVR.red <- stress.data.lnCVR[,c("esID","lnCVR.HE","lnCVR.ours","lnCVR.sv")]
-
+stress.data.lnCVR.red <- stress.data.lnCVR[,c("esID","lnCVR","lnCVR.sv")]
 
 # showing the effect sizes for which metafor produces the following error:
 # Warning message:
 #   In escalc.default(measure = "VR", n1i = N.treat, n2i = N.control,  :
 #                       Some 'yi' and/or 'vi' values equal to +-Inf. Recoded to NAs.
-esID.to.doublecheck <- c(esID.to.doublecheck,stress.data.lnCVR.red[is.na(stress.data.lnCVR.red$lnCVR.HE),"esID"])
+esID.to.doublecheck <- c(esID.to.doublecheck,stress.data.lnCVR.red[is.na(stress.data.lnCVR.red$lnCVR),"esID"])
 
 
 
@@ -454,13 +442,9 @@ stress.data.lnCVR.sc<-escalc(measure="CVR",
                              append=TRUE)
 
 stress.data.lnCVR.sc <- as.data.frame(stress.data.lnCVR.sc)
-stress.data.lnCVR.sc$lnCVR.sc.HE <- stress.data.lnCVR.sc$lnCVR*stress.data.lnCVR.sc$sign.inversion.HE
-stress.data.lnCVR.sc$lnCVR.sc.ours <- stress.data.lnCVR.sc$lnCVR*stress.data.lnCVR.sc$sign.inversion.ours
 
-colnames(stress.data.lnCVR.sc)[colnames(stress.data.lnCVR.sc)=="lnCVR.sv"] <- "lnCVR.sc.sv"
-
-stress.data.lnCVR.sc.red <- stress.data.lnCVR.sc[,c("esID","lnCVR.sc.HE","lnCVR.sc.ours","lnCVR.sc.sv")]
-
+stress.data.lnCVR.sc.red <- stress.data.lnCVR.sc[,c("esID","lnCVR","lnCVR.sv")]
+names(stress.data.lnCVR.sc.red) <- c("esID","lnCVR.sc","lnCVR.sc.sv")
 
 
 ##############################################################
@@ -522,7 +506,6 @@ esID.to.doublecheck.final <- sort(unique(esID.to.doublecheck))
 #                                                            (sum(c(0.08))))
 
 # esID==823:a typo that was fixed in the original dataset
-
 
 
 ##############################################################
