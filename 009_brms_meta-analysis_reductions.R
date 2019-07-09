@@ -153,9 +153,9 @@ thinning <- 2
 # UNIVARIATE MODELS: lnRR #
 ###########################
 
-# sharedcontrol - 10%: 0.999, 20, 6000, 3000, 2: XX min (corei7)
-# sharedcontrol - 30%: 0.999, 20, 6000, 3000, 2: XX min (corei7)
-# sharedcontrol - 50%: 0.999, 20, 6000, 3000, 2: XX min (corei7)
+# sharedcontrol - 10%: 0.999, 20, 6000, 3000, 2: 70 min (corei7)
+# sharedcontrol - 30%: 0.999, 20, 6000, 3000, 2: 41 min (corei7)
+# sharedcontrol - 50%: 0.999, 20, 6000, 3000, 2: 28 min (corei7)
 
 # subset of data needed just to make it easier for the univariate
 # models instead of going through tons of NA's.
@@ -264,9 +264,9 @@ save(brms.univariate.lnRR.ours.50,
 # UNIVARIATE MODELS: lnCVR #
 ############################
 
-# sharedcontrol - 10%: 0.999, 20, 6000, 3000, 2: XX min (corei7)
-# sharedcontrol - 30%: 0.999, 20, 6000, 3000, 2: XX min (corei7)
-# sharedcontrol - 50%: 0.999, 20, 6000, 3000, 2: XX min (corei7)
+# sharedcontrol - 10%: 0.999, 20, 6000, 3000, 2: 5 min (corei7)
+# sharedcontrol - 30%: 0.999, 20, 6000, 3000, 2: 5 min (corei7)
+# sharedcontrol - 50%: 0.999, 20, 6000, 3000, 2: 3 min (corei7)
 
 # subset of data needed just to make it easier for the univariate
 # models instead of going through tons of NA's.
