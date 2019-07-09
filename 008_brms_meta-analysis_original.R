@@ -62,24 +62,20 @@ thinning <- 2
 stress.data <- read.xlsx("data_re-extraction/clean_data/EyckDev_stress_clean_effect_sizes_sp_corrected.xlsx",
                          colNames=T,sheet = 1)
 
-# subsetting data
-stress.data.ours <- stress.data[!(is.na(stress.data$SMDH.ours)),]
-stress.data.HE <- stress.data[!(is.na(stress.data$SMDH.HE)),]
-
 # counting number of studies, species, etc...
-nrow(stress.data.ours)
-length(unique(stress.data.ours$studyID))
-length(unique(stress.data.ours$speciesID))
+nrow(stress.data)
+length(unique(stress.data$studyID))
+length(unique(stress.data$speciesID))
 
-stress.data.ours %>% 
+stress.data %>% 
   group_by(TAXA) %>% 
   summarise(count = n_distinct(speciesID))
 
 # percentage of effect sizes affected by shared control effects
-nrow(stress.data.ours[stress.data.ours$num.shared.control>1,])
-length(unique(stress.data.ours[stress.data.ours$num.shared.control>1,"studyID"]))
-round((length(unique(stress.data.ours[stress.data.ours$num.shared.control>1,"studyID"]))/length(unique(stress.data.ours$studyID)))*100,1)
-round((nrow(stress.data.ours[stress.data.ours$num.shared.control>1,])/nrow(stress.data.ours))*100,2)
+nrow(stress.data[stress.data$num.shared.control>1,])
+length(unique(stress.data[stress.data$num.shared.control>1,"studyID"]))
+round((length(unique(stress.data[stress.data$num.shared.control>1,"studyID"]))/length(unique(stress.data$studyID)))*100,1)
+round((nrow(stress.data[stress.data$num.shared.control>1,])/nrow(stress.data))*100,2)
 
 # loading phylogenetic matrix "phylo_cor"
 load("data_re-extraction/clean_data/phylo_cor.Rdata") #phylo_cor
@@ -162,7 +158,7 @@ dev.off()
 # sharedcontrol: 0.999, 20, 6000, 3000, 2: 82 min (corei7)
 
 # subset of data needed
-stress.data.ours.lnRR <- stress.data.ours[!(is.na(stress.data.ours$lnRR.sc.sv)),]
+stress.data.lnRR <- stress.data[!(is.na(stress.data$lnRR.sc.sv)),]
 
 ptm <- proc.time() # checking the time needed to run the model
 
@@ -182,7 +178,7 @@ filename <- paste0("models/brms/brms_univariate_lnRR_ours_",
 brms.univariate.lnRR.ours <- brm(lnRR.sc.ours | se(sqrt(lnRR.sc.sv)) ~ 1 + 
                                    (1|studyID) + (1|esID) +
                                    (1|scientific.name) + (1|speciesID),
-                                 data = stress.data.ours.lnRR,
+                                 data = stress.data.lnRR,
                                  family = gaussian(),
                                  cov_ranef = list(scientific.name = phylo_cor),
                                  #autocor = cor_fixed(varcovar.studyID.lnRR.ours_0.5), # fixed covariance matrix of the response variable for instance to model multivariate effect sizes in meta-analysis (https://rdrr.io/cran/brms/man/cor_fixed.html)
@@ -202,7 +198,7 @@ save(brms.univariate.lnRR.ours,
 # sharedcontrol: 0.999, 20, 6000, 3000, 2: 6 min (corei7)
 
 # subset of data needed
-stress.data.ours.lnVR <- stress.data.ours[!(is.na(stress.data.ours$lnVR.sc.sv)),]
+stress.data.lnVR <- stress.data[!(is.na(stress.data$lnVR.sc.sv)),]
 
 ptm <- proc.time() # checking the time needed to run the model
 
@@ -219,10 +215,10 @@ filename <- paste0("models/brms/brms_univariate_lnVR_ours_",
                    max_treedepth_value,"treedepth.RData")
 
 
-brms.univariate.lnVR.ours <- brm(lnVR.sc.ours | se(sqrt(lnVR.sc.sv)) ~ 1 + 
+brms.univariate.lnVR.ours <- brm(lnVR.sc | se(sqrt(lnVR.sc.sv)) ~ 1 + 
                                    (1|studyID) + (1|esID) +
                                    (1|scientific.name) + (1|speciesID),
-                                 data = stress.data.ours.lnVR,
+                                 data = stress.data.lnVR,
                                  family = gaussian(),
                                  cov_ranef = list(scientific.name = phylo_cor),
                                  #autocor = cor_fixed(varcovar.studyID.lnRR.ours_0.5), # fixed covariance matrix of the response variable for instance to model multivariate effect sizes in meta-analysis (https://rdrr.io/cran/brms/man/cor_fixed.html)
@@ -242,7 +238,7 @@ save(brms.univariate.lnVR.ours,
 # sharedcontrol: 0.999, 20, 6000, 3000, 2: XX min (corei7)
 
 # subset of data needed
-stress.data.ours.lnCVR <- stress.data.ours[!(is.na(stress.data.ours$lnCVR.sc.sv)),]
+stress.data.lnCVR <- stress.data[!(is.na(stress.data$lnCVR.sc.sv)),]
 
 ptm <- proc.time() # checking the time needed to run the model
 
@@ -259,10 +255,10 @@ filename <- paste0("models/brms/brms_univariate_lnCVR_ours_",
                    max_treedepth_value,"treedepth.RData")
 
 
-brms.univariate.lnCVR.ours <- brm(lnCVR.sc.ours | se(sqrt(lnCVR.sc.sv)) ~ 1 + 
+brms.univariate.lnCVR.ours <- brm(lnCVR.sc | se(sqrt(lnCVR.sc.sv)) ~ 1 + 
                                     (1|studyID) + (1|esID) +
                                     (1|scientific.name) + (1|speciesID),
-                                  data = stress.data.ours.lnCVR,
+                                  data = stress.data.lnCVR,
                                   family = gaussian(),
                                   cov_ranef = list(scientific.name = phylo_cor),
                                   #autocor = cor_fixed(varcovar.studyID.lnRR.ours_0.5), # fixed covariance matrix of the response variable for instance to model multivariate effect sizes in meta-analysis (https://rdrr.io/cran/brms/man/cor_fixed.html)
@@ -282,7 +278,7 @@ save(brms.univariate.lnCVR.ours,
 # sharedcontrol: 0.999, 20, 6000, 3000, 2: 13 min (corei7)
 
 # subset of data needed
-stress.data.ours.SMDH <- stress.data.ours[!(is.na(stress.data.ours$SMDH.sc.sv)),]
+stress.data.SMDH <- stress.data[!(is.na(stress.data$SMDH.sc.sv)),]
 
 ptm <- proc.time() # checking the time needed to run the model
 
@@ -302,7 +298,7 @@ filename <- paste0("models/brms/brms_univariate_SMDH_ours_",
 brms.univariate.SMDH.ours <- brm(SMDH.sc.ours | se(sqrt(SMDH.sc.sv)) ~ 1 + 
                                    (1|studyID) + (1|esID) +
                                    (1|scientific.name) + (1|speciesID),
-                                 data = stress.data.ours.SMDH,
+                                 data = stress.data.SMDH,
                                  family = gaussian(),
                                  cov_ranef = list(scientific.name = phylo_cor),
                                  #autocor = cor_fixed(varcovar.studyID.lnRR.ours_0.5), # fixed covariance matrix of the response variable for instance to model multivariate effect sizes in meta-analysis (https://rdrr.io/cran/brms/man/cor_fixed.html)
@@ -368,10 +364,10 @@ save(brms.univariate.cohens.biased.HE,
 bf.lnRR.ours <- bf(lnRR.sc.ours | se(sqrt(lnRR.sc.sv)) ~
                      1 + (1|p|studyID) + (1|q|esID) + (1|a|scientific.name) + (1|d|speciesID))
 
-bf.lnVR.ours <- bf(lnVR.sc.ours | se(sqrt(lnVR.sc.sv)) ~
+bf.lnVR.ours <- bf(lnVR.sc | se(sqrt(lnVR.sc.sv)) ~
                      1 + (1|p|studyID) + (1|q|esID) + (1|a|scientific.name) + (1|d|speciesID))
 
-bf.lnCVR.ours <- bf(lnCVR.sc.ours | se(sqrt(lnCVR.sc.sv)) ~
+bf.lnCVR.ours <- bf(lnCVR.sc | se(sqrt(lnCVR.sc.sv)) ~
                       1 + (1|p|studyID) + (1|q|esID) + (1|a|scientific.name) + (1|d|speciesID))
 
 # By writing |p| and |q| in between we indicate that all varying
@@ -402,7 +398,7 @@ filename <- paste0("models/brms/brms_bivariate_lnRR_lnVR_ours_",
 
 
 brms.bivariate.lnRR.lnVR.ours <- brm(bf.lnRR.ours + bf.lnVR.ours,
-                                     data = stress.data.ours,
+                                     data = stress.data,
                                      cov_ranef = list(scientific.name = phylo_cor),
                                      family = gaussian(),
                                      control = list(adapt_delta = adapt_delta_value, max_treedepth = max_treedepth_value),
@@ -437,7 +433,7 @@ filename <- paste0("models/brms/brms_bivariate_lnVR_lnCVR_ours_",
 
 
 brms.bivariate.lnVR.lnCVR.ours <- brm(bf.lnVR.ours + bf.lnCVR.ours,
-                                      data = stress.data.ours,
+                                      data = stress.data,
                                       cov_ranef = list(scientific.name = phylo_cor),
                                       family = gaussian(),
                                       control = list(adapt_delta = adapt_delta_value, max_treedepth = max_treedepth_value),
