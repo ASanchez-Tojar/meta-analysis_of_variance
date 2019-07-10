@@ -48,7 +48,7 @@ tm <- theme(panel.background = element_blank(),
             plot.title = element_text(size = 16, hjust = 0.5))
 
 # model specifications
-adapt_delta_value <- 0.999
+adapt_delta_value <- 0.9999
 max_treedepth_value <- 20
 iterations <- 6000
 burnin <- 3000
@@ -204,7 +204,7 @@ ptm <- proc.time() # checking the time needed to run the model
 
 # filename for saving the model, this avoids having to change the
 # text every time
-filename <- paste0("models/brms/brms_univariate_lnVR_ours_",
+filename <- paste0("models/brms/brms_univariate_lnVR_",
                    #"0.5varcov_",
                    #"novarcovar_",
                    "sharedcontrol_",
@@ -215,19 +215,19 @@ filename <- paste0("models/brms/brms_univariate_lnVR_ours_",
                    max_treedepth_value,"treedepth.RData")
 
 
-brms.univariate.lnVR.ours <- brm(lnVR.sc | se(sqrt(lnVR.sc.sv)) ~ 1 + 
-                                   (1|studyID) + (1|esID) +
-                                   (1|scientific.name) + (1|speciesID),
-                                 data = stress.data.lnVR,
-                                 family = gaussian(),
-                                 cov_ranef = list(scientific.name = phylo_cor),
-                                 #autocor = cor_fixed(varcovar.studyID.lnRR.ours_0.5), # fixed covariance matrix of the response variable for instance to model multivariate effect sizes in meta-analysis (https://rdrr.io/cran/brms/man/cor_fixed.html)
-                                 control = list(adapt_delta = adapt_delta_value, max_treedepth = max_treedepth_value),
-                                 chains = 4, cores = 4, iter = iterations, warmup = burnin, thin = thinning)
+brms.univariate.lnVR <- brm(lnVR.sc | se(sqrt(lnVR.sc.sv)) ~ 1 + 
+                              (1|studyID) + (1|esID) +
+                              (1|scientific.name) + (1|speciesID),
+                            data = stress.data.lnVR,
+                            family = gaussian(),
+                            cov_ranef = list(scientific.name = phylo_cor),
+                            #autocor = cor_fixed(varcovar.studyID.lnRR.ours_0.5), # fixed covariance matrix of the response variable for instance to model multivariate effect sizes in meta-analysis (https://rdrr.io/cran/brms/man/cor_fixed.html)
+                            control = list(adapt_delta = adapt_delta_value, max_treedepth = max_treedepth_value),
+                            chains = 4, cores = 4, iter = iterations, warmup = burnin, thin = thinning)
 
 proc.time() - ptm # checking the time needed to run the model
 
-save(brms.univariate.lnVR.ours,
+save(brms.univariate.lnVR,
      file=filename)
 
 
@@ -244,7 +244,7 @@ ptm <- proc.time() # checking the time needed to run the model
 
 # filename for saving the model, this avoids having to change the
 # text every time
-filename <- paste0("models/brms/brms_univariate_lnCVR_ours_",
+filename <- paste0("models/brms/brms_univariate_lnCVR_",
                    #"0.5varcov_",
                    #"novarcovar_",
                    "sharedcontrol_",
@@ -255,19 +255,19 @@ filename <- paste0("models/brms/brms_univariate_lnCVR_ours_",
                    max_treedepth_value,"treedepth.RData")
 
 
-brms.univariate.lnCVR.ours <- brm(lnCVR.sc | se(sqrt(lnCVR.sc.sv)) ~ 1 + 
-                                    (1|studyID) + (1|esID) +
-                                    (1|scientific.name) + (1|speciesID),
-                                  data = stress.data.lnCVR,
-                                  family = gaussian(),
-                                  cov_ranef = list(scientific.name = phylo_cor),
-                                  #autocor = cor_fixed(varcovar.studyID.lnRR.ours_0.5), # fixed covariance matrix of the response variable for instance to model multivariate effect sizes in meta-analysis (https://rdrr.io/cran/brms/man/cor_fixed.html)
-                                  control = list(adapt_delta = adapt_delta_value, max_treedepth = max_treedepth_value),
-                                  chains = 4, cores = 4, iter = iterations, warmup = burnin, thin = thinning)
+brms.univariate.lnCVR <- brm(lnCVR.sc | se(sqrt(lnCVR.sc.sv)) ~ 1 + 
+                               (1|studyID) + (1|esID) +
+                               (1|scientific.name) + (1|speciesID),
+                             data = stress.data.lnCVR,
+                             family = gaussian(),
+                             cov_ranef = list(scientific.name = phylo_cor),
+                             #autocor = cor_fixed(varcovar.studyID.lnRR.ours_0.5), # fixed covariance matrix of the response variable for instance to model multivariate effect sizes in meta-analysis (https://rdrr.io/cran/brms/man/cor_fixed.html)
+                             control = list(adapt_delta = adapt_delta_value, max_treedepth = max_treedepth_value),
+                             chains = 4, cores = 4, iter = iterations, warmup = burnin, thin = thinning)
 
 proc.time() - ptm # checking the time needed to run the model
 
-save(brms.univariate.lnCVR.ours,
+save(brms.univariate.lnCVR,
      file=filename)
 
 
@@ -364,11 +364,11 @@ save(brms.univariate.cohens.biased.HE,
 bf.lnRR.ours <- bf(lnRR.sc.ours | se(sqrt(lnRR.sc.sv)) ~
                      1 + (1|p|studyID) + (1|q|esID) + (1|a|scientific.name) + (1|d|speciesID))
 
-bf.lnVR.ours <- bf(lnVR.sc | se(sqrt(lnVR.sc.sv)) ~
-                     1 + (1|p|studyID) + (1|q|esID) + (1|a|scientific.name) + (1|d|speciesID))
+bf.lnVR <- bf(lnVR.sc | se(sqrt(lnVR.sc.sv)) ~
+                1 + (1|p|studyID) + (1|q|esID) + (1|a|scientific.name) + (1|d|speciesID))
 
-bf.lnCVR.ours <- bf(lnCVR.sc | se(sqrt(lnCVR.sc.sv)) ~
-                      1 + (1|p|studyID) + (1|q|esID) + (1|a|scientific.name) + (1|d|speciesID))
+bf.lnCVR <- bf(lnCVR.sc | se(sqrt(lnCVR.sc.sv)) ~
+                 1 + (1|p|studyID) + (1|q|esID) + (1|a|scientific.name) + (1|d|speciesID))
 
 # By writing |p| and |q| in between we indicate that all varying
 # effects of Study and Index should be modeled as correlated.
@@ -386,7 +386,7 @@ ptm <- proc.time() # checking the time needed to run the model
 
 # filename for saving the model, this avoids having to change the
 # text every time
-filename <- paste0("models/brms/brms_bivariate_lnRR_lnVR_ours_",
+filename <- paste0("models/brms/brms_bivariate_lnRR_ours_lnVR_",
                    #"0.5varcov_",
                    #"novarcovar_",
                    "sharedcontrol_",
@@ -397,7 +397,7 @@ filename <- paste0("models/brms/brms_bivariate_lnRR_lnVR_ours_",
                    max_treedepth_value,"treedepth.RData")
 
 
-brms.bivariate.lnRR.lnVR.ours <- brm(bf.lnRR.ours + bf.lnVR.ours,
+brms.bivariate.lnRR.ours.lnVR <- brm(bf.lnRR.ours + bf.lnVR,
                                      data = stress.data,
                                      cov_ranef = list(scientific.name = phylo_cor),
                                      family = gaussian(),
@@ -406,7 +406,7 @@ brms.bivariate.lnRR.lnVR.ours <- brm(bf.lnRR.ours + bf.lnVR.ours,
 
 proc.time() - ptm # checking the time needed to run the model
 
-save(brms.bivariate.lnRR.lnVR.ours,
+save(brms.bivariate.lnRR.ours.lnVR,
      file=filename)
 
 
@@ -421,7 +421,7 @@ ptm <- proc.time() # checking the time needed to run the model
 
 # filename for saving the model, this avoids having to change the
 # text every time
-filename <- paste0("models/brms/brms_bivariate_lnVR_lnCVR_ours_",
+filename <- paste0("models/brms/brms_bivariate_lnVR_lnCVR_",
                    #"0.5varcov_",
                    #"novarcovar_",
                    "sharedcontrol_",
@@ -432,16 +432,16 @@ filename <- paste0("models/brms/brms_bivariate_lnVR_lnCVR_ours_",
                    max_treedepth_value,"treedepth.RData")
 
 
-brms.bivariate.lnVR.lnCVR.ours <- brm(bf.lnVR.ours + bf.lnCVR.ours,
-                                      data = stress.data,
-                                      cov_ranef = list(scientific.name = phylo_cor),
-                                      family = gaussian(),
-                                      control = list(adapt_delta = adapt_delta_value, max_treedepth = max_treedepth_value),
-                                      chains = 4, cores = 4, iter = iterations, warmup = burnin, thin = thinning)
+brms.bivariate.lnVR.lnCVR <- brm(bf.lnVR + bf.lnCVR,
+                                 data = stress.data,
+                                 cov_ranef = list(scientific.name = phylo_cor),
+                                 family = gaussian(),
+                                 control = list(adapt_delta = adapt_delta_value, max_treedepth = max_treedepth_value),
+                                 chains = 4, cores = 4, iter = iterations, warmup = burnin, thin = thinning)
 
 proc.time() - ptm # checking the time needed to run the model
 
-save(brms.bivariate.lnVR.lnCVR.ours,
+save(brms.bivariate.lnVR.lnCVR,
      file=filename)
 
 
