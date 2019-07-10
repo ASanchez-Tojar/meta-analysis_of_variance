@@ -85,10 +85,6 @@ stress.data <- read.xlsx("data_re-extraction/clean_data/EyckDev_stress_clean_eff
 
 #test<-stress.data[stress.data$studyID=="114" | stress.data$studyID=="80",]
 
-# subsetting data
-stress.data.ours <- stress.data[!(is.na(stress.data$SMDH.ours)),]
-stress.data.HE <- stress.data[!(is.na(stress.data$SMDH.HE)),]
-
 ##############################################################
 # METAFOR and BRMS: variance-covariance matrices
 ##############################################################
@@ -98,7 +94,7 @@ stress.data.HE <- stress.data[!(is.na(stress.data$SMDH.HE)),]
 ##############################################################
 
 # subset of data needed
-stress.data.ours.lnRR <- stress.data.ours[!(is.na(stress.data.ours$lnRR.sv)),]
+stress.data.lnRR <- stress.data[!(is.na(stress.data$lnRR.ours)),]
 
 ##################################
 # within-study correlation = 0.5
@@ -114,8 +110,8 @@ stress.data.ours.lnRR <- stress.data.ours[!(is.na(stress.data.ours$lnRR.sv)),]
 # test$studyID <- factor(test$studyID, levels=unique(test$studyID))
 # splt <- split(test, test$studyID)
 
-stress.data.ours.lnRR$studyID <- factor(stress.data.ours.lnRR$studyID, levels=unique(stress.data.ours.lnRR$studyID))
-splt <- split(stress.data.ours.lnRR, stress.data.ours.lnRR$studyID)
+stress.data.lnRR$studyID <- factor(stress.data.lnRR$studyID, levels=unique(stress.data.lnRR$studyID))
+splt <- split(stress.data.lnRR, stress.data.lnRR$studyID)
 covMat <- lapply(splt, function(x) covMatrix(x, "lnRR.sv", cor = 0.5))
 varcovar.studyID.lnRR.ours_0.5 <- bldiag(covMat)
 
@@ -129,13 +125,12 @@ is.positive.definite(varcovar.studyID.lnRR.ours_0.5)
 save(varcovar.studyID.lnRR.ours_0.5, file = "data_re-extraction/clean_data/varcovar_studyID_lnRR_ours_0.50.Rdata")
 
 
-
 ##############################################################
-# lnVR.ours
+# lnVR
 ##############################################################
 
 # subset of data needed
-stress.data.ours.lnVR <- stress.data.ours[!(is.na(stress.data.ours$lnVR.sv)),]
+stress.data.lnVR <- stress.data[!(is.na(stress.data$lnVR.sv)),]
 
 ##################################
 # within-study correlation = 0.5
@@ -151,28 +146,27 @@ stress.data.ours.lnVR <- stress.data.ours[!(is.na(stress.data.ours$lnVR.sv)),]
 # test$studyID <- factor(test$studyID, levels=unique(test$studyID))
 # splt <- split(test, test$studyID)
 
-stress.data.ours.lnVR$studyID <- factor(stress.data.ours.lnVR$studyID, levels=unique(stress.data.ours.lnVR$studyID))
-splt <- split(stress.data.ours.lnVR, stress.data.ours.lnVR$studyID)
+stress.data.lnVR$studyID <- factor(stress.data.lnVR$studyID, levels=unique(stress.data.lnVR$studyID))
+splt <- split(stress.data.lnVR, stress.data.lnVR$studyID)
 covMat <- lapply(splt, function(x) covMatrix(x, "lnVR.sv", cor = 0.5))
-varcovar.studyID.lnVR.ours_0.5 <- bldiag(covMat)
+varcovar.studyID.lnVR_0.5 <- bldiag(covMat)
 
 # is the matrix positive-definitive? No, run PDfunc to make it
 # so. If a matrix is not positive-definite, it won't work
-is.positive.definite(varcovar.studyID.lnVR.ours_0.5) # FALSE
-varcovar.studyID.lnVR.ours_0.5<-PDfunc(varcovar.studyID.lnVR.ours_0.5)
-is.positive.definite(varcovar.studyID.lnVR.ours_0.5)
+is.positive.definite(varcovar.studyID.lnVR_0.5) # FALSE
+varcovar.studyID.lnVR_0.5<-PDfunc(varcovar.studyID.lnVR_0.5)
+is.positive.definite(varcovar.studyID.lnVR_0.5)
 
 # all good, save it
-save(varcovar.studyID.lnVR.ours_0.5, file = "data_re-extraction/clean_data/varcovar_studyID_lnVR_ours_0.50.Rdata")
-
+save(varcovar.studyID.lnVR_0.5, file = "data_re-extraction/clean_data/varcovar_studyID_lnVR_0.50.Rdata")
 
 
 ##############################################################
-# lnCVR.ours
+# lnCVR
 ##############################################################
 
 # subset of data needed
-stress.data.ours.lnCVR <- stress.data.ours[!(is.na(stress.data.ours$lnCVR.sv)),]
+stress.data.lnCVR <- stress.data[!(is.na(stress.data$lnCVR.sv)),]
 
 ##################################
 # within-study correlation = 0.5
@@ -188,19 +182,19 @@ stress.data.ours.lnCVR <- stress.data.ours[!(is.na(stress.data.ours$lnCVR.sv)),]
 # test$studyID <- factor(test$studyID, levels=unique(test$studyID))
 # splt <- split(test, test$studyID)
 
-stress.data.ours.lnCVR$studyID <- factor(stress.data.ours.lnCVR$studyID, levels=unique(stress.data.ours.lnCVR$studyID))
-splt <- split(stress.data.ours.lnCVR, stress.data.ours.lnCVR$studyID)
+stress.data.lnCVR$studyID <- factor(stress.data.lnCVR$studyID, levels=unique(stress.data.lnCVR$studyID))
+splt <- split(stress.data.lnCVR, stress.data.lnCVR$studyID)
 covMat <- lapply(splt, function(x) covMatrix(x, "lnCVR.sv", cor = 0.5))
-varcovar.studyID.lnCVR.ours_0.5 <- bldiag(covMat)
+varcovar.studyID.lnCVR_0.5 <- bldiag(covMat)
 
 # is the matrix positive-definitive? No, run PDfunc to make it
 # so. If a matrix is not positive-definite, it won't work
-is.positive.definite(varcovar.studyID.lnCVR.ours_0.5) # FALSE
-varcovar.studyID.lnCVR.ours_0.5<-PDfunc(varcovar.studyID.lnCVR.ours_0.5)
-is.positive.definite(varcovar.studyID.lnCVR.ours_0.5)
+is.positive.definite(varcovar.studyID.lnCVR_0.5) # FALSE
+varcovar.studyID.lnCVR_0.5<-PDfunc(varcovar.studyID.lnCVR_0.5)
+is.positive.definite(varcovar.studyID.lnCVR_0.5)
 
 # all good, save it
-save(varcovar.studyID.lnCVR.ours_0.5, file = "data_re-extraction/clean_data/varcovar_studyID_lnCVR_ours_0.50.Rdata")
+save(varcovar.studyID.lnCVR_0.5, file = "data_re-extraction/clean_data/varcovar_studyID_lnCVR_0.50.Rdata")
 
 
 
@@ -208,6 +202,9 @@ save(varcovar.studyID.lnCVR.ours_0.5, file = "data_re-extraction/clean_data/varc
 # SMDH.ours
 ##############################################################
 
+# subset of data needed
+stress.data.SMDH <- stress.data[!(is.na(stress.data$SMDH.ours)),]
+
 ##################################
 # within-study correlation = 0.5
 ##################################
@@ -222,8 +219,8 @@ save(varcovar.studyID.lnCVR.ours_0.5, file = "data_re-extraction/clean_data/varc
 # test$studyID <- factor(test$studyID, levels=unique(test$studyID))
 # splt <- split(test, test$studyID)
 
-stress.data.ours$studyID <- factor(stress.data.ours$studyID, levels=unique(stress.data.ours$studyID))
-splt <- split(stress.data.ours, stress.data.ours$studyID)
+stress.data.SMDH$studyID <- factor(stress.data.SMDH$studyID, levels=unique(stress.data.SMDH$studyID))
+splt <- split(stress.data.SMDH, stress.data.SMDH$studyID)
 covMat <- lapply(splt, function(x) covMatrix(x, "SMDH.sv", cor = 0.5))
 varcovar.studyID.SMDH.ours_0.5 <- bldiag(covMat)
 
