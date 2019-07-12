@@ -156,9 +156,10 @@ dev.off()
 # varcovar: 0.99, 15, 6000, 3000, 2: after ca. 20 h, not a single chain had reached 10% (corei7)
 # sharedcontrol: 0.99, 15, 4000, 2000, 2: 47 min (corei7)
 # sharedcontrol: 0.999, 20, 6000, 3000, 2: 82 min (corei7)
+# sharedcontrol: 0.9999, 20, 6000, 3000, 2: 111 min (corei7)
 
 # subset of data needed
-stress.data.lnRR <- stress.data[!(is.na(stress.data$lnRR.sc.sv)),]
+stress.data.lnRR.ours <- stress.data[!(is.na(stress.data$lnRR.sc.ours)),]
 
 ptm <- proc.time() # checking the time needed to run the model
 
@@ -178,7 +179,7 @@ filename <- paste0("models/brms/brms_univariate_lnRR_ours_",
 brms.univariate.lnRR.ours <- brm(lnRR.sc.ours | se(sqrt(lnRR.sc.sv)) ~ 1 + 
                                    (1|studyID) + (1|esID) +
                                    (1|scientific.name) + (1|speciesID),
-                                 data = stress.data.lnRR,
+                                 data = stress.data.lnRR.ours,
                                  family = gaussian(),
                                  cov_ranef = list(scientific.name = phylo_cor),
                                  #autocor = cor_fixed(varcovar.studyID.lnRR.ours_0.5), # fixed covariance matrix of the response variable for instance to model multivariate effect sizes in meta-analysis (https://rdrr.io/cran/brms/man/cor_fixed.html)
@@ -196,6 +197,7 @@ save(brms.univariate.lnRR.ours,
 ###########################
 
 # sharedcontrol: 0.999, 20, 6000, 3000, 2: 6 min (corei7)
+# sharedcontrol: 0.9999, 20, 6000, 3000, 2: 7 min (corei7)
 
 # subset of data needed
 stress.data.lnVR <- stress.data[!(is.na(stress.data$lnVR.sc.sv)),]
@@ -235,7 +237,7 @@ save(brms.univariate.lnVR,
 # UNIVARIATE MODELS: lnCVR #
 ###########################
 
-# sharedcontrol: 0.999, 20, 6000, 3000, 2: XX min (corei7)
+# sharedcontrol: 0.9999, 20, 6000, 3000, 2: 6 min (corei7)
 
 # subset of data needed
 stress.data.lnCVR <- stress.data[!(is.na(stress.data$lnCVR.sc.sv)),]
@@ -276,6 +278,7 @@ save(brms.univariate.lnCVR,
 ###########################
 
 # sharedcontrol: 0.999, 20, 6000, 3000, 2: 13 min (corei7)
+# sharedcontrol: 0.9999, 20, 6000, 3000, 2: 14 min (corei7)
 
 # subset of data needed
 stress.data.SMDH <- stress.data[!(is.na(stress.data$SMDH.sc.sv)),]
@@ -319,9 +322,10 @@ save(brms.univariate.SMDH.ours,
 # after we corrected his typos
 
 # sharedcontrol: 0.999, 20, 6000, 3000, 2: 9 min (corei7)
+# sharedcontrol: 0.9999, 20, 6000, 3000, 2: X min (corei7)
 
 # subset of data needed
-stress.data.HE.cohens.biased <- stress.data.HE[!(is.na(stress.data.HE$cohens.biased.HE)),]
+stress.data.HE.cohens.biased <- stress.data[!(is.na(stress.data$cohens.biased.HE)),]
 
 ptm <- proc.time() # checking the time needed to run the model
 
@@ -344,7 +348,7 @@ brms.univariate.cohens.biased.HE <- brm(cohens.biased.HE | se(sqrt(cohens.biased
                                         data = stress.data.HE.cohens.biased,
                                         family = gaussian(),
                                         control = list(adapt_delta = adapt_delta_value, max_treedepth = max_treedepth_value),
-                                        chains = 4, cores = 4, iter = iterations, warmup = burnin, thin = thinning) # aiming for 1000 samples (i.e. (20000-10000)/10=1000
+                                        chains = 4, cores = 4, iter = iterations, warmup = burnin, thin = thinning)
 
 proc.time() - ptm # checking the time needed to run the model
 
@@ -381,6 +385,7 @@ bf.lnCVR <- bf(lnCVR.sc | se(sqrt(lnCVR.sc.sv)) ~
 #Error: Fixed residual covariance matrices are not implemented when 'rescor' is estimated.
 
 # sharedcontrol: 0.999, 20, 6000, 3000, 2: 33 h (corei7)
+# sharedcontrol: 0.9999, 20, 6000, 3000, 2: XX h (corei7)
 
 ptm <- proc.time() # checking the time needed to run the model
 
@@ -416,6 +421,7 @@ save(brms.bivariate.lnRR.ours.lnVR,
 #Error: Fixed residual covariance matrices are not implemented when 'rescor' is estimated.
 
 # sharedcontrol: 0.999, 20, 6000, 3000, 2: 5 h (corei7)
+# sharedcontrol: 0.999, 20, 6000, 3000, 2: XX h (corei7)
 
 ptm <- proc.time() # checking the time needed to run the model
 
