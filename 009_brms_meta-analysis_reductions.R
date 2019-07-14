@@ -142,8 +142,8 @@ thinning <- 2
 # UNIVARIATE MODELS: lnRR #
 ###########################
 
-# sharedcontrol - 25%: 0.999, 20, 6000, 3000, 2:  min (corei7)
-# sharedcontrol - 50%: 0.999, 20, 6000, 3000, 2:  min (corei7)
+# sharedcontrol - 25%: 0.999, 20, 6000, 3000, 2:  73 min (corei7)
+# sharedcontrol - 50%: 0.999, 20, 6000, 3000, 2:  34 min (corei7)
 
 # subset of data needed just to make it easier for the univariate
 # models instead of going through tons of NA's.
@@ -219,8 +219,8 @@ save(brms.univariate.lnRR.ours.50,
 # UNIVARIATE MODELS: lnCVR #
 ############################
 
-# sharedcontrol - 25%: 0.999, 20, 6000, 3000, 2:  min (corei7)
-# sharedcontrol - 50%: 0.999, 20, 6000, 3000, 2:  min (corei7)
+# sharedcontrol - 25%: 0.999, 20, 6000, 3000, 2: 4 min (corei7)
+# sharedcontrol - 50%: 0.999, 20, 6000, 3000, 2: 3  min (corei7)
 
 # subset of data needed just to make it easier for the univariate
 # models instead of going through tons of NA's.
@@ -317,8 +317,8 @@ bf.lnCVR.50 <- bf(lnCVR.sc.50 | se(sqrt(lnCVR.sc.sv)) ~
 # cbind(lnRR,lnVR) 
 ###################
 
-# sharedcontrol - 25%: 0.999, 20, 6000, 3000, 2:  h (corei7)
-# sharedcontrol - 50%: 0.999, 20, 6000, 3000, 2:  h (corei7)
+# sharedcontrol - 25%: 0.999, 20, 6000, 3000, 2:  1385 min   (corei7)
+# sharedcontrol - 50%: 0.999, 20, 6000, 3000, 2:  896 min (corei7)
 
 
 #################
@@ -385,8 +385,8 @@ save(brms.bivariate.lnRR.ours.lnVR.50,
 # cbind(lnVR,lnCVR) 
 ###################
 
-# sharedcontrol - 25%: 0.999, 20, 6000, 3000, 2:  h (corei7)
-# sharedcontrol - 50%: 0.999, 20, 6000, 3000, 2:  h (corei7)
+# sharedcontrol - 25%: 0.999, 20, 6000, 3000, 2:  201 min (corei7)
+# sharedcontrol - 50%: 0.999, 20, 6000, 3000, 2:  126 min (corei7)
 
 #################
 # 25% reduction #
