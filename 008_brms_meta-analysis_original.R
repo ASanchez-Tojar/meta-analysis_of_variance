@@ -322,7 +322,7 @@ save(brms.univariate.SMDH.ours,
 # after we corrected his typos
 
 # sharedcontrol: 0.999, 20, 6000, 3000, 2: 9 min (corei7)
-# sharedcontrol: 0.9999, 20, 6000, 3000, 2: X min (corei7)
+# sharedcontrol: 0.9999, 20, 6000, 3000, 2: 9 min (corei7)
 
 # subset of data needed
 stress.data.HE.cohens.biased <- stress.data[!(is.na(stress.data$cohens.biased.HE)),]
@@ -421,7 +421,7 @@ save(brms.bivariate.lnRR.ours.lnVR,
 #Error: Fixed residual covariance matrices are not implemented when 'rescor' is estimated.
 
 # sharedcontrol: 0.999, 20, 6000, 3000, 2: 5 h (corei7)
-# sharedcontrol: 0.999, 20, 6000, 3000, 2: XX h (corei7)
+# sharedcontrol: 0.999, 20, 6000, 3000, 2: 161 min (corei7)
 
 ptm <- proc.time() # checking the time needed to run the model
 
