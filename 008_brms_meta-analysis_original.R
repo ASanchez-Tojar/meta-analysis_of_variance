@@ -421,7 +421,7 @@ save(brms.bivariate.lnRR.ours.lnVR,
 #Error: Fixed residual covariance matrices are not implemented when 'rescor' is estimated.
 
 # sharedcontrol: 0.999, 20, 6000, 3000, 2: 5 h (corei7)
-# sharedcontrol: 0.999, 20, 6000, 3000, 2: 161 min (corei7)
+# sharedcontrol: 0.9999, 20, 6000, 3000, 2: 161 min (corei7)
 
 ptm <- proc.time() # checking the time needed to run the model
 
@@ -448,6 +448,40 @@ brms.bivariate.lnVR.lnCVR <- brm(bf.lnVR + bf.lnCVR,
 proc.time() - ptm # checking the time needed to run the model
 
 save(brms.bivariate.lnVR.lnCVR,
+     file=filename)
+
+
+###################
+# cbind(lnRR,lnCVR) 
+###################
+
+# sharedcontrol: 0.9999, 20, 6000, 3000, 2: 31 h (corei7)
+
+ptm <- proc.time() # checking the time needed to run the model
+
+# filename for saving the model, this avoids having to change the
+# text every time
+filename <- paste0("models/brms/brms_bivariate_lnRR_ours_lnCVR_",
+                   #"0.5varcov_",
+                   #"novarcovar_",
+                   "sharedcontrol_",
+                   iterations,"iter_",
+                   burnin,"burnin_",
+                   thinning,"thin_",
+                   adapt_delta_value,"delta_",
+                   max_treedepth_value,"treedepth.RData")
+
+
+brms.bivariate.lnRR.ours.lnCVR <- brm(bf.lnRR.ours + bf.lnCVR,
+                                      data = stress.data,
+                                      cov_ranef = list(scientific.name = phylo_cor),
+                                      family = gaussian(),
+                                      control = list(adapt_delta = adapt_delta_value, max_treedepth = max_treedepth_value),
+                                      chains = 4, cores = 4, iter = iterations, warmup = burnin, thin = thinning)
+
+proc.time() - ptm # checking the time needed to run the model
+
+save(brms.bivariate.lnRR.ours.lnCVR,
      file=filename)
 
 
