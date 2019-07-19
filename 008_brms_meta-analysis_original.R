@@ -385,7 +385,7 @@ bf.lnCVR <- bf(lnCVR.sc | se(sqrt(lnCVR.sc.sv)) ~
 #Error: Fixed residual covariance matrices are not implemented when 'rescor' is estimated.
 
 # sharedcontrol: 0.999, 20, 6000, 3000, 2: 33 h (corei7)
-# sharedcontrol: 0.9999, 20, 6000, 3000, 2: XX h (corei7)
+# sharedcontrol: 0.9999, 20, 6000, 3000, 2: 32 h (corei7)
 
 ptm <- proc.time() # checking the time needed to run the model
 
@@ -484,6 +484,39 @@ proc.time() - ptm # checking the time needed to run the model
 save(brms.bivariate.lnRR.ours.lnCVR,
      file=filename)
 
+
+###################
+# TRIVARIATE MODEL: 
+###################
+
+# sharedcontrol: 0.9999, 20, 6000, 3000, 2: XX h (corei7)
+
+ptm <- proc.time() # checking the time needed to run the model
+
+# filename for saving the model, this avoids having to change the
+# text every time
+filename <- paste0("models/brms/brms_trivariate_lnRR_ours_lnRR_lnCVR_",
+                   #"0.5varcov_",
+                   #"novarcovar_",
+                   "sharedcontrol_",
+                   iterations,"iter_",
+                   burnin,"burnin_",
+                   thinning,"thin_",
+                   adapt_delta_value,"delta_",
+                   max_treedepth_value,"treedepth.RData")
+
+
+brms.trivariate.lnRR.ours.lnRR.lnCVR <- brm(bf.lnRR.ours + bf.lnVR + bf.lnCVR,
+                                            data = stress.data,
+                                            cov_ranef = list(scientific.name = phylo_cor),
+                                            family = gaussian(),
+                                            control = list(adapt_delta = adapt_delta_value, max_treedepth = max_treedepth_value),
+                                            chains = 4, cores = 4, iter = iterations, warmup = burnin, thin = thinning)
+
+proc.time() - ptm # checking the time needed to run the model
+
+save(brms.trivariate.lnRR.ours.lnRR.lnCVR,
+     file=filename)
 
 ####################################################################################
 # saving session information with all packages versions for reproducibility purposes
