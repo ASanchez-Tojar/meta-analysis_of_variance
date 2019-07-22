@@ -489,7 +489,7 @@ save(brms.bivariate.lnRR.ours.lnCVR,
 # TRIVARIATE MODEL: 
 ###################
 
-# sharedcontrol: 0.9999, 20, 6000, 3000, 2: XX h (corei7)
+# sharedcontrol: 0.9999, 20, 6000, 3000, 2: 61 h (corei7)
 
 ptm <- proc.time() # checking the time needed to run the model
 
