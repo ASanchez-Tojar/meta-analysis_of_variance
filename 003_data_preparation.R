@@ -221,7 +221,7 @@ db.full.red$esID <- 1:nrow(db.full.red)
 
 
 # extracting year of publication from the citation
-db.full.red$year <- str_extract(db.full.red$citation, regex("(\\d+)"))
+db.full.red$year <- as.integer(str_extract(db.full.red$citation, regex("(\\d+)")))
 
 
 ##############################################################
