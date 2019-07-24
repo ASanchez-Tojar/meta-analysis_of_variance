@@ -55,7 +55,7 @@
 # Packages needed
 ##############################################################
 
-pacman::p_load(openxlsx,plyr)
+pacman::p_load(openxlsx,plyr,stringr)
 
 # Clear memory
 rm(list=ls())
@@ -218,6 +218,10 @@ levels(db.full.red$sex)
 
 # creating an effect size ID
 db.full.red$esID <- 1:nrow(db.full.red)
+
+
+# extracting year of publication from the citation
+db.full.red$year <- str_extract(db.full.red$citation, regex("(\\d+)"))
 
 
 ##############################################################
