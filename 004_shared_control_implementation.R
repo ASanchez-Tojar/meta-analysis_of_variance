@@ -145,7 +145,7 @@ db.red.dup.df <- as.data.frame(db.red.dup)
 db.red.dup.df[db.red.dup.df$TAXA=="Aves ","TAXA"] <- "Aves"
 
 
-# # what's the number of studies using suffering from shared control?
+# # what's the number of studies suffering from shared control?
 # length(unique(db.red.dup.df[db.red.dup.df$num.shared.control>1,"studyID"]))
 # 
 # # what's the % then?
