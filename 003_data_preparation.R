@@ -220,10 +220,6 @@ levels(db.full.red$sex)
 db.full.red$esID <- 1:nrow(db.full.red)
 
 
-# extracting year of publication from the citation
-db.full.red$year <- as.integer(str_extract(db.full.red$citation, regex("(\\d+)")))
-
-
 ##############################################################
 # Identifying ratio scale data
 ##############################################################
@@ -1754,6 +1750,10 @@ db.full.red.sign[(is.na(db.full.red.sign$mean.treat)),"sign.inversion.ours"]<- N
 db.full.red.sign$sign.inversion.ours <- factor(db.full.red.sign$sign.inversion.ours)
 
 summary(db.full.red.sign)
+
+
+# extracting year of publication from the citation
+db.full.red.sign$year <- as.integer(str_extract(db.full.red.sign$citation, regex("(\\d+)")))
 
 
 # exporting clean data for effect size estimation
