@@ -518,6 +518,175 @@ proc.time() - ptm # checking the time needed to run the model
 save(brms.trivariate.lnRR.ours.lnRR.lnCVR,
      file=filename)
 
+
+
+##############################
+# UNIVARIATE META-REGRESSIONS: 
+##############################
+
+# adding the corrected trait classes
+trait.database <- read.xlsx("data_re-extraction/clean_data/EyckDev_stress_clean_effect_sizes_sp_corrected_trait_modification.xlsx",
+                            colNames=T,sheet = 1)
+
+trait.database.red <- trait.database[,c("esID","trait.class.2","potential.alternative","agreement")]
+
+stress.data.metareg <- merge(stress.data,trait.database.red,by="esID",all.x=T)
+
+
+#####################
+# TRAIT CLASS: lnRR #
+#####################
+
+# sharedcontrol: 0.9999, 20, 6000, 3000, 2: 109 min (corei7)
+
+# subset of data needed
+stress.data.metareg.lnRR.ours <- stress.data.metareg[!(is.na(stress.data.metareg$lnRR.sc.ours)),]
+
+ptm <- proc.time() # checking the time needed to run the model
+
+# filename for saving the model, this avoids having to change the
+# text every time
+filename <- paste0("models/brms/brms_univariate_lnRR_ours_trait",
+                   "sharedcontrol_",
+                   iterations,"iter_",
+                   burnin,"burnin_",
+                   thinning,"thin_",
+                   adapt_delta_value,"delta_",
+                   max_treedepth_value,"treedepth.RData")
+
+
+brms.univariate.lnRR.ours.trait <- brm(lnRR.sc.ours | se(sqrt(lnRR.sc.sv)) ~ 
+                                         1 + trait.class.2 +
+                                         (1|studyID) + (1|esID) +
+                                         (1|scientific.name) + (1|speciesID),
+                                       data = stress.data.metareg.lnRR.ours,
+                                       family = gaussian(),
+                                       cov_ranef = list(scientific.name = phylo_cor),
+                                       control = list(adapt_delta = adapt_delta_value, max_treedepth = max_treedepth_value),
+                                       chains = 4, cores = 4, iter = iterations, warmup = burnin, thin = thinning)
+
+proc.time() - ptm # checking the time needed to run the model
+
+save(brms.univariate.lnRR.ours.trait,
+     file=filename)
+
+
+#####################
+# TRAIT CLASS: lnVR #
+#####################
+
+# sharedcontrol: 0.9999, 20, 6000, 3000, 2: 8 min (corei7)
+
+# subset of data needed
+stress.data.metareg.lnVR <- stress.data.metareg[!(is.na(stress.data.metareg$lnVR.sc)),]
+
+ptm <- proc.time() # checking the time needed to run the model
+
+# filename for saving the model, this avoids having to change the
+# text every time
+filename <- paste0("models/brms/brms_univariate_lnVR_trait",
+                   "sharedcontrol_",
+                   iterations,"iter_",
+                   burnin,"burnin_",
+                   thinning,"thin_",
+                   adapt_delta_value,"delta_",
+                   max_treedepth_value,"treedepth.RData")
+
+
+brms.univariate.lnVR.trait <- brm(lnVR.sc | se(sqrt(lnVR.sc.sv)) ~ 
+                                    1 + trait.class.2 +
+                                    (1|studyID) + (1|esID) +
+                                    (1|scientific.name) + (1|speciesID),
+                                  data = stress.data.metareg.lnVR,
+                                  family = gaussian(),
+                                  cov_ranef = list(scientific.name = phylo_cor),
+                                  control = list(adapt_delta = adapt_delta_value, max_treedepth = max_treedepth_value),
+                                  chains = 4, cores = 4, iter = iterations, warmup = burnin, thin = thinning)
+
+proc.time() - ptm # checking the time needed to run the model
+
+save(brms.univariate.lnVR.trait,
+     file=filename)
+
+
+######################
+# TRAIT CLASS: lnCVR #
+######################
+
+# sharedcontrol: 0.9999, 20, 6000, 3000, 2: 8 min (corei7)
+
+# subset of data needed
+stress.data.metareg.lnCVR <- stress.data.metareg[!(is.na(stress.data.metareg$lnCVR.sc)),]
+
+ptm <- proc.time() # checking the time needed to run the model
+
+# filename for saving the model, this avoids having to change the
+# text every time
+filename <- paste0("models/brms/brms_univariate_lnCVR_trait",
+                   "sharedcontrol_",
+                   iterations,"iter_",
+                   burnin,"burnin_",
+                   thinning,"thin_",
+                   adapt_delta_value,"delta_",
+                   max_treedepth_value,"treedepth.RData")
+
+
+brms.univariate.lnCVR.trait <- brm(lnCVR.sc | se(sqrt(lnCVR.sc.sv)) ~ 
+                                     1 + trait.class.2 +
+                                     (1|studyID) + (1|esID) +
+                                     (1|scientific.name) + (1|speciesID),
+                                   data = stress.data.metareg.lnCVR,
+                                   family = gaussian(),
+                                   cov_ranef = list(scientific.name = phylo_cor),
+                                   control = list(adapt_delta = adapt_delta_value, max_treedepth = max_treedepth_value),
+                                   chains = 4, cores = 4, iter = iterations, warmup = burnin, thin = thinning)
+
+proc.time() - ptm # checking the time needed to run the model
+
+save(brms.univariate.lnCVR.trait,
+     file=filename)
+
+
+################
+# TIME-LAG BIAS: 
+################
+
+# sharedcontrol: 0.9999, 20, 6000, 3000, 2: 104 min (corei7)
+
+# subset of data needed
+stress.data.lnRR.ours <- stress.data[!(is.na(stress.data$lnRR.sc.ours)),]
+
+stress.data.lnRR.ours$year.z <- scale(stress.data.lnRR.ours$year)
+
+ptm <- proc.time() # checking the time needed to run the model
+
+# filename for saving the model, this avoids having to change the
+# text every time
+filename <- paste0("models/brms/brms_univariate_lnRR_ours_year",
+                   "sharedcontrol_",
+                   iterations,"iter_",
+                   burnin,"burnin_",
+                   thinning,"thin_",
+                   adapt_delta_value,"delta_",
+                   max_treedepth_value,"treedepth.RData")
+
+
+brms.univariate.lnRR.ours.year <- brm(lnRR.sc.ours | se(sqrt(lnRR.sc.sv)) ~ 
+                                        1 + year.z +
+                                        (1|studyID) + (1|esID) +
+                                        (1|scientific.name) + (1|speciesID),
+                                      data = stress.data.lnRR.ours,
+                                      family = gaussian(),
+                                      cov_ranef = list(scientific.name = phylo_cor),
+                                      control = list(adapt_delta = adapt_delta_value, max_treedepth = max_treedepth_value),
+                                      chains = 4, cores = 4, iter = iterations, warmup = burnin, thin = thinning)
+
+proc.time() - ptm # checking the time needed to run the model
+
+save(brms.univariate.lnRR.ours.year,
+     file=filename)
+
+
 ####################################################################################
 # saving session information with all packages versions for reproducibility purposes
 sink("models/brms/brms_meta-analysis_R_session.txt")
