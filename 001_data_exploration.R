@@ -42,6 +42,9 @@
 # (note that there are 865 total effect sizes in this dataset, in 
 # contrast to the published data set, which contained 866 effect sizes).
 
+# This was a simple initial data exploration to understand the 
+# data.
+
 ##############################################################
 # Packages needed
 ##############################################################
