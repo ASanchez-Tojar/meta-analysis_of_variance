@@ -22,7 +22,7 @@
 # Packages needed
 ##############################################################
 
-pacman::p_load(openxlsx,brms,tidybayes,ggplot2,plotly,stringr,dplyr)
+pacman::p_load(openxlsx,brms,tidybayes,ggplot2,plotly,stringr,dplyr,tidyr)
 
 
 # Clear memory
@@ -80,20 +80,23 @@ stress.data.metareg.SMDH.ours <- stress.data.metareg[!(is.na(stress.data.metareg
 # Some summary numbers #
 ########################
 
-# counting number of studies, species, etc...
-nrow(stress.data)
-length(unique(stress.data$studyID))
-length(unique(stress.data$speciesID))
+# reducing dataset to lnRR and lnCVR only
+stress.data.red <- stress.data[!(is.na(stress.data$lnRR.sc.ours)) | !(is.na(stress.data$lnCVR.sc)),]
 
-stress.data %>% 
+# counting number of studies, species, etc...
+nrow(stress.data.red)
+length(unique(stress.data.red$studyID))
+length(unique(stress.data.red$speciesID))
+
+stress.data.red %>% 
   group_by(TAXA) %>% 
   summarise(count = n_distinct(speciesID))
 
 # percentage of effect sizes affected by shared control effects
-nrow(stress.data[stress.data$num.shared.control>1,])
-length(unique(stress.data[stress.data$num.shared.control>1,"studyID"]))
-round((length(unique(stress.data[stress.data$num.shared.control>1,"studyID"]))/length(unique(stress.data$studyID)))*100,1)
-round((nrow(stress.data[stress.data$num.shared.control>1,])/nrow(stress.data))*100,2)
+nrow(stress.data.red[stress.data.red$num.shared.control>1,])
+length(unique(stress.data.red[stress.data.red$num.shared.control>1,"studyID"]))
+round((length(unique(stress.data.red[stress.data.red$num.shared.control>1,"studyID"]))/length(unique(stress.data.red$studyID)))*100,1)
+round((nrow(stress.data.red[stress.data.red$num.shared.control>1,])/nrow(stress.data.red))*100,2)
 
 ##############################################################
 # -------------------------- BRMS -------------------------- #
