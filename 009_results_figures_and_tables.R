@@ -23,7 +23,7 @@
 ##############################################################
 
 pacman::p_load(openxlsx,brms,tidybayes,ggplot2,plotly,stringr,
-               dplyr,pander,gt,ggridges)#,sjstats)
+               dplyr,pander,gt,ggridges,metafor)
 
 #webshot::install_phantomjs()
 
@@ -199,6 +199,9 @@ stress.data.metareg.lnRR.ours <- stress.data.metareg[!(is.na(stress.data.metareg
 #stress.data.metareg.lnVR <- stress.data.metareg[!(is.na(stress.data.metareg$lnVR.sc)),]
 stress.data.metareg.lnCVR <- stress.data.metareg[!(is.na(stress.data.metareg$lnCVR.sc)),]
 stress.data.metareg.SMDH.ours <- stress.data.metareg[!(is.na(stress.data.metareg$SMDH.sc.ours)),]
+
+# loading phylogenetic matrix "phylo_cor"
+load("data_re-extraction/clean_data/phylo_cor.Rdata") #phylo_cor
 
 ##############################################################
 # Loading models
@@ -631,6 +634,41 @@ R2m.SMDH.year<-100*(vmVarF/(vmVarF+posterior.brms.univariate.SMDH.ours.year$sd_e
 
 
 ##############################################################
+# Cochrane's Q test
+##############################################################
+
+#####################
+# lnRR
+#####################
+lnRR.ours.Q <- rma.mv(yi=lnRR.sc.ours,
+                      V = lnRR.sc.sv, 
+                      random = list(~ 1 | studyID, ~ 1 | esID, 
+                                    ~ 1 | scientific.name, ~ 1 | speciesID), 
+                      R = list(scientific.name = phylo_cor),
+                      data=stress.data.lnRR.ours)$QE
+
+#####################
+# lnCVR
+#####################
+lnCVR.Q <- rma.mv(yi=lnCVR.sc, 
+                  V = lnCVR.sc.sv, 
+                  random = list(~ 1 | studyID, ~ 1 | esID, 
+                                ~ 1 | scientific.name, ~ 1 | speciesID), 
+                  R = list(scientific.name = phylo_cor),
+                  data=stress.data.lnCVR)$QE
+
+#####################
+# SMDH
+#####################
+SMDH.ours.Q <- rma.mv(yi=SMDH.sc.ours, 
+                      V = SMDH.sc.sv, 
+                      random = list(~ 1 | studyID, ~ 1 | esID, 
+                                    ~ 1 | scientific.name, ~ 1 | speciesID), 
+                      R = list(scientific.name = phylo_cor),
+                      data=stress.data.SMDH.ours)$QE
+
+
+##############################################################
 # Creating tables for the results
 ##############################################################
 
@@ -640,7 +678,7 @@ R2m.SMDH.year<-100*(vmVarF/(vmVarF+posterior.brms.univariate.SMDH.ours.year$sd_e
 
 # using the package gt to create fancy tables: https://github.com/rstudio/gt
 table.column.names <- c("Effect.size","K","Metaanalytic.mean",
-                        "Observational","Study","Species","Phylogeny","Total","Bayes.R2","Eggers")
+                        "Observational","Study","Species","Phylogeny","Total","Qtest","Eggers")
 
 # effect size names
 effect.sizes <- c("lnRR",
@@ -796,6 +834,10 @@ speciesID.I2.upper <- round(c(bayestestR::hdi(I2_speciesID.lnRR.ours,ci = 0.95)$
 #                              bayestestR::hdi(bayes_R2(brms.univariate.lnCVR,summary = FALSE),ci = 0.95)$CI_high,
 #                              bayestestR::hdi(bayes_R2(brms.univariate.SMDH.ours,summary = FALSE),ci = 0.95)$CI_high),3)*100
 
+# Q tests
+Qtests <- round(c(lnRR.ours.Q,lnCVR.Q,SMDH.ours.Q),0)
+
+
 # Egger's regression intercept modes
 eggers.modes <- round(c(unlist(point.summaries.brms.Egger.lnRR.ours[["b_Intercept"]]),
                         #NA,
@@ -837,6 +879,7 @@ table1 <- data.frame(effect.sizes,
                      paste0(sprintf("%.1f",total.I2.modes)," [", #sprintf allows to keep the number of digits regardless of 0's
                             sprintf("%.1f",total.I2.lower),",",
                             sprintf("%.1f",total.I2.upper),"]"),
+                     Qtests,
                      paste0(sprintf("%.2f",eggers.modes)," [", #sprintf allows to keep the number of digits regardless of 0's
                             sprintf("%.2f",eggers.lower),",",
                             sprintf("%.2f",eggers.upper),"]"))#,
@@ -845,7 +888,7 @@ table1 <- data.frame(effect.sizes,
 #        sprintf("%.1f",bayesian.R2.upper),"]"))
 
 
-names(table1) <- table.column.names[c(1:8,10)]
+names(table1) <- table.column.names
 
 # some tweaking for the table to look nice
 table1[table1$Eggers=="NA [NA,NA]","Eggers"] <- NA
@@ -863,10 +906,11 @@ table1.gt <- table1.red %>%
              Species=md("***I*<sup>2</sup><sub>Species</sub> (%)**"),
              Phylogeny=md("***I*<sup>2</sup><sub>Phylo</sub> (%)**"),
              Total=md("***I*<sup>2</sup><sub> Total</sub> (%)**"),
+             Qtest=md("***Q*<sub>test</sub>**"),
              Eggers=md("**Egger's test**")) %>%#,
   #Bayes.R2=md("**Bayesian R<sup>2</sup> (%)**")) %>%
   cols_align(align = "right") %>%
-  tab_source_note(source_note = md("k = number of estimates; *I*<sup>2</sup> = heterogeneity; NA = not applicable; Obser. = Observational or residual variance; Phylo = Phylogeny. Egger's test = intercept of an Egger's regression following Nakagawa and Santos (2012). Estimates shown correspond to modes and 95% Highest Posterior Density Intervals")) %>%
+  tab_source_note(source_note = md("k = number of estimates; *I*<sup>2</sup> = heterogeneity; *Q*<sub>test</sub> = Cochrane's *Q* test; NA = not applicable; Obser. = Observational or residual variance; Phylo = Phylogeny. Egger's test = intercept of an Egger's regression following Nakagawa and Santos (2012). Estimates shown correspond to modes and 95% Highest Posterior Density Intervals")) %>%
   tab_options(table.width=775)
 
 
@@ -893,10 +937,11 @@ tableS1.gt <- table1.SMDH %>%
              Species=md("***I*<sup>2</sup><sub>Species</sub> (%)**"),
              Phylogeny=md("***I*<sup>2</sup><sub>Phylo</sub> (%)**"),
              Total=md("***I*<sup>2</sup><sub> Total</sub> (%)**"),
+             Qtest=md("***Q*<sub>test</sub>**"),
              Eggers=md("**Egger's test**")) %>%#,
   #Bayes.R2=md("**Bayesian R<sup>2</sup> (%)**")) %>%
   cols_align(align = "right") %>%
-  tab_source_note(source_note = md("k = number of estimates; *I*<sup>2</sup> = heterogeneity; NA = not applicable; Obser. = Observational or residual variance; Phylo = Phylogeny. Egger's test = intercept of an Egger's regression (Nakagawa and Santos 2012). Estimates shown correspond to modes and 95% Highest Posterior Density Intervals")) %>%
+  tab_source_note(source_note = md("k = number of estimates; *I*<sup>2</sup> = heterogeneity; *Q*<sub>test</sub> = Cochrane's *Q* test; NA = not applicable; Obser. = Observational or residual variance; Phylo = Phylogeny. Egger's test = intercept of an Egger's regression (Nakagawa and Santos 2012). Estimates shown correspond to modes and 95% Highest Posterior Density Intervals")) %>%
   tab_options(table.width=775)
 
 
