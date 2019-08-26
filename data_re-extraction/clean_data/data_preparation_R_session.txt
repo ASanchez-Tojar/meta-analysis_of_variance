@@ -1,0 +1,20 @@
+R version 3.5.1 (2018-07-02)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows >= 8 x64 (build 9200)
+
+Matrix products: default
+
+locale:
+[1] LC_COLLATE=English_United States.1252  LC_CTYPE=English_United States.1252   
+[3] LC_MONETARY=English_United States.1252 LC_NUMERIC=C                          
+[5] LC_TIME=English_United States.1252    
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] stringr_1.4.0  plyr_1.8.4     openxlsx_4.1.0
+
+loaded via a namespace (and not attached):
+[1] compiler_3.5.1 magrittr_1.5   tools_3.5.1    yaml_2.2.0     Rcpp_1.0.1     stringi_1.4.3 
+[7] zip_2.0.1      pacman_0.5.0  
