@@ -18,25 +18,32 @@ other attached packages:
 [11] doBy_4.6-2         metafor_2.1-0      Matrix_1.2-14      openxlsx_4.1.0    
 
 loaded via a namespace (and not attached):
- [1] nlme_3.1-137              matrixStats_0.54.0        xts_0.11-2                threejs_0.3.1            
- [5] httr_1.4.0                rstan_2.18.2              tools_3.5.1               backports_1.1.2          
- [9] R6_2.4.0                  DT_0.5                    lazyeval_0.2.1            colorspace_1.3-2         
-[13] withr_2.1.2               tidyselect_0.2.5          gridExtra_2.3             prettyunits_1.0.2        
-[17] processx_3.2.0            Brobdingnag_1.2-6         compiler_3.5.1            cli_1.1.0                
-[21] pacman_0.5.0              arrayhelpers_1.0-20160527 shinyjs_1.0               labeling_0.3             
-[25] colourpicker_1.0          scales_1.0.0              dygraphs_1.1.1.6          mvtnorm_1.0-8            
-[29] ggridges_0.5.1            callr_3.0.0               stringr_1.4.0             digest_0.6.18            
-[33] StanHeaders_2.18.0-1      base64enc_0.1-3           pkgconfig_2.0.2           htmltools_0.3.6          
-[37] htmlwidgets_1.3           rlang_0.3.2               rstudioapi_0.8            shiny_1.2.0              
-[41] svUnit_0.7-12             zoo_1.8-4                 jsonlite_1.6              crosstalk_1.0.0          
-[45] gtools_3.8.1              zip_2.0.1                 inline_0.3.15             magrittr_1.5             
-[49] loo_2.1.0                 bayesplot_1.6.0           munsell_0.5.0             abind_1.4-5              
-[53] stringi_1.4.3             yaml_2.2.0                MASS_7.3-50               ggstance_0.3.1           
-[57] pkgbuild_1.0.2            plyr_1.8.4                grid_3.5.1                parallel_3.5.1           
-[61] promises_1.0.1            forcats_0.3.0             crayon_1.3.4              miniUI_0.1.1.1           
-[65] lattice_0.20-35           ps_1.2.1                  pillar_1.3.1              igraph_1.2.2             
-[69] markdown_0.9              shinystan_2.5.0           reshape2_1.4.3            stats4_3.5.1             
-[73] rstantools_1.5.1          glue_1.3.1                data.table_1.11.8         httpuv_1.4.5.1           
-[77] gtable_0.2.0              purrr_0.3.2               assertthat_0.2.1          mime_0.6                 
-[81] broom_0.5.0               xtable_1.8-3              coda_0.19-2               later_0.7.5              
-[85] rsconnect_0.8.12          viridisLite_0.3.0         shinythemes_1.1.2         bridgesampling_0.6-0     
+ [1] nlme_3.1-137              matrixStats_0.54.0        xts_0.11-2               
+ [4] threejs_0.3.1             httr_1.4.0                rstan_2.18.2             
+ [7] tools_3.5.1               backports_1.1.2           R6_2.4.0                 
+[10] DT_0.5                    lazyeval_0.2.1            colorspace_1.3-2         
+[13] withr_2.1.2               tidyselect_0.2.5          gridExtra_2.3            
+[16] prettyunits_1.0.2         processx_3.2.0            Brobdingnag_1.2-6        
+[19] compiler_3.5.1            cli_1.1.0                 pacman_0.5.0             
+[22] arrayhelpers_1.0-20160527 shinyjs_1.0               colourpicker_1.0         
+[25] scales_1.0.0              dygraphs_1.1.1.6          mvtnorm_1.0-8            
+[28] ggridges_0.5.1            callr_3.0.0               stringr_1.4.0            
+[31] digest_0.6.18             StanHeaders_2.18.0-1      base64enc_0.1-3          
+[34] pkgconfig_2.0.2           htmltools_0.3.6           htmlwidgets_1.3          
+[37] rlang_0.4.0               rstudioapi_0.8            shiny_1.2.0              
+[40] svUnit_0.7-12             zoo_1.8-4                 jsonlite_1.6             
+[43] crosstalk_1.0.0           gtools_3.8.1              zip_2.0.1                
+[46] inline_0.3.15             magrittr_1.5              loo_2.1.0                
+[49] bayesplot_1.6.0           munsell_0.5.0             abind_1.4-5              
+[52] stringi_1.4.3             yaml_2.2.0                MASS_7.3-50              
+[55] ggstance_0.3.1            pkgbuild_1.0.2            plyr_1.8.4               
+[58] grid_3.5.1                parallel_3.5.1            promises_1.0.1           
+[61] forcats_0.3.0             crayon_1.3.4              miniUI_0.1.1.1           
+[64] lattice_0.20-35           ps_1.2.1                  pillar_1.3.1             
+[67] igraph_1.2.2              markdown_0.9              shinystan_2.5.0          
+[70] reshape2_1.4.3            stats4_3.5.1              rstantools_1.5.1         
+[73] glue_1.3.1                data.table_1.11.8         httpuv_1.4.5.1           
+[76] gtable_0.2.0              purrr_0.3.2               assertthat_0.2.1         
+[79] mime_0.6                  broom_0.5.0               xtable_1.8-3             
+[82] coda_0.19-2               later_0.7.5               rsconnect_0.8.12         
+[85] viridisLite_0.3.0         shinythemes_1.1.2         bridgesampling_0.6-0     
