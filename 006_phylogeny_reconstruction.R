@@ -22,7 +22,7 @@
 # Packages needed
 ##############################################################
 
-pacman::p_load(openxlsx,readxl, ape, fulltext, metafor,rotl,
+pacman::p_load(openxlsx,readxl,ape,fulltext,metafor,rotl,
                treebase,diagram,dplyr)
 
 # Clear memory
@@ -125,7 +125,7 @@ is.binary.tree(tree_random)
 ##############################################################
 
 # exploring whether our tree covers all the species we wanted 
-# it to include, and makeing sure that the species names in our 
+# it to include, and making sure that the species names in our 
 # database match those in the tree. We use the following code.
 
 tree_random$tip.label <- gsub("_"," ", tree_random$tip.label)
@@ -161,7 +161,7 @@ save(tree_random, file = "data_re-extraction/clean_data/tree_random.Rdata")
 # we are computing branch lengths for our tree following 
 # Grafen (1989)(https://royalsocietypublishing.org/doi/abs/10.1098/rstb.1989.0106)
 
-# before we now need to make sure that tree labels and database
+# before we need to make sure that tree labels and database
 # use the same nomenclature
 setdiff(stress.data$scientific.name, as.character(tree_random$tip.label))
 setdiff(as.character(tree_random$tip.label),stress.data$scientific.name)
