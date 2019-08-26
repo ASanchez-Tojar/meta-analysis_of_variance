@@ -231,6 +231,6 @@ length(unique(studyIDs))
 
 
 # saving versions used for reproducibility purposes
-sink("literature_review/Nakagawa_et_al_2015/metaanalysis_variance_review_Nakagawa_et_al_2015_Rpackages_session.txt")
+sink("literature_review/additional_R_session.txt")
 sessionInfo()
 sink()
