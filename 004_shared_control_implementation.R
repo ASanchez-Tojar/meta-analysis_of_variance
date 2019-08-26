@@ -21,7 +21,7 @@
 # Sharing a control is a form of non-independence that needs to 
 # be dealt with. One way of dealing with this non-independence
 # is to adjust sample sizes accordingly. The idea behind this
-# is simple, to reduce the sample size of the control groups
+# is simple: reduce the sample size of the control groups
 # that are used multiple times so that they have less weight
 # in the meta-analysis.
 
@@ -124,7 +124,6 @@ db.red[db.red$specific.trait=="fat content [%]","specific.trait"] <- "fat conten
 # present, and then it calculates a new sample size "N.control.sc"
 # that is equal to the original sample size divided by the number
 # of times a specific control group was used.
-
 
 #db.red.dup <- test %>% 
 db.red.dup <- db.red %>% 
