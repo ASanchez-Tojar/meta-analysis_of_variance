@@ -1,0 +1,326 @@
+Author,Year,Journal,Field,Model,Effect.Size,Mean,Significant,Heterogeneity.Statistic,Heterogeneity.Analysis,Heterogeneity.Verdict,Software,MultiPredictor.Model
+Chan,2013,Global Change Biology,Captive,Random,beta,NA,Y,I2,"SS,MR",Reported,,N
+Crnokrak,2002,Evolution,Captive,Random,beta,0.42,Y,Q,MR,Reported,metawin,N
+Hector,2012,Journal of Animal Ecology,Captive,Multilevel,d,-0.54,Y,I2,"SS,MR",Reported,,Y
+Kroeker,2013,Global Change Biology,Captive,Random,lnRR,-0.112,Y,Q,"SS,MR",Reported,metawin,N
+Lively,2004,American Naturalist,Captive,Random,d,2.898,Y,Q,SS,Reported,metawin,
+Bancroft,2007,Ecology Letters,Captive?,Random,d,-1.225,Y,Q,SS,Reported,metawin,
+Hasselquist,2012,Animal Behaviour,Captive?,Random,d,0.31,Y,Q,,Reported,,
+Jarosik,2002,American Naturalist,Captive?,,beta,0.00135,N,Q,,Reported,,
+Kroeker,2010,Ecology Letters,Captive?,Random,lnRR,-0.131,Y,Q,"SS,MR",Reported,,N
+Lambrechts,2009,Proceedings of the Royal Society B,Captive?,Random,Zr,0.099,Y,Q,MR,Reported,metawin,N
+Mèller,1999,Proceedings of the Royal Society B,Captive?,Fixed,Zr,0.1226,Y,Q,SS,Reported,,
+Poulin,1994,Animal Behaviour,Captive?,Random,d,0.523,Y,Q,MR,Reported,,N
+Ban,2014,Global Change Biology,Mix,Random,d,-0.332,Y,I2,MR,Reported,metafor,Y
+Bell,2009,Animal Behaviour,Mix,Fixed,mean,0.37,Y,Q,MR,Reported,metawin,N
+Britten,1996,Evolution,Mix,Random,Zr,0.181,Y,Q,SS,Reported,,
+Castro-Diez,2014,Ecology Letters,Mix,Random,d,0.63,Y,Q,SS,Reported,,
+Chapman,2009,Molecular Ecology,Mix,Multilevel,Zr,0.08,N,Q,MR,Reported,nlme,Y
+Coltman,2003,Evolution,Mix,Random,Zr,0.0274,Y,Q,SS,Reported,,
+Garamszegi,2013,Behavioral Ecology,Mix,Random,Zr,0.211,Y,I2,MR,Reported,MCMCglmm,Y
+Gruner,2008,Ecology Letters,Mix,Fixed,lnRR,1.26,Y,Q,MR,Reported,,N
+Hovick,2014,Ecology Letters,Mix,Random,d,0.136,N,I2,MR,Reported,metafor,N
+Jones,2009,American Naturalist,Mix,Multilevel,Zr,-0.006,N,Q,"SS,MR",Reported,nlme,Y
+Kamiya,2014,Molecular Ecology,Mix,Multilevel,Zr,0.113,N,I2,MR,Reported,MCMCglmm,Y
+Kamiya,2014,Ecography,Mix,Random,Zr,0.618,Y,I2,MR,Reported,nlme,Y
+Lim,2014,Evolution,Mix,Multilevel,Zr,0.641,Y,I2,"SS,MR",Reported,MCMCglmm,N
+Loydi,2013,Journal of Ecology,Mix,Random,d,0.043,N,Q,SS,Reported,metawin,
+Meisner,2014,Biological Invasions,Mix,Random,d,-0.008,N,Q,SS,Reported,metawin,
+Nakagawa,2007,Behavioral Ecology,Mix,Random,Zr,0.093,Y,Q,,Reported,nlme,
+Oduor,2013,New Phytologist,Mix,Random,lnRR,1.21,Y,Q,MR,Reported,metawin,N
+Roberts,2004,Animal Behaviour,Mix,Fixed,d,0.239,Y,Q,MR,Reported,metawin,N
+Romero,2011,Journal of Animal Ecology,Mix,Random,lnRR,0.28,Y,Q,MR,Reported,metawin,N
+Santos,2011,Animal Behaviour,Mix,Multilevel,Zr,0.376,Y,Q,MR,Reported,nlme,Y
+Schino,2001,Animal Behaviour,Mix,Fixed,r,0.329,Y,Q,SS,Reported,metawin,
+Schino,2004,Behavioral Ecology,Mix,Random,r,0.0098,N,Q,MR,Reported,metawin,N
+Sheldon,2004,American Naturalist,Mix,Random,Zr,0.09,Y,Q,MR,Reported,metawin,N
+Simons,2011,Behavioral Ecology,Mix,Random,Zr,0.28,Y,Q,MR,Reported,metafor,Y
+Smith,2008,Behavioral Ecology,Mix,Random,r,0.1,Y,I2,SS,Reported,Meta-analysis programs 5.3,
+Stankowich,2005,Proceedings of the Royal Society B,Mix,Random,r,0.38,Y,I2,SS,Reported,Meta-Analysis,
+Stankowich,2008,Biological Conservation,Mix,Random,r,0.13,Y,I2,,Reported,Meta-Analysis,
+Beauchamp,2008,Behavioral Ecology,Mix?,Fixed,Zr,-0.42,Y,Q,MR,Reported,,N
+Cadotte,2006,American Naturalist,Mix?,Random,d,1.153,Y,Q,SS,Reported,,
+Cameron,1998,Animal Behaviour,Mix?,Random?,r,0.24,Y,Q,SS,Reported,,
+Cameron,2004,Proceedings of the Royal Society B,Mix?,Random,r,0.0027,Y,Q,SS,Reported,meta,
+Englund,2011,Ecology Letters,Mix?,Fixed,d,0.614,Y,Q,MR,Reported,metawin,N
+Ewen,2004,Proceedings of the Royal Society B,Mix?,Random,Zr,0.01,N,Q,SS,Reported,SAS,
+Gontard-Danek,1999,Behavioral Ecology,Mix?,Fixed,Zr,0.3095,Y,Q,MR,Reported,,Y
+Gripenberg,2010,Ecology Letters,Mix?,Random,d,0.729,Y,Q,MR,Reported,metawin,N
+Jiang,2013,American Naturalist,Mix?,Random,Zr,0.2877,Y,Q,MR,Reported,metafor,N
+Kraaijeveld,2007,Animal Behaviour,Mix?,Random,Zr,0.28,Y,Q,MR,Reported,metawin,N
+Mèller,1998,American Naturalist,Mix?,Fixed,Zr,-0.4477,Y,Q,SS,Reported,,
+Mèller,1999,Ecology Letters,Mix?,Fixed,Zr,-0.2533,Y,Q,SS,Reported,,
+Rifkin,2012,American Naturalist,Mix?,Random,d,0.187,Y,Q,MR,Reported,Comprehensive Meta Analysis,N
+Slate,2003,Molecular Ecology,Mix?,Fixed,Zr,0.052,Y,Q,,Reported,In House,
+Waring,2013,Ecology Letters,Mix?,Random,RR,7.5,N,Q,"SS,MR",Reported,,Y
+Winternitz,2014,Proceedings of the Royal Society B,Mix?,Random,Zr,0.22,N,I2,MR,Reported,metafor,Y
+Aslan,2012,Conservation Biology,Wild,Random,lnRR,-0.566,N,Q,MR,Reported,metawin,N
+Attwood,2008,Global Ecology and Biogeography,Wild,Random,d,0.46,Y,Q,SS,Reported,metawin,
+Bai,2013,New Phytologist,Wild,Fixed,lnRR,0.179,Y,Q,MR,Reported,metawin,N
+Barbosa,2009,"Annual Review of Ecology, Evolution, and Systematics",Wild,Random,d,-0.6765,Y,Q,MR,Reported,metawin,N
+Benêtez-L‹pez,2010,Biological Conservation,Wild,Random,mean,0.6777,Y,I2,MR,Reported,metafor,Y
+Blackburn,2006,Journal of Animal Ecology,Wild,Random,Zr,0.655,Y,Q,MR,Reported,SAS,N
+Blanchet,2010,Evolutionary Applications,Wild,Fixed?,d,-1.981,Y,Q,SS,Reported,metawin,
+Bonardi,2011,Biological Conservation,Wild,Random,Zr,-1.32,Y,Q,,Reported,metafor,
+Branton,2011,Conservation Biology,Wild,Random,d,6,Y,Q,SS,Reported,metawin,
+Cassey,2005,Journal of Animal Ecology,Wild,Random,Zr,0.04,Y,Q,SS,Reported,SAS,
+Claudet,2008,Ecology Letters,Wild,Multilevel,lnRR,0.8,N,Q,MR,Reported,,Y
+Comita,2014,Journal of Ecology,Wild,Random,lnOR,-0.43,Y,Q,"SS,MR",Reported,metafor,N
+Cote,1997,Conservation Biology,Wild,Fixed,d,0.676,Y,Q,MR,Reported,,N
+Dolman,1997,Journal of Animal Ecology,Wild,Fixed,Zr,0.583,Y,Q,MR,Reported,,N
+Ebensperger,2012,Journal of Animal Ecology,Wild,Random,r,0.074,Y,I2,MR,Reported,metawin,N
+Garcia-Palacios,2013,Ecology Letters,Wild,Fixed?,lnRR,-0.398,Y,Q,MR,Reported,metawin,N
+Gardner,2009,Proceedings of the Royal Society B,Wild,Random,Zr,0.282,Y,Q,MR,Reported,metawin,N
+Gomez-Aparicio,2009,Journal of Ecology,Wild,Random,lnOR,0.136,N,Q,MR,Reported,metawin,N
+Grace,2007,Ecology Letters,Wild,Random,Zr,0.929,N,Q,,Reported,metawin,
+Gurevitch,1992,American Naturalist,Wild,Random,d,0.8,Y,Q,MR,Reported,,N
+Gurevitch,2000,American Naturalist,Wild,Fixed,d,0.115,Y,Q,MR,Reported,,N
+Hillebrand,2004,American Naturalist,Wild,Fixed?,Zr,-0.729,Y,Q,"SS,MR",Reported,metawin,N
+Kinnear,2002,Biological Conservation,Wild,Fixed,d,NA,Y,Q,,Reported,Mathcad,
+Lewinsohn,2008,Ecology Letters,Wild,Fixed,Zr,0.6328,Y,Q,SS,Reported,metawin,
+Lyons,2014,Global Change Biology,Wild,Random,d,-0.489,Y,Q,SS,Reported,metafor,
+Maestre,2005,Journal of Ecology,Wild,Random,lnOR,NA,N,Q,SS,Reported,metawin,
+Marklein,2012,New Phytologist,Wild,Random,lnRR,1.46,Y,Q,"t-test, LMM",Reported,,
+Monkkonen,2007,Journal of Animal Ecology,Wild,Random,Zr,-0.174,Y,Q,,Reported,metawin,
+Montero-Castano,2012,Journal of Ecology,Wild,Random,d,-0.61,Y,Q,"SS,MR",Reported,metawin,N
+Moore,2004,American Naturalist,Wild,Random,d,1.3,?,Q,,Reported,metawin,
+Mosqueira,2000,Animal Conservation,Wild,Random,lnRR,3.72,Y,Q,SS,Reported,metawin,
+Munguia-Rosas,2011,Ecology Letters,Wild,Random,Zr,-0.134,N,Q,MR,Reported,Phylometa,N
+Newton,2009,Biological Conservation,Wild,Random,RR,1.19,Y,Q,SS,Reported,,
+Oduor,2010,Biological Invasions,Wild,Fixed,d,-0.1187,Y,Q,MR,Reported,metawin,N
+Ordonez,2014,Global Ecology and Biogeography,Wild,Random,lnRR,-0.018,N,Q,SS,Reported,nlme,
+Osenberg,2002,Ecology Letters,Wild,Random,beta,0.00013,Y,Q,,Reported,metawin,
+Paillet,2010,Conservation Biology,Wild,Random,d,-0.24,Y,Q,,Reported,metawin,
+Prior,2014,Biological Invasions,Wild,Random,d,0.73,Y,Q,SS,Reported,metawin,
+Ruggiero,2007,Global Ecology and Biogeography,Wild,Fixed?,Zr,0.3109,Y,Q,MR,Reported,metawin,N
+Rytwinski,2012,Biological Conservation,Wild,Random,Zr,-0.077,Y,Q,MR,Reported,metafor,Y
+Salkeld,2013,Ecology Letters,Wild,Random,Zr,-0.2301,N,Q,SS,Reported,meta,
+Shafer,2013,Ecology Letters,Wild,Multilevel,Zr,0.34,Y,I2,MR,Reported,MCMCglmm,Y
+Skau,2005,Behavioral Ecology,Wild,Random?,d,0.41,Y,Q,SS,Reported,METADOS,
+Smith,2010,Conservation Biology,Wild,Random,d,0.547904,Y,Q,MR,Reported,metawin,N
+Smith,2011,Biological Conservation,Wild,Random,d,1.59338,Y,Q,MR,Reported,metawin / metareg,Y
+Soma,2011,Behavioral Ecology,Wild,Random,Zr,0.245,Y,Q,MR,Reported,metafor,Y
+Stahlheber,2013,Biological Conservation,Wild,Fixed,lnRR,0.325,Y,Q,MR,Reported,metafor & metwin,Y
+Stein,2014,Ecology Letters,Wild,Random,Zr,0.63,Y,Tau,MR,Reported,,Y
+Stewart,2005,Biological Conservation,Wild,Random,d,1.628,N,Q,MR,Reported,StatsDirect,Y
+Stewart,2009,Conservation Letters,Wild,Random,d,0.293,Y,Q,MR,Reported,,N
+Timonen,2011,Biological Conservation,Wild,Random,Zr,0.37,Y,Q,MR,Reported,metawin,N
+Treseder,2004,New Phytologist,Wild,Random,lnRR,-0.165,Y,Q,MR,Reported,metawin,N
+Treseder,2008,Ecology Letters,Wild,Random,lnRR,-0.167,Y,Q,MR,Reported,metawin,N
+Vetter,2013,Biological Conservation,Wild,Random,lnOR,0.998,N,I2,SS,Reported,metafor,
+Vila,2011,Ecology Letters,Wild,Random,d,NA,Y,Q,MR,Reported,metawin,N
+Whitlock,2014,Journal of Ecology,Wild,Multilevel,d,0.178,Y,I2,MR,Reported,MCMCglmm,N
+Aguilar,2006,Ecology Letters,Wild?,Random,d,-0.608,Y,Q,MR,Reported,metawin,N
+Barto,2010,Journal of Ecology,Wild?,Random,d,-2.96,Y,Q,MR,Reported,meta,N
+Claudet,2010,Biological Conservation,Wild?,Random,lnRR,-2.8,,Q,,Reported,,
+Cote,1995,Behavioral Ecology,Wild?,Fixed,r,0.091,N,Q,MR,Reported,,N
+Durrant,2014,Conservation Biology,Wild?,Random,r,0.6249,Y,Q,SS,Reported,metawin,
+Fiske,1998,Behavioral Ecology,Wild?,Fixed,r,0.27,Y,Q,,Reported,,
+Griffin,2005,American Naturalist,Wild?,Random,Zr,0.17,N,Q,,Reported,metawin,
+Liu,2014,Global Change Biology,Wild?,Fixed,lnRR,0.12,Y,Q,"Regression, ANOVA",Reported,In House,N
+McKechnie,2013,Biological Conservation,Wild?,Random,d,-0.356,Y,Q,SS,Reported,meta,
+Molloy,2008,Biological Conservation,Wild?,Random,lnRR,1.34,N,Q,,Reported,metawin,
+Poulsen,2007,American Naturalist,Wild?,Random,beta,0.022,Y,Q,,Reported,metawin,
+Prugh,2014,Journal of Animal Ecology,Wild?,Random,Zr,-0.28,Y,Q,MR,Reported,metafor,Y
+van Kleunen,2010,Ecology Letters,Wild?,Random,d,0.777,Y,Q,MR,Reported,metawin,N
+Zvereva,2014,Journal of Ecology,Wild?,Fixed?,d,-0.84,Y,Q,MR,Reported,metawin,N
+Adams,2008,Evolution,,Fixed,Zr,0.0665,N,,SS,SubSet.Data.But.Unclear,metawin,
+Aerts,2006,Journal of Ecology,,Fixed?,d,0.29,Y,,SS,SubSet.Data.But.Unclear,,
+Aguilar,2008,Molecular Ecology,,Random,d,-0.307,Y,,MR,Significant.MR,metawin,N
+Ainsworth,2002,Global Change Biology,,Random,lnRR,0.313,Y,,MR,Significant.MR,metawin,N
+Ainsworth,2005,New Phytologist,,Random,lnRR,0.271,Y,,MR,Significant.MR,metawin,N
+Ainsworth,2008,Global Change Biology,,Random,lnRR,0.302,Y,,MR,Significant.MR,metawin,N
+Akiyama,2010,Global Change Biology,,Fixed?,lnRR,-0.478,Y,,SS,SubSet.Data.But.Unclear,metawin,
+Alberton,2005,New Phytologist,,Random,RR,1.21,Y,,MR,Significant.MR,metawin,N
+Anderegg,2014,New Phytologist,,Fixed,CV,0.52,Y,,ANOVA,Significant.MR,metafor,N
+Anderson,2013,Methods in Ecology and Evolution,,Random,beta,1.359,Y,,,No.Mention,,
+Angeloni,2011,Biological Conservation,,Random,Zr,0.2409,Y,,MR,Significant.MR,metawin,N
+Arft,1999,Ecological Monographs,,Random,d,0.375,Y,,MR,Significant.MR,metawin,N
+Arnqvist,2000,Animal Behaviour,,Random,RR,1.17,Y,,MR,Significant.MR,metawin,N
+Ashton,2002,Global Ecology and Biogeography,,Fixed,r,0.32,Y,,MR,Non.Significant.MR,,N
+Ashton,2003,Evolution,,Fixed,r,-0.59,Y,,MR,Non.Significant.MR,,N
+Ban,2014,Biological Conservation,,Random,RR,0.983,Y,,,State.Variance.Is.High,metawin,
+Barcena,2014,Global Change Biology,,Random,lnRR,NA,,Q,MR,Significant.MR,metafor,Y
+Barron,2010,Methods in Ecology and Evolution,,Random,Zr,-0.27,Y,,MR,Significant.MR,metawin,N
+Barton,2010,American Naturalist,,Random,d,-3.37736,Y,,MR,Significant.MR,metawin,N
+Batary,2004,Conservation Biology,,Random,Zr,0.153969,Y,,SS,SubSet.Data.But.Unclear,metawin,
+Batary,2011,Proceedings of the Royal Society B,,Random,d,NA,,,MR,Non.Significant.MR,metawin,N
+Baum,2009,Journal of Animal Ecology,,Random,r,0.0100559,N,,,No.Mention,,
+Bertheau,2010,Ecology Letters,,Random,d,-0.61,Y,,MR,Significant.MR,metawin,N
+Blackburn,2009,Global Change Biology,,,Zr,0.111,Y,,MR,Significant.MR,SAS,N
+Blenckner,2002,Global Change Biology,,Random,Zr,-0.383,Y,,MR,Significant.MR,metawin,N
+Blenckner,2007,Global Change Biology,,Random,Zr,0.766,Y,,SS,SubSet.Data.But.Unclear,metawin,
+Briones,2007,Global Change Biology,,Fixed,mean,9.459,?,,MR,Significant.MR,metawin,N
+Brotons,2003,American Naturalist,,Random,Zr,0.005,N,,MR,Significant.MR,metawin,N
+Busch,2004,Evolution,,Fixed?,Zr,0.2537,Y,,,No.Mention,metawin,
+Charmantier,2005,Proceedings of the Royal Society B,,Random,Zr,0.0221,Y,,MR,Non.Significant.MR,metawin,N
+Chisholm,2013,Journal of Ecology,,Fixed,beta,0.613,Y,,SS,SubSet.Data.But.Unclear,,
+Chun,2010,Ecology Letters,,Random,lnRR,-0.381,N,,MR,Significant.MR,metawin,N
+Clark CJ,2007,American Naturalist,,Random,d,0.15,Y,,MR,Significant.MR,metawin,N
+Coomes,2009,Journal of Ecology,,Fixed,exponent,0.47,Y,,,No.Mention,rmeta,
+Cornwell,2008,Ecology Letters,,Random,r,0.574,Y,,SS,SubSet.Data.But.Unclear,metawin,
+Crain,2008,Ecology Letters,,Fixed,d,-0.18,Y,,SS,SubSet.Data.But.Unclear,Excel,
+Daufresne,2007,Global Change Biology,,Fixed,beta,0.036,Y,,MR,Significant.MR,LMM,N
+Davey,2004,Plant Physiology,,Random,lnRR,1.11,Y,,,No.Mention,metawin,
+Davidson,2011,Ecology Letters,,Random,d,0.668,Y,,MR,Significant.MR,metawin,N
+Dawson ,2011,Global Ecology and Biogeography,,Multilevel,mean,0.007,N,,MR,Significant.MR,MCMCglmm,Y
+de Graaff,2006,Global Change Biology,,Fixed,lnRR,0.195,Y,,ANOVA,Significant.MR,metawin,N
+Drakare,2006,Ecology Letters,,Random,Zr,0.726,Y,,MR,Significant.MR,,N
+Edwards,2010,Ecology Letters,,Fixed,lnRR,0.667,Y,,MR,Significant.MR,,Y
+Ekl_f,2012,Ecology Letters,,Random,lnRR,-1.08,Y,,MR,Non.Significant.MR,metawin,N
+Englund,2007,Journal of Animal Ecology,,Random,d,-0.39,Y,,MR,Significant.MR,metawin,N
+Feng,2008,Global Change Biology,,Fixed?,lnRR,0.333,Y,,MR,Non.Significant.MR,metawin,N
+Fernadez-Douque,1994,Conservation Biology,,Fixed,d,0.59,Y,,,No.Mention,,
+Ferretti,2008,Conservation Biology,,Fixed,beta,-0.17,Y,,,No.Mention,,
+Floeter,2007,Journal of Animal Ecology,,Fixed,Zr,-0.15,Y,,MR,Non.Significant.MR,metawin,N
+Freschet,2013,Journal of Ecology,,Random,Zr,0.81,Y,,SS,SubSet.Data.But.Unclear,metawin,
+Friesen,2012,New Phytologist,,,Zr,0.83,Y,,,No.Mention,,
+Gaertner,2014,Diversity and Distributions,,,lnRR,-1.352,N,,,State.Variance.Is.High,metafor,
+Garamszegi,2004,Behavioral Ecology,,Random,d,0.245,N,,SS,SubSet.Data.But.Unclear,,
+Garcia-Morales,2013,Conservation Biology,,,lnOR,0.627,Y,,SS,SubSet.Data.But.Unclear,metawin,
+Gilbert-Norton,2010,Conservation Biology,,Random,d,0.48,Y,,MR,Significant.MR,,Y
+Griffith,2006,Animal Behaviour,,Random,Zr,0.33,Y,,MR,Non.Significant.MR,metawin,N
+Gundel,2013,Trends in Plant Science,,Random,d,2.025,Y,,MR,Significant.MR,metawin,N
+Haddad,2014,Conservation Biology,,,d,-0.11,N,,,Discuss.Qualitatively,,
+Halaj,2001,American Naturalist,,Random,d,0.77,Y,,SS,SubSet.Data.But.Unclear,metawin,
+Hartway,2012,Conservation Biology,,Random,d,0.514,Y,,MR,Significant.MR,metawin,N
+Hawkes,2007,American Naturalist,,Random,lnRR,0.244,Y,,MR,Significant.MR,SPSS,Y
+He,2013,Ecology Letters,,Random,d,0.62,Y,,MR,Significant.MR,metafor,N
+He,2014,New Phytologist,,Random,lnRR,-3.37,Y,,MR,Significant.MR,metawin,N
+Hillebrand,2001,Ecography,,Random,Zr,-0.788,Y,Q,MR,Significant.MR,metawin,N
+Hillebrand,2004,Ecology Letters,,Random,lnRR,-1.79,Y,Q,MR,Significant.MR,metawin,N
+Hillebrand,2005,Journal of Ecology,,Random,lnRR,NA,Y,Q,MR,Significant.MR,metawin,N
+Hirschenhauser,2006,Animal Behaviour,,Random,d,0.854,Y,Q,MR,Significant.MR,metawin,N
+Hoeksema,2008,American Naturalist,,Random,lnRR,0.117,N,Q,MR,Significant.MR,metawin,N
+Hoeksema,2010,Ecology Letters,,Random,lnRR,0.43,Y,,MR,Significant.MR,SAS,Y
+Hollander,2008,Evolution,,Random,d,0.5,Y,,MR,Significant.MR,metawin,N
+Hollister,2000,Global Change Biology,,Random,d,0.43,Y,,SS,SubSet.Data.But.Unclear,metawin,
+Honnay,2007,Conservation Biology,,Random,Zr,0.23,Y,Q,MR,Significant.MR,SPSS,N
+Horv_thov_,2012,Proceedings of the Royal Society B,,Multilevel,Zr,0.146,Y,I2,MR,Significant.MR,MCMCglmm,Y
+Hungate,2009,Global Change Biology,,Fixed?,lnRR,0.043,Y,,SS,SubSet.Data.But.Unclear,metawin,
+Hunt,2005,Ecology Letters,,Random,beta,-10.69,Y,,SS,SubSet.Data.But.Unclear,,
+Ibanez,2014,Journal of Ecology,,Random,diff,0,N,,SS,SubSet.Data.But.Unclear,,
+Ihle,2013,Behavioral Ecology,,Random,lnOR,-0.017,N,,SS,SubSet.Data.But.Unclear,rmeta,
+Jablonski,2002,New Phytologist,,Random,lnRR,0.233,Y,Q,MR,Significant.MR,metawin,N
+Jactel,2007,Ecology Letters,,Random,d,-0.67,Y,Q,MR,Significant.MR,metawin,N
+Jactel,2012,Global Change Biology,,Random,d,0.23,Y,Q,MR,Significant.MR,metawin,N
+Jaeggi,2014,Proceedings of the Royal Society B,,Random,Zr,0.2,Y,Q,MR,Significant.MR,meta,N
+Jandov_,2014,Biological Invasions,,Fixed?,d,NA,,,SS,SubSet.Data.But.Unclear,metafor,
+Jastrow,2005,Global Change Biology,,Fixed?,lnRR,0.05,Y,,,No.Mention,metawin,
+Jiang,2009,American Naturalist,,Random,Zr,-0.277,Y,,MR,Significant.MR,metawin,N
+Johansson,2008,Biological Conservation,,,d,-1.08,Y,,SS,SubSet.Data.But.Unclear,metawin,
+Jones,2008,Conservation Biology,,Fixed,d,0.347,Y,,MR,Significant.MR,metawin,N
+Kaplan,2007,Ecology Letters,,Random,d,-0.5398,Y,Q,MR,Significant.MR,metawin,N
+Karban,2014,Ecology Letters,,Multilevel,lnRR,-0.31,Y,,MR,Non.Significant.MR,MCMCglmm,Y
+Kiaer,2013,Journal of Ecology,,Random,lnRR,0.798,Y,,MR,Significant.MR,metafor,Y
+Knight,2005,"Annual Review of Ecology, Evolution, and Systematics",,Random,lnRR,0.52,Y,,MR,Significant.MR,metawin,N
+Knight,2006,Ecology Letters,,Random,lnRR,-0.22,Y,,,No.Mention,metawin,
+Korallo-Vinarskaya,2013,Ecography,,Random,d,-0.06,N,,,No.Mention,Comprehensive Meta Analysis,
+Koricheva,2004,American Naturalist,,Random,Zr,0.235,N,Q,MR,Significant.MR,metawin,N
+Krasnov,2013,Ecography,,Random,beta,-0.24,Y,,MR,Significant.MR,Comprehensive Meta Analysis,N
+Krkosek,2013,Proceedings of the Royal Society B,,Random,lnOR,0.11,Y,,,No.Mention,rmeta,
+Kulmatiski,2008,Ecology Letters,,Multilevel,d,-0.75,Y,Q,MR,Significant.MR,metahdep,N
+Laganiere,2010,Global Change Biology,,Random,d,NA,,,SS,SubSet.Data.But.Unclear,SAS,
+Laliberte,2010,Ecology Letters,,Random,Zr,-0.286,Y,,SS,SubSet.Data.But.Unclear,metacor,
+Lam,2012,Global Change Biology,,Fixed,lnRR,0.153,Y,,MR,Significant.MR,metawin,N
+Lamarque,2011,Biological Invasions,,Random,d,0.5945,Y,Q,MR,Significant.MR,metawin,N
+Lampila,2005,Conservation Biology,,Random,Zr,-0.18,Y,Q,MR,Significant.MR,metawin,N
+Leimu,2006,Journal of Ecology,,Random,Zr,0.4465,Y,,MR,Significant.MR,metawin,N
+Leimu ,2006,American Naturalist,,Random,Zr,0.0923,Y,,MR,Significant.MR,metawin,N
+Letourneau,2009,"Annual Review of Ecology, Evolution, and Systematics",,Random,d,-0.523,Y,,MR,Significant.MR,metawin,N
+Levine,2004,Ecology Letters,,Random,d,0.94,Y,,MR,Significant.MR,,N
+Liao,2008,New Phytologist,,Fixed,lnRR,-1.1332,Y,,T.Test,Significant.MR,,N
+Liao,2012,Global Ecology and Biogeography,,Fixed,lnRR,-1.1712,Y,,SS,SubSet.Data.But.Unclear,,
+Lin ,2010,New Phytologist,,,lnRR,0.116,Y,,MR,Significant.MR,metawin,N
+Linquist,2012,Global Change Biology,,Fixed?,mean,NA,,,,No.Mention,metawin,
+Lira-Noriega,2014,Evolution,,,Zr,-0.042,N,,MR,Significant.MR,,N
+Liu,2006,Biological Invasions,,,d,-0.37,N,,,No.Mention,,
+Liu,2009,Ecology Letters,,Random,lnRR,1.1675,Y,,MR,Significant.MR,SAS,N
+Liu,2010,Ecology Letters,,Random,lnRR,-0.0356,N,,SS,SubSet.Data.But.Unclear,metawin,
+Long,2004,Annual Review of Plant Biology,,Random,lnOR,0.3221,Y,,SS,SubSet.Data.But.Unclear,metawin,
+Lusk,2007,New Phytologist,,Fixed,Zr,-0.356,Y,Q,MR,Significant.MR,,Y
+Magrach,2014,Conservation Biology,,Random,d,0.192,N,Q,MR,Significant.MR,metawin,N
+Maherali,2014,New Phytologist,,Random,lnRR,-1.3471,N,,SS,SubSet.Data.But.Unclear,,
+Mantzouni,2010,Proceedings of the Royal Society B,,Random,Zr,0.16,N,,,No.Mention,Excel,
+Manuel Rodriguez-Llanes,2009,Animal Behaviour,,Random,Zr,0.382,Y,,MR,Significant.MR,Comprehensive Meta Analysis,N
+Markl,2012,Conservation Biology,,Random,d,-0.989,Y,Q,MR,Significant.MR,metafor,N
+Martinson,2014,Ecology Letters,,,lnRR,-0.1786,Y,,MR,Significant.MR,nlme,Y
+McCall,2010,Journal of Ecology,,Random,d,1.378,Y,Q,MR,Significant.MR,metawin,N
+Medlyn,2001,New Phytologist,,Random,lnRR,-0.1508,Y,,MR,Significant.MR,metawin,N
+Meissner,2006,Journal of Animal Ecology,,Random,d,-0.665,Y,,MR,Significant.MR,metawin,N
+Mèller,2005,Animal Behaviour,,Random,Zr,-0.318,N,,MR,Significant.MR,metawin,N
+Meunier,2008,Behavioral Ecology,,Random,Zr,0.2268,Y,,ANOVA,Significant.MR,metawin,N
+Morales,2009,Ecology Letters,,Random,d,-0.326,Y,,MR,Significant.MR,metawin,N
+Mori,2013,Biological Conservation,,Random,d,0.182,N,,MR,Significant.MR,metawin,N
+Morissey,2012,Evolution,,Random,beta,0.053,Y,Sigma,,Reported,MCMCglmm,
+Myers,2009,Ecology Letters,,Random,d,1.212,Y,,MR,Significant.MR,metawin,N
+Naya,2008,American Naturalist,,Random,d,0.748,Y,,MR,Significant.MR,metawin,N
+Newsham,2009,Global Change Biology,,,lnRR,1.017,Y,,MR,Significant.MR,metawin,N
+Newsham,2011,New Phytologist,,Random,d,0.317,Y,,MR,Significant.MR,metawin,N
+Nie,2013,Global Ecology and Biogeography,,Fixed,lnRR,0.259,Y,,SS,SubSet.Data.But.Unclear,,
+Ogle,2014,Journal of Ecology,,Random,mean,1.175,N,Sigma,,Reported,OpenBUGS,
+Ohsowski,2014,New Phytologist,,Random,proportion,30.669,Y,,SS,SubSet.Data.But.Unclear,metafor,
+Ord,2009,American Naturalist,,Fixed?,r,0.25,Y,,SS,SubSet.Data.But.Unclear,,
+Ord,2011,Evolution,,Random,r,0.36,Y,,SS,SubSet.Data.But.Unclear,metafor,
+Ordonez,2013,Global Ecology and Biogeography,,Random,lnRR,0.105,Y,,MR,Significant.MR,nlme,Y
+Parker,2005,Conservation Biology,,Random,Zr,0.27,Y,,SS,SubSet.Data.But.Unclear,metawin,
+Parker,2006,Behavioral Ecology,,Random,Zr,0.1,Y,,SS,SubSet.Data.But.Unclear,metawin,
+Parr,2012,Journal of Animal Ecology,,Fixed?,Zr,-0.085,N,,SS,SubSet.Data.But.Unclear,,
+Petrin,2008,Proceedings of the Royal Society B,,Random,beta,6.66,Y,,MR,Significant.MR,MiMa,Y
+Philpott,2008,Conservation Biology,,Random,Zr,0.243,Y,,MR,Significant.MR,metawin,N
+Pisanski,2014,Animal Behaviour,,Fixed?,Zr,-0.1,Y,,MR,Non.Significant.MR,,Y
+Poissant,2010,Evolution,,Random,r,-0.12,Y,Q,,State.Non.Significant,MiMa,
+Preisser,2009,Ecology Letters,,Random,RR,0.924,Y,,SS,SubSet.Data.But.Unclear,metawin,
+Prevedello,2013,Journal of Animal Ecology,,Random,RR,1.55,Y,,MR,Significant.MR,metafor,Y
+Prieto-Benitez,2011,Biological Conservation,,Random,d,0.5,Y,,SS,SubSet.Data.But.Unclear,metawin,
+Prokop,2012,Evolution,,Random,Zr,0.06,N,,MR,Significant.MR,MCMCglmm,Y
+Robinson,2012,New Phytologist,,Random,lnRR,0.278,Y,,MR,Significant.MR,metawin,N
+Rodriguez-Castaneda,2013,Global Change Biology,,,lnRR,NA,,,MR,Significant.MR,,Y
+Rosas-Guerrero,2014,Ecology Letters,,Random,d,0.609,Y,,MR,Significant.MR,metawin,N
+Saikkonen,2006,Trends in Plant Science,,Random,Zr,0.372,Y,,MR,Significant.MR,metawin,N
+Salo,2007,Proceedings of the Royal Society B,,Random,d,1.562,Y,,MR,Significant.MR,metawin,N
+Schaeffer,2013,Ecology Letters,,Random,lnRR,NA,,,MR,Significant.MR,metawin,N
+Scheper,2013,Ecology Letters,,Random,d,0.88,Y,,MR,Significant.MR,metawin,N
+Schino,2007,Behavioral Ecology,,Random,r,0.154,Y,,SS,SubSet.Data.But.Unclear,metawin,
+Schino,2010,Ecology Letters,,Random,Zr,0.709,Y,,SS,SubSet.Data.But.Unclear,Stata,
+Schmitz,2000,American Naturalist,,Random,lnRR,0.49,Y,,MR,Significant.MR,metawin,N
+Shuker,2004,Animal Behaviour,,Fixed?,r,-0.056,N,,,No.Mention,metawin,
+Siepielski,2013,Ecology Letters,,,beta,NA,,Sigma,,Reported,,
+Sirami,2008,Biological Conservation,,Random,Zr,0.05,Y,,MR,Significant.MR,metawin,N
+Skau,2003,Behavioral Ecology,,Fixed,Zr,0.2,Y,,,State.Non.Significant,In House,
+Sorte,2013,Ecology Letters,,Random,RR,NA,,,MR,Significant.MR,metafor,N
+Sridhar,2009,Animal Behaviour,,Random,d,0.44,Y,,MR,Significant.MR,metawin,N
+Stiling,2007,Global Change Biology,,Random,lnRR,0.037,Y,,MR,Significant.MR,metawin,N
+Strain,2014,Global Change Biology,,Random,d,NA,,,MR,Significant.MR,metafor,Y
+Teder,2014,Evolution,,Random,Zr,-0.65,Y,,SS,SubSet.Data.But.Unclear,metacor,
+Thebault,2014,Journal of Ecology,,Random,lnRR,0.062,Y,,MR,Significant.MR,metawin,N
+Thomas,2007,Trends in Ecology and Evolution,,Random,Zr,-0.556,Y,,SS,SubSet.Data.But.Unclear,metawin,
+Thornhill,1998,Behavioral Ecology,,Fixed,Zr,0.193,Y,,MR,Significant.MR,,N
+Thornton,2014,Ecography,,Multilevel,Zr,0.21,Y,,MR,Non.Significant.MR,metafor,N
+Toth,2007,Journal of Ecology,,Fixed,d,-0.489,Y,,MR,Significant.MR,metawin,N
+Tripler,2006,Ecology Letters,,Fixed?,d,0.561,Y,,SS,SubSet.Data.But.Unclear,Comprehensive Meta Analysis,
+Valkama,2007,Global Change Biology,,Random,lnRR,0.0043,N,,MR,Significant.MR,metawin,N
+Valkama,2008,Biological Conservation,,Random,lnRR,-0.223,Y,,MR,Significant.MR,metawin,N
+Van Buskirk,2004,Conservation Biology,,Random,d,0.428,Y,,MR,Significant.MR,metawin,N
+van Hengstum,2014,Journal of Ecology,,Random,d,-0.62,Y,,MR,Significant.MR,SPSS,N
+van Kessel,2013,Global Change Biology,,Fixed,RR,1.01,N,,SS,SubSet.Data.But.Unclear,metawin,
+van Wijk,2004,Global Change Biology,,Random,lnRR,0.61,Y,,,No.Mention,,
+Van Zandt,1998,American Naturalist,,Random,lnRR,-0.264,Y,,MR,Significant.MR,metawin,N
+Verdu,2012,Proceedings of the Royal Society B,,Multilevel,lnOR,0.42,Y,,MR,Significant.MR,MCMCglmm,Y
+Vranckx,2012,Conservation Biology,,Random,r,NA,Y,,MR,Significant.MR,metawin,N
+Wand,1999,Global Change Biology,,Random,lnRR,0.362,Y,,MR,Significant.MR,metawin,N
+Wang,2014,Global Change Biology,,Random,lnRR,1.12,Y,,MR,Significant.MR,metawin,N
+Ward,2007,Global Change Biology,,Fixed,lnRR,0.237,Y,,MR,Significant.MR,,N
+Weedon,2009,Ecology Letters,,Random,lnRR,0.84,Y,,T.Test,Significant.MR,,
+West,2005,Evolution,,Random,Zr,0.587,Y,,MR,Significant.MR,metawin,N
+While,2014,Ecography,,Multilevel,Zr,-0.29,N,,MR,Significant.MR,MCMCglmm,Y
+Williams,2009,Conservation Biology,,Fixed,r,0.026,Y,,,No.Mention,,
+Wittig,2009,Global Change Biology,,Random,lnRR,-3.408,N,,MR,Significant.MR,metawin,N
+Wu,2011,Global Change Biology,,Random,lnRR,0.239,Y,,MR,Significant.MR,metawin,N
+Xia,2008,New Phytologist,,Random,lnRR,0.429,Y,,MR,Significant.MR,metawin,N
+Xiong,1999,Journal of Ecology,,Fixed,d,-0.6,Y,,MR,Significant.MR,metawin,N
+Yendrek,2013,Global Change Biology,,Random,lnRR,NA,,,,No.Mention,metawin,
+Young,2013,Ecology Letters,,Random,r,0.05,N,,MR,Significant.MR,Comprehensive Meta Analysis,N
+Zhou,2014,Global Change Biology,,Fixed,lnRR,0.019,N,,MR,Significant.MR,In House,Y
+Zvereva,2006,Global Change Biology,,,d,0.103,N,,MR,Significant.MR,metawin,N
+Zvereva,2008,Global Ecology and Biogeography,,Random,Zr,-0.713,Y,,MR,Significant.MR,metawin,N
