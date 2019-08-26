@@ -8,7 +8,7 @@
 
 # Input from:
 #
-# Nicholas P. Moran
+# Nicholas P. Moran (@NickMoranPinCER)
 # Profile: https://www.researchgate.net/profile/Nicholas_Moran
 # Department of Evolutionary Biology, Bielefeld University (GER) 
 # Email: nicholaspatrickmoran@gmail.com
@@ -27,8 +27,8 @@
 # Alfredo Sanchez-Tojar and Nicholas P. Moran did a pilot 
 # re-extraction of some of the studies in Jan 2019. This
 # pilot re-extraction revealed some inconsistencies. Thus,
-# we decided to double-check and re-extract the all the 
-# raw data used in that study
+# we decided to double-check and re-extract all the raw
+# data used in that study
 
 # This script was originally designed with the idea that we
 # did not need to double-check all the raw data, which explains
@@ -59,7 +59,7 @@ rm(list=ls())
 # none
 
 ##############################################################
-# Assigning re-extracting efforts
+# Assigning re-extracting efforts among observers
 ##############################################################
 
 #####################
@@ -70,7 +70,7 @@ pilot <- read.xlsx("data_re-extraction/re-extracted/re-extracing_data_Eyck_early
                    colNames=T,sheet = 2)
 
 
-# study ID of studies re-extracted so far
+# studyID of studies re-extracted so far
 rextracted <- sort(unique(pilot$studyID))
 
 
@@ -78,8 +78,8 @@ rextracted <- sort(unique(pilot$studyID))
 stress.red <- read.xlsx("data/EyckDev.stress_Data_FULL_TABLE.xlsx",
                         colNames=T,sheet = 1)
 
-# identifying if we re-extracted any study that is not
-# included in the final dataset that we will re-analyse
+# identifying if we initially re-extracted any study that is
+# not included in the final dataset that we will re-analyse
 missing <- setdiff(pilot$studyID,stress.red$studyID)
 
 
@@ -103,8 +103,8 @@ study.ids.adj <- study.ids[!(study.ids %in% rextracted.adj)]
 
 # we have decided to only re-extract data from studies for which
 # raw data (i.e. means, var, n) is presented. The reason is that
-# our analyses will only include this data because lnRR can only
-# be estimated from raw data (i.e. not from test statistics)
+# our analyses will only include this data because lnRR and lnCVR
+# can only be estimated from raw data (i.e. not from test statistics)
 test.stastics <- sort(unique(stress.red[(is.na(stress.red$mean.control)) | 
                                           (is.na(stress.red$mean.treat)),c("studyID")]))
 
@@ -160,7 +160,6 @@ write.xlsx(db.alfredo, "data_re-extraction/EyckDev.stress_Data_FULL_TABLE_Alfred
 ####################
 
 # subset of studies that contained both raw data and test statistics
-
 done.so.far <- unique(c(study.ids.adj.2,rextracted.adj))
 
 db.both.data <- stress.red[!(stress.red$studyID%in%done.so.far),]
