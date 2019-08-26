@@ -13,38 +13,21 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] diagram_1.6.4      shape_1.4.4        treebase_0.1.4     rotl_3.0.5         fulltext_1.1.0    
- [6] ape_5.2            readxl_1.2.0       modelr_0.1.2       tidyr_0.8.3        tidybayes_1.0.3   
-[11] brms_2.9.0         Rcpp_1.0.1         plotly_4.8.0       ggplot2_3.1.0      tibble_2.1.1      
-[16] dplyr_0.8.0.1      metaDigitise_1.0.0 doBy_4.6-2         metafor_2.1-0      Matrix_1.2-14     
-[21] openxlsx_4.1.0    
+ [1] dplyr_0.8.0.1  diagram_1.6.4  shape_1.4.4    treebase_0.1.4 rotl_3.0.5     metafor_2.1-0 
+ [7] Matrix_1.2-14  fulltext_1.1.0 ape_5.2        readxl_1.2.0   openxlsx_4.1.0
 
 loaded via a namespace (and not attached):
-  [1] backports_1.1.2           plyr_1.8.4                igraph_1.2.2              lazyeval_0.2.1           
-  [5] aRxiv_0.5.16              svUnit_0.7-12             storr_1.2.1               crosstalk_1.0.0          
-  [9] rncl_0.8.3                rstantools_1.5.1          inline_0.3.15             digest_0.6.18            
- [13] htmltools_0.3.6           rsconnect_0.8.12          magrittr_1.5              matrixStats_0.54.0       
- [17] xts_0.11-2                prettyunits_1.0.2         colorspace_1.3-2          rappdirs_0.3.1           
- [21] hoardr_0.5.2              callr_3.0.0               crayon_1.3.4              RCurl_1.95-4.11          
- [25] jsonlite_1.6              zoo_1.8-4                 glue_1.3.1                gtable_0.2.0             
- [29] microdemic_0.4.0          pkgbuild_1.0.2            rstan_2.18.2              rentrez_1.2.1            
- [33] abind_1.4-5               scales_1.0.0              mvtnorm_1.0-8             solrium_1.0.2            
- [37] bibtex_0.4.2              miniUI_0.1.1.1            viridisLite_0.3.0         xtable_1.8-3             
- [41] progress_1.2.0            ggstance_0.3.1            stats4_3.5.1              StanHeaders_2.18.0-1     
- [45] DT_0.5                    htmlwidgets_1.3           httr_1.4.0                threejs_0.3.1            
- [49] arrayhelpers_1.0-20160527 pkgconfig_2.0.2           loo_2.1.0                 XML_3.98-1.16            
- [53] crul_0.7.0                tidyselect_0.2.5          labeling_0.3              rlang_0.3.2              
- [57] reshape2_1.4.3            later_0.7.5               munsell_0.5.0             cellranger_1.1.0         
- [61] tools_3.5.1               cli_1.1.0                 pacman_0.5.0              broom_0.5.0              
- [65] ggridges_0.5.1            stringr_1.4.0             yaml_2.2.0                processx_3.2.0           
- [69] zip_2.0.1                 purrr_0.3.2               nlme_3.1-137              whisker_0.3-2            
- [73] mime_0.6                  xml2_1.2.0                compiler_3.5.1            bayesplot_1.6.0          
- [77] shinythemes_1.1.2         rstudioapi_0.8            curl_3.3                  stringi_1.4.3            
- [81] ps_1.2.1                  Brobdingnag_1.2-6         forcats_0.3.0             lattice_0.20-35          
- [85] markdown_0.9              shinyjs_1.0               pillar_1.3.1              bridgesampling_0.6-0     
- [89] data.table_1.11.8         bitops_1.0-6              httpuv_1.4.5.1            R6_2.4.0                 
- [93] promises_1.0.1            rplos_0.8.4               gridExtra_2.3             colourpicker_1.0         
- [97] MASS_7.3-50               gtools_3.8.1              assertthat_0.2.1          withr_2.1.2              
-[101] rcrossref_0.8.4           httpcode_0.2.0            shinystan_2.5.0           parallel_3.5.1           
-[105] hms_0.4.2                 grid_3.5.1                coda_0.19-2               shiny_1.2.0              
-[109] lubridate_1.7.4           base64enc_0.1-3           dygraphs_1.1.1.6         
+ [1] Rcpp_1.0.1        lubridate_1.7.4   lattice_0.20-35   prettyunits_1.0.2 assertthat_0.2.1 
+ [6] digest_0.6.18     mime_0.6          R6_2.4.0          cellranger_1.1.0  plyr_1.8.4       
+[11] httr_1.4.0        ggplot2_3.1.0     pillar_1.3.1      progress_1.2.0    rlang_0.4.0      
+[16] lazyeval_0.2.1    curl_3.3          rstudioapi_0.8    miniUI_0.1.1.1    whisker_0.3-2    
+[21] rentrez_1.2.1     DT_0.5            rcrossref_0.8.4   stringr_1.4.0     htmlwidgets_1.3  
+[26] RCurl_1.95-4.11   munsell_0.5.0     shiny_1.2.0       compiler_3.5.1    httpuv_1.4.5.1   
+[31] pkgconfig_2.0.2   htmltools_0.3.6   tidyselect_0.2.5  tibble_2.1.1      solrium_1.0.2    
+[36] httpcode_0.2.0    microdemic_0.4.0  XML_3.98-1.16     crayon_1.3.4      hoardr_0.5.2     
+[41] later_0.7.5       bitops_1.0-6      rappdirs_0.3.1    crul_0.7.0        grid_3.5.1       
+[46] nlme_3.1-137      jsonlite_1.6      xtable_1.8-3      gtable_0.2.0      pacman_0.5.0     
+[51] magrittr_1.5      storr_1.2.1       scales_1.0.0      bibtex_0.4.2      zip_2.0.1        
+[56] stringi_1.4.3     aRxiv_0.5.16      reshape2_1.4.3    promises_1.0.1    xml2_1.2.0       
+[61] tools_3.5.1       rncl_0.8.3        glue_1.3.1        purrr_0.3.2       hms_0.4.2        
+[66] parallel_3.5.1    yaml_2.2.0        colorspace_1.3-2  rplos_0.8.4      
