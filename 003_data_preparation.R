@@ -225,7 +225,7 @@ db.full.red$esID <- 1:nrow(db.full.red)
 ##############################################################
 
 # This is because lnRR and lnCVR can only be estimated for ratio
-# scale data. In contrast, lnVR can be estimated for non-ratio 
+# scale data. In contrast, lnVR could be estimated for non-ratio 
 # scale data too.
 
 # Our strategy to find about ratio scale data is to simply assume
@@ -256,8 +256,8 @@ round((table(db.full.red$ratioscale)/sum(table(db.full.red$ratioscale)))*100,1)
 # Identifying group level proportion data
 ##############################################################
 
-# This is because lnCVR can only be estimated for non-group
-# level proportion data (and alikes)
+# This is because lnVR and lnCVR can only be estimated for 
+# non-group level proportion data
 
 # Our strategy to find ratio scale data consisted of going 
 # through all the levels of the variable "specific.trait" and 
@@ -265,8 +265,9 @@ round((table(db.full.red$ratioscale)/sum(table(db.full.red$ratioscale)))*100,1)
 # proportion data. Those identified as potential group level 
 # proportion data were then checked in the original papers to
 # confirm data type.
+
 # Note that levels for the subset origin==STATS were not checked
-# as they cannot anyway be used to calculate lnRR, lnVR or lnCVR.
+# as they cannot be used to calculate lnRR, lnVR or lnCVR.
 # First, AST went through all the levels and split them into two
 # groups: non.prop.data and unknown.data. Second, NPM went through
 # those two groups to also give opinion on which variables should
@@ -772,7 +773,7 @@ db.full.red$prop.data <- ifelse(db.full.red$specific.trait %in% non.prop.data,
 
 # the following vector contains those levels from non.prop.data
 # that were checked in the original papers and identified as 
-# non-group-level proportional data (and alike)
+# non-group-level proportional data
 non.prop.data.confirmed <- c("offspring matured", # studyID=12:number of chicks fledged
                              "cling to surrogate", # studyID=36:frequency and duration of contact with an artificial mother-surrogate
                              "tadpole survival", # studyID=43:Survival was expressed as the proportion of larvae per tub that completed development (N=38 tubs/treatment)
@@ -794,7 +795,7 @@ non.prop.data.confirmed <- c("offspring matured", # studyID=12:number of chicks 
 
 # the following vector contains those levels from non.prop.data
 # that were checked in the original papers and identified as 
-# group-level proportional data (and alike)
+# group-level proportional data
 prop.data.confirmed <- c("microbiota similarity (%) from fecal samples", # studyID=20:based on Dice's similarity coefficient, links read: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1415224/ and wikipedia 
                          "percentage of pop breeding in natural conditions", # studyID=92:does not seem to be a mean % across enclosures but a % of individuals from all the individuals from all enclosures
                          "percentage of pop breeding in supplemented conditons" # studyID=92:does not seem to be a mean % across enclosures but a % of individuals from all the individuals from all enclosures
@@ -900,9 +901,9 @@ subset.variables.2 <- c("studyID","speciesID","TAXA","common.name","scientific.n
                         "seasonality","developmental.stressor",
                         "sex","age","trait.class","specific.trait",
                         "mean.control","SD","N.control",
-                        "mean.treat","SD","N.treat",
+                        "mean.treat","SD.1","N.treat",
                         "t.value","F.value",
-                        "Cohen's.D","sv")
+                        "Cohens.D","sv")
 
 
 eyck.dat.red <- eyck.dat[,subset.variables.2]
@@ -941,7 +942,7 @@ eyck.dat.red$data.sign.HE <- factor(ifelse(eyck.dat.red$mean.treat-eyck.dat.red$
                                            "positive.or.zero"))
 
 
-eyck.dat.red$es.sign.HE <- factor(ifelse(eyck.dat.red$`Cohen's.D`<0,
+eyck.dat.red$es.sign.HE <- factor(ifelse(eyck.dat.red$Cohens.D<0,
                                          "negative",
                                          "positive.or.zero"))
 
@@ -1505,8 +1506,8 @@ variable.meaning.unclear <- c("(dihydroxyphenylacetic acid/dopamine) ratio in th
 
 # In this round, we went through the list of levels for which
 # either meaning or direction was unclear, and went and double-
-# check each of them in their original publication. Then, we made
-# a final decision on whether a sign is needed or not, and left
+# checked each of them in their original publication. Then, we made
+# a final decision on whether sign inversion is needed or not, and left
 # some variables as direction unclear. We tried to reduce the list
 # of unclear ones to the minimum possible, and made some decision
 # for some variables, mostly behaviour, for which one could almost
