@@ -12,7 +12,7 @@ More information and materials (e.g. data) available at the [OSF project](https:
 
 ## Scripts:
 
-`001_data_exploration.R`: this code was used for our initial exploration of the data, when we were trying to understand the reported and shared data, the calculations, and the strengths and weaknesses of the data. This script did not generate any results for the manuscript. R session info is available in "data/data_exploration_R_session.txt".
+`001_data_exploration.R`: this code was used for our initial exploration of the data, when we were trying to understand the reported and shared data, the calculations, and the strengths and weaknesses of the data. This script did not generate any results for the manuscript. R session info is available in ["data/data_exploration_R_session.txt"](https://github.com/ASanchez-Tojar/meta-analysis_of_variance/blob/master/data/data_exploration_R_session.txt).
 
 `002_data_re-extraction.R`: this code was used for organizing the re-extraction of the data. The outputs of this script were later used to double-check and re-extract the data, which was performed by two observers. R session info is available in "data_re-extraction/data_re-extraction_R_session.txt".
 
