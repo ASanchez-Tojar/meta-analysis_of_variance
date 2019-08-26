@@ -8,7 +8,7 @@ This repository contains the R scripts use in the following study:
 
 Sánchez-Tójar, A., Moran, N.P., O'Dea, R.E., Reinhold, K., Nakagawa, S. In preparation. *Meta-analysing means and variances*
 
-More information and materials (e.g. data) available at the [OSF project](https://osf.io/yjua8/). For any further information, please contact: [Alfredo Sánchez-Tójar](https://scholar.google.co.uk/citations?hl=en&user=Sh-Rjq8AAAAJ&view_op=list_works&sortby=pubdate), email: alfredo.tojar@gmail.com
+More information and materials available at the [OSF project](https://osf.io/yjua8/). For any further information, please contact: [Alfredo Sánchez-Tójar](https://scholar.google.co.uk/citations?hl=en&user=Sh-Rjq8AAAAJ&view_op=list_works&sortby=pubdate), email: alfredo.tojar@gmail.com
 
 ## Scripts:
 
