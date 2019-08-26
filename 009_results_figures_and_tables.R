@@ -90,35 +90,6 @@ collidev <- function(data, height = NULL, name, strategy, check.height = TRUE) {
   }
 }
 
-# Stack overlapping intervals.
-# Assumes that each set has the same horizontal position
-pos_stackv <- function(df, height) {
-  if (nrow(df) == 1) return(df)
-  
-  n <- nrow(df) + 1
-  x <- ifelse(is.na(df$x), 0, df$x)
-  if (all(is.na(df$y))) {
-    heights <- rep(NA, n)
-  } else {
-    heights <- c(0, cumsum(x))
-  }
-  
-  df$xmin <- heights[-n]
-  df$xmax <- heights[-1]
-  df$x <- df$xmax
-  df
-}
-
-# Stack overlapping intervals and set height to 1.
-# Assumes that each set has the same horizontal position.
-pos_fillv <- function(df, height) {
-  stacked <- pos_stackv(df, height)
-  stacked$xmin <- stacked$xmin / max(stacked$xmax)
-  stacked$xmax <- stacked$xmax / max(stacked$xmax)
-  stacked$x <- stacked$xmax
-  stacked
-}
-
 # Dodge overlapping interval.
 # Assumes that each set has the same horizontal position.
 pos_dodgev <- function(df, height) {
@@ -178,7 +149,7 @@ PositionDodgeV <- ggproto(
 # Importing dataset
 ##############################################################
 
-# database with the corrected data from our pilot re-extraction
+# database with the corrected data
 stress.data <- read.xlsx("data_re-extraction/clean_data/EyckDev_stress_clean_effect_sizes_sp_corrected.xlsx",
                          colNames=T,sheet = 1)
 
@@ -341,29 +312,19 @@ total_var.lnRR.ours <- posterior.brms.univariate.lnRR.ours$sd_esID__Intercept +
 
 # total heterogeneity I2
 I2_total.lnRR.ours <- (total_var.lnRR.ours-s2I.lnRR.ours)/total_var.lnRR.ours
-# round(mean(I2_total.lnRR.ours),3)*100
-# round(quantile(I2_total.lnRR.ours, c(0.025, 0.975), na.rm = TRUE),3)*100
 
 # observational level I2
 I2_esiD.lnRR.ours <- posterior.brms.univariate.lnRR.ours$sd_esID__Intercept/total_var.lnRR.ours
-# round(mean(I2_esiD.lnRR.ours),3)*100
-# round(quantile(I2_esiD.lnRR.ours, c(0.025, 0.975), na.rm = TRUE),3)*100
 
 # studyID I2
 I2_studyID.lnRR.ours <- posterior.brms.univariate.lnRR.ours$sd_studyID__Intercept/total_var.lnRR.ours
-# round(mean(I2_studyID.lnRR.ours),3)*100
-# round(quantile(I2_studyID.lnRR.ours, c(0.025, 0.975), na.rm = TRUE),3)*100
 
 # phylogeny I2: notice that s2I is substracted from this calculation as phylogenetic
 # relatedness is a "fixed random effect"
 I2_phylo.lnRR.ours <- posterior.brms.univariate.lnRR.ours$sd_scientific.name__Intercept/(total_var.lnRR.ours-s2I.lnRR.ours)
-# round(mean(I2_speciesID.lnRR.ours),3)*100
-# round(quantile(I2_speciesID.lnRR.ours, c(0.025, 0.975), na.rm = TRUE),3)*100
 
 # speciesID I2
 I2_speciesID.lnRR.ours <- posterior.brms.univariate.lnRR.ours$sd_speciesID__Intercept/total_var.lnRR.ours
-# round(mean(I2_speciesID.lnRR.ours),3)*100
-# round(quantile(I2_speciesID.lnRR.ours, c(0.025, 0.975), na.rm = TRUE),3)*100
 
 
 # #####################
@@ -864,28 +825,25 @@ table1 <- data.frame(effect.sizes,
                      paste0(sprintf("%.2f",meta.modes)," [", #sprintf allows to keep the number of digits regardless of 0's
                             sprintf("%.2f",meta.lower),",",
                             sprintf("%.2f",meta.upper),"]"),
-                     paste0(sprintf("%.1f",esID.I2.modes)," [", #sprintf allows to keep the number of digits regardless of 0's
+                     paste0(sprintf("%.1f",esID.I2.modes)," [", 
                             sprintf("%.1f",esID.I2.lower),",",
                             sprintf("%.1f",esID.I2.upper),"]"),
-                     paste0(sprintf("%.1f",studyID.I2.modes)," [", #sprintf allows to keep the number of digits regardless of 0's
+                     paste0(sprintf("%.1f",studyID.I2.modes)," [", 
                             sprintf("%.1f",studyID.I2.lower),",",
                             sprintf("%.1f",studyID.I2.upper),"]"),
-                     paste0(sprintf("%.1f",speciesID.I2.modes)," [", #sprintf allows to keep the number of digits regardless of 0's
+                     paste0(sprintf("%.1f",speciesID.I2.modes)," [", 
                             sprintf("%.1f",speciesID.I2.lower),",",
                             sprintf("%.1f",speciesID.I2.upper),"]"),
-                     paste0(sprintf("%.1f",phylo.I2.modes)," [", #sprintf allows to keep the number of digits regardless of 0's
+                     paste0(sprintf("%.1f",phylo.I2.modes)," [", 
                             sprintf("%.1f",phylo.I2.lower),",",
                             sprintf("%.1f",phylo.I2.upper),"]"),
-                     paste0(sprintf("%.1f",total.I2.modes)," [", #sprintf allows to keep the number of digits regardless of 0's
+                     paste0(sprintf("%.1f",total.I2.modes)," [", 
                             sprintf("%.1f",total.I2.lower),",",
                             sprintf("%.1f",total.I2.upper),"]"),
                      Qtests,
-                     paste0(sprintf("%.2f",eggers.modes)," [", #sprintf allows to keep the number of digits regardless of 0's
+                     paste0(sprintf("%.2f",eggers.modes)," [", 
                             sprintf("%.2f",eggers.lower),",",
-                            sprintf("%.2f",eggers.upper),"]"))#,
-# paste0(sprintf("%.1f",bayesian.R2.modes)," [", #sprintf allows to keep the number of digits regardless of 0's
-#        sprintf("%.1f",bayesian.R2.lower),",",
-#        sprintf("%.1f",bayesian.R2.upper),"]"))
+                            sprintf("%.2f",eggers.upper),"]"))
 
 
 names(table1) <- table.column.names
@@ -907,14 +865,12 @@ table1.gt <- table1.red %>%
              Phylogeny=md("***I*<sup>2</sup><sub>Phylo</sub> (%)**"),
              Total=md("***I*<sup>2</sup><sub> Total</sub> (%)**"),
              Qtest=md("***Q*<sub>test</sub>**"),
-             Eggers=md("**Egger's test**")) %>%#,
-  #Bayes.R2=md("**Bayesian R<sup>2</sup> (%)**")) %>%
+             Eggers=md("**Egger's test**")) %>%
   cols_align(align = "right") %>%
   tab_source_note(source_note = md("k = number of estimates; *I*<sup>2</sup> = heterogeneity; *Q*<sub>test</sub> = Cochrane's *Q* test; NA = not applicable; Obser. = Observational or residual variance; Phylo = Phylogeny. Egger's test = intercept of an Egger's regression following Nakagawa and Santos (2012). Estimates shown correspond to modes and 95% Highest Posterior Density Intervals")) %>%
   tab_options(table.width=775)
 
-
-#table1.gt
+table1.gt
 
 # saving table
 gtsave(table1.gt,filename="table1_meta-analysis.png", path="./tables/")
@@ -938,14 +894,13 @@ tableS1.gt <- table1.SMDH %>%
              Phylogeny=md("***I*<sup>2</sup><sub>Phylo</sub> (%)**"),
              Total=md("***I*<sup>2</sup><sub> Total</sub> (%)**"),
              Qtest=md("***Q*<sub>test</sub>**"),
-             Eggers=md("**Egger's test**")) %>%#,
-  #Bayes.R2=md("**Bayesian R<sup>2</sup> (%)**")) %>%
+             Eggers=md("**Egger's test**")) %>%
   cols_align(align = "right") %>%
   tab_source_note(source_note = md("k = number of estimates; *I*<sup>2</sup> = heterogeneity; *Q*<sub>test</sub> = Cochrane's *Q* test; NA = not applicable; Obser. = Observational or residual variance; Phylo = Phylogeny. Egger's test = intercept of an Egger's regression (Nakagawa and Santos 2012). Estimates shown correspond to modes and 95% Highest Posterior Density Intervals")) %>%
   tab_options(table.width=775)
 
 
-#table1.gt
+tableS1.gt
 
 # saving table
 gtsave(tableS1.gt,filename="tableS1_meta-analysis.png", path="./tables/")
@@ -956,15 +911,9 @@ gtsave(tableS1.gt,filename="tableS1_meta-analysis.png", path="./tables/")
 ###########
 
 # using the package gt to create fancy tables: https://github.com/rstudio/gt
-table.2.column.names <- c(#"Effect.size",
-  "Effect.size.group",
-  "Estimates","Posterior.mode")
+table.2.column.names <- c("Effect.size.group",
+                          "Estimates","Posterior.mode")
 
-# effect size names
-# effect.sizes.2 <- c("lnRR",paste0("k = ",nrow(stress.data.metareg.lnRR.ours)),
-#                     rep("",5))
-
-#es2 <- c(paste0("lnRR (k = ",nrow(stress.data.metareg.lnRR.ours),")"))
 
 effect.sizes.2.group <- c(rep(paste0("lnRR (k = ",nrow(stress.data.metareg.lnRR.ours),")"),7),
                           rep(paste0("lnRR (k = ",nrow(stress.data.metareg.lnRR.ours),"; time-lag bias test)"),3),
@@ -1026,72 +975,71 @@ brms.univariate.SMDH.ours.trait %>%
 
 
 # meta-analytic modes
-meta.modes <- round(c(unlist(point.summaries.univariate.lnRR.ours.trait[["b_Intercept"]]),
-                      unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2development"]]),
-                      unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2metabolism_and_physiology"]]),
-                      unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2morphological"]]),
-                      unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2reproduction"]]),
-                      unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2survival"]]),
-                      MCMCglmm::posterior.mode(R2m.lnRR.trait),
-                      unlist(point.summaries.univariate.lnRR.ours.year[["b_Intercept"]]),
-                      unlist(point.summaries.univariate.lnRR.ours.year[["b_year.z"]]),
-                      MCMCglmm::posterior.mode(R2m.lnRR.year),
-                      unlist(point.summaries.univariate.lnCVR.trait[["b_Intercept"]]),
-                      unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2development"]]),
-                      unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2metabolism_and_physiology"]]),
-                      unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2morphological"]]),
-                      unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2reproduction"]]),
-                      unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2survival"]]),
-                      MCMCglmm::posterior.mode(R2m.lnCVR.trait)),2)
+metareg.modes <- round(c(unlist(point.summaries.univariate.lnRR.ours.trait[["b_Intercept"]]),
+                         unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2development"]]),
+                         unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2metabolism_and_physiology"]]),
+                         unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2morphological"]]),
+                         unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2reproduction"]]),
+                         unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2survival"]]),
+                         MCMCglmm::posterior.mode(R2m.lnRR.trait),
+                         unlist(point.summaries.univariate.lnRR.ours.year[["b_Intercept"]]),
+                         unlist(point.summaries.univariate.lnRR.ours.year[["b_year.z"]]),
+                         MCMCglmm::posterior.mode(R2m.lnRR.year),
+                         unlist(point.summaries.univariate.lnCVR.trait[["b_Intercept"]]),
+                         unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2development"]]),
+                         unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2metabolism_and_physiology"]]),
+                         unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2morphological"]]),
+                         unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2reproduction"]]),
+                         unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2survival"]]),
+                         MCMCglmm::posterior.mode(R2m.lnCVR.trait)),2)
 
 
 # meta-analytic lower 2.5% CrIs (HDI)
-meta.lower <- round(c(unlist(point.summaries.univariate.lnRR.ours.trait[["b_Intercept.lower"]]),
-                      unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2development.lower"]]),
-                      unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2metabolism_and_physiology.lower"]]),
-                      unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2morphological.lower"]]),
-                      unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2reproduction.lower"]]),
-                      unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2survival.lower"]]),
-                      bayestestR::hdi(R2m.lnRR.trait,ci = 0.95)$CI_low,
-                      unlist(point.summaries.univariate.lnRR.ours.year[["b_Intercept.lower"]]),
-                      unlist(point.summaries.univariate.lnRR.ours.year[["b_year.z.lower"]]),
-                      bayestestR::hdi(R2m.lnRR.year,ci = 0.95)$CI_low,
-                      unlist(point.summaries.univariate.lnCVR.trait[["b_Intercept.lower"]]),
-                      unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2development.lower"]]),
-                      unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2metabolism_and_physiology.lower"]]),
-                      unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2morphological.lower"]]),
-                      unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2reproduction.lower"]]),
-                      unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2survival.lower"]]),
-                      bayestestR::hdi(R2m.lnCVR.trait,ci = 0.95)$CI_low),2)
+metareg.lower <- round(c(unlist(point.summaries.univariate.lnRR.ours.trait[["b_Intercept.lower"]]),
+                         unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2development.lower"]]),
+                         unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2metabolism_and_physiology.lower"]]),
+                         unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2morphological.lower"]]),
+                         unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2reproduction.lower"]]),
+                         unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2survival.lower"]]),
+                         bayestestR::hdi(R2m.lnRR.trait,ci = 0.95)$CI_low,
+                         unlist(point.summaries.univariate.lnRR.ours.year[["b_Intercept.lower"]]),
+                         unlist(point.summaries.univariate.lnRR.ours.year[["b_year.z.lower"]]),
+                         bayestestR::hdi(R2m.lnRR.year,ci = 0.95)$CI_low,
+                         unlist(point.summaries.univariate.lnCVR.trait[["b_Intercept.lower"]]),
+                         unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2development.lower"]]),
+                         unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2metabolism_and_physiology.lower"]]),
+                         unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2morphological.lower"]]),
+                         unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2reproduction.lower"]]),
+                         unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2survival.lower"]]),
+                         bayestestR::hdi(R2m.lnCVR.trait,ci = 0.95)$CI_low),2)
 
 # meta-analytic upper 97.5% CrIs (HDI)
-meta.upper <- round(c(unlist(point.summaries.univariate.lnRR.ours.trait[["b_Intercept.upper"]]),
-                      unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2development.upper"]]),
-                      unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2metabolism_and_physiology.upper"]]),
-                      unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2morphological.upper"]]),
-                      unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2reproduction.upper"]]),
-                      unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2survival.upper"]]),
-                      bayestestR::hdi(R2m.lnRR.trait,ci = 0.95)$CI_high,
-                      unlist(point.summaries.univariate.lnRR.ours.year[["b_Intercept.upper"]]),
-                      unlist(point.summaries.univariate.lnRR.ours.year[["b_year.z.upper"]]),
-                      bayestestR::hdi(R2m.lnRR.year,ci = 0.95)$CI_high,
-                      unlist(point.summaries.univariate.lnCVR.trait[["b_Intercept.upper"]]),
-                      unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2development.upper"]]),
-                      unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2metabolism_and_physiology.upper"]]),
-                      unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2morphological.upper"]]),
-                      unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2reproduction.upper"]]),
-                      unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2survival.upper"]]),
-                      bayestestR::hdi(R2m.lnCVR.trait,ci = 0.95)$CI_high),2)
+metareg.upper <- round(c(unlist(point.summaries.univariate.lnRR.ours.trait[["b_Intercept.upper"]]),
+                         unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2development.upper"]]),
+                         unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2metabolism_and_physiology.upper"]]),
+                         unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2morphological.upper"]]),
+                         unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2reproduction.upper"]]),
+                         unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2survival.upper"]]),
+                         bayestestR::hdi(R2m.lnRR.trait,ci = 0.95)$CI_high,
+                         unlist(point.summaries.univariate.lnRR.ours.year[["b_Intercept.upper"]]),
+                         unlist(point.summaries.univariate.lnRR.ours.year[["b_year.z.upper"]]),
+                         bayestestR::hdi(R2m.lnRR.year,ci = 0.95)$CI_high,
+                         unlist(point.summaries.univariate.lnCVR.trait[["b_Intercept.upper"]]),
+                         unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2development.upper"]]),
+                         unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2metabolism_and_physiology.upper"]]),
+                         unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2morphological.upper"]]),
+                         unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2reproduction.upper"]]),
+                         unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2survival.upper"]]),
+                         bayestestR::hdi(R2m.lnCVR.trait,ci = 0.95)$CI_high),2)
 
 
 
 # Building Table 2
-table2 <- data.frame(#effect.sizes.2,
-  effect.sizes.2.group,
-  estimates,
-  paste0(sprintf("%.2f",meta.modes)," [", #sprintf allows to keep the number of digits regardless of 0's
-         sprintf("%.2f",meta.lower),",",
-         sprintf("%.2f",meta.upper),"]"))#,
+table2 <- data.frame(effect.sizes.2.group,
+                     estimates,
+                     paste0(sprintf("%.2f",metareg.modes)," [", #sprintf allows to keep the number of digits regardless of 0's
+                            sprintf("%.2f",metareg.lower),",",
+                            sprintf("%.2f",metareg.upper),"]"))
 
 names(table2) <- table.2.column.names
 
@@ -1099,13 +1047,10 @@ names(table2) <- table.2.column.names
 
 table2.gt <- table2 %>% 
   gt(groupname_col = "Effect.size.group") %>%
-  #tab_stubhead(label = "Effect.size") %>% 
   cols_label(Estimates=md("**Estimates**"),
              Posterior.mode=md("**Mode [95% HPDI]**")) %>%#,
-  #Bayes.R2=md("**Bayesian R<sup>2</sup> (%)**")) %>%
   cols_align(align = "right",columns=c("Posterior.mode")) %>%
-  cols_align(align = "left",columns=c(#"Effect.size",
-    "Estimates")) %>%
+  cols_align(align = "left",columns=c("Estimates")) %>%
   text_transform(locations = cells_data(columns = vars(Estimates)),
                  fn = function(x){ifelse(x=="R2marginal",
                                          md("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>R</em><sup>2</sup><sub> marginal</sub> (%) = "),
@@ -1113,7 +1058,7 @@ table2.gt <- table2 %>%
   tab_source_note(source_note = md("k = number of estimates; *R*<sup>2</sup><sub>marginal</sub> = percentage of variance explained by the moderators (Nakagawa and Schielzeth 2013). The reference level (i.e. Intercept) corresponds to \"Behaviour\" (except for the time-lag bias test). Year of publication was z-transformed. Estimates shown correspond to posterior modes and 95% Highest Posterior Density Intervals (HPDI)"))%>%
   tab_options(table.width=397)
 
-#table2.gt
+table2.gt
 
 # saving table
 gtsave(table2.gt,filename="table2_meta-regressions.png", path="./tables/")
@@ -1446,3 +1391,10 @@ both.plots <- posterior.metaregression.plot +
 both.plots
 
 dev.off()
+
+
+####################################################################################
+# saving session information with all packages versions for reproducibility purposes
+sink("plots/results_figures_and_tables_R_session.txt")
+sessionInfo()
+sink()
