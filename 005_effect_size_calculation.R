@@ -18,6 +18,9 @@
 
 # using a cleaner version of the dataset (more in scripts 001-004).
 
+# Note that some of the effect size statistic calculated in this
+# script were never analyzed (e.g. SMD, .HE, etc...)
+
 
 ##############################################################
 # Packages needed
