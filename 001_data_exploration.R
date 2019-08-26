@@ -8,7 +8,7 @@
 
 # Input from: 
 # 
-# Nicholas P. Moran
+# Nicholas P. Moran (@NickMoranPinCER)
 # Profile: https://www.researchgate.net/profile/Nicholas_Moran
 # Department of Evolutionary Biology, Bielefeld University (GER) 
 # Email: nicholaspatrickmoran@gmail.com
@@ -39,21 +39,21 @@
 
 # https://onlinelibrary.wiley.com/action/downloadSupplement?doi=10.1111%2Fbrv.12496&file=brv12496-sup-0004-TableS4.xlsx
 
-# We will use for the analyses since it contains the raw data of 
-# the selection of studies that were used in the meta-analysis 
+# We will use this database for the analyses since it contains the raw  
+# data of the selection of studies that were used in the meta-analysis 
 # (note that there are 865 total effect sizes in this dataset, in 
-# contrast to the published data set, which contained 866 effect sizes).
+# contrast to the published dataset, which contained 866 effect sizes).
 
 # This was a simple initial data exploration to understand the 
-# data.
+# data. Something we wanted to understand with this script but
+# that couldn't until more information was provided from the authors
+# was the effect size statistic used.
 
 ##############################################################
 # Packages needed
 ##############################################################
 
-pacman::p_load(metafor, doBy, metaDigitise, dplyr, tibble,
-               ggplot2, plotly, brms, tidybayes, tidyr,
-               modelr)
+pacman::p_load(metafor, openxlsx, plyr)
 
 # Clear memory
 rm(list=ls())
@@ -68,7 +68,7 @@ rm(list=ls())
 
 sdpooled <- function(n1,n2,sd1,sd2){
   sp <- sqrt((((n1-1)*sd1^2)+(n2-1)*sd2^2)/(n1+n2-2))
-  #sp <- sqrt((((n1)*sd1^2)+(n2)*sd2^2)/(n1+n2+2))
+  #sp <- sqrt((((n1)*sd1^2)+(n2)*sd2^2)/(n1+n2+2)) #alternative
 }
 
 means.to.d <- function(x1,x2,sp){
@@ -81,10 +81,10 @@ v.from.raw<-function(n1,n2,d){
 
 
 ################################################################################
-# Comparing new dataset with the published dataset (table 2)
+# Comparing new dataset with the published dataset (i.e. table 2)
 ################################################################################
 
-# importing published dataset
+# importing published dataset (i.e. table 2)
 eyck.efs <- read.xlsx("data_re-extraction/brv12496-sup-0002-tables2.xlsx",
                       colNames=T,sheet = 1)
 
@@ -142,7 +142,7 @@ names(eyck.dat93)
 
 # looking for it
 eyck.efs93.cut<-round(eyck.efs93[,c("d","sv")], 2)
-eyck.dat93.cut<-round(eyck.dat93[,c("Cohen's.D","sv")],2)
+eyck.dat93.cut<-round(eyck.dat93[,c("Cohens.D","sv")],2)
 names(eyck.dat93.cut)<-c("d","sv")
 
 setdiff(eyck.dat93.cut$d, eyck.efs93.cut$d)
@@ -167,12 +167,18 @@ eyck.table4.93[eyck.table4.93$trait.class=="morphological"]
 # Understanding how effect sizes were calculated
 ################################################################################
 
-#stress.red <- read.table("data/EyckDev.stress_Data_FULL_TABLE_red.csv",header=T,sep=',')
 stress.red <- read.xlsx("data/EyckDev.stress_Data_FULL_TABLE.xlsx",
                         colNames=T,sheet = 1)
 
 # Estimating Cohen's d using equations from W.Viechtbauer course
-stress.red$Cohens.2 <- round(means.to.d(stress.red$mean.treat,stress.red$mean.control,sdpooled(stress.red$N.treat,stress.red$N.control,stress.red$SD.1,stress.red$SD)),2)
+stress.red$Cohens.2 <- round(means.to.d(stress.red$mean.treat,
+                                        stress.red$mean.control,
+                                        sdpooled(stress.red$N.treat,
+                                                 stress.red$N.control,
+                                                 stress.red$SD.1,
+                                                 stress.red$SD)),
+                             2)
+
 stress.red$sv.2 <- round(v.from.raw(stress.red$N.treat,stress.red$N.control,means.to.d(stress.red$mean.treat,stress.red$mean.control,sdpooled(stress.red$N.treat,stress.red$N.control,stress.red$SD.1,stress.red$SD))),2)
 
 
@@ -201,7 +207,7 @@ stress.red$vi.SMDH <- round(y[["vi"]][1:nrow(stress.red)],2)
 # eliminating effect sizes based on test statistics for the time being
 stress.red.2 <- stress.red[!(is.na(stress.red$Cohens.2)),]
 
-# proportion of effect sizes derived from test statistics
+# proportion of effect sizes not derived from test statistics
 nrow(stress.red.2)/nrow(stress.red)
 
 # 83% of effect sizes are based on means, sds and ns. These are the 
@@ -210,12 +216,17 @@ nrow(stress.red.2)/nrow(stress.red)
  
 
 # estimating how many Cohen's d values differ between the two approaches
+# no rounding
 table(stress.red.2$Cohens.D == stress.red.2$Cohens.2)
 table(stress.red.2$Cohens.D == stress.red.2$Cohens.2)[1]/nrow(stress.red.2)
+# some rounding
+table(round(stress.red.2$Cohens.D,2) == round(stress.red.2$Cohens.2,2))
+table(round(stress.red.2$Cohens.D,2) == round(stress.red.2$Cohens.2,2))[1]/nrow(stress.red.2)
+# no rounding but signs off
 table(abs(stress.red.2$Cohens.D) == abs(stress.red.2$Cohens.2))
 table(abs(stress.red.2$Cohens.D) == abs(stress.red.2$Cohens.2))[1]/nrow(stress.red.2)
 
-# There are 459 (64%) effect sizes for which the two approaches differ
+# There are lots of effect sizes for which the two approaches differ
 
 
 # Value are larger for Hedges' g and SMDH, so this is not the answer for 
@@ -228,8 +239,7 @@ table(abs(stress.red$Cohens.D) == abs(stress.red$yi.SMDH))
 table(stress.red.2$sv == stress.red.2$sv.2)
 table(stress.red.2$sv == stress.red.2$sv.2)[1]/nrow(stress.red.2)
 
-# Regarding the sampling variance, there are 697 (97%) sampling variances
-# that differe between the two approaches.
+# Regarding the sampling variance, they all differ between the two approaches.
 
 
 # Further exploring whether the difference tends to be consistently 
@@ -255,8 +265,8 @@ summary(stress.red.dif[stress.red.dif$Cohens.2<3000,"Cohens.2"]) #typo in one of
 # absolute difference between effect sizes
 summary(abs(stress.red.dif[stress.red.dif$Cohens.2<3000,"Cohens.D"]-stress.red.dif[stress.red.dif$Cohens.2<3000,"Cohens.2"]))
 
-# The effect sizes used in the paper are larger that the ones I have
-# calculated in 97% of the cases. Additionally, their effect sizes tend
+# The effect sizes used in the paper are generally larger that the 
+# ones I have calculated. Additionally, their effect sizes tend
 # to be 0.04 larger at the median level.
 
 
@@ -267,6 +277,10 @@ table(stress.red.dif.sv$sv < stress.red.dif.sv$sv.2)
 summary(stress.red.dif[stress.red.dif$sv.2<100000,"sv"])
 summary(stress.red.dif[stress.red.dif$sv.2<100000,"sv.2"]) #typo in one of the means, it seems
 
-# Around 50% of the variances are larger, and vice versa.
-# But sampling variances are generally smaller in the database used
+# Sampling variances are generally smaller in the database used
 # for the paper
+
+# saving session information with all packages versions for reproducibility purposes
+sink("data/data_exploration_R_session.txt")
+sessionInfo()
+sink()
