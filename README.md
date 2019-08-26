@@ -6,13 +6,13 @@ This repository contains all R code and data used for a project on the use of me
 
 This repository contains the R scripts use in the following study:
 
-[Sánchez-Tójar, A., Moran, N.P., O'Dea, R.E., Reinhold, K., Nakagawa, S. In preparation. *Meta-analysing means and variances*
+Sánchez-Tójar, A., Moran, N.P., O'Dea, R.E., Reinhold, K., Nakagawa, S. In preparation. *Meta-analysing means and variances*
 
 More information and materials (e.g. data) available at the [OSF project](https://osf.io/yjua8/). For any further information, please contact: [Alfredo Sánchez-Tójar](https://scholar.google.co.uk/citations?hl=en&user=Sh-Rjq8AAAAJ&view_op=list_works&sortby=pubdate), email: alfredo.tojar@gmail.com
 
 ## Scripts:
 
-`001_data_exploration.R`: this is the code used for our initial exploration of the data, when we were trying to understand the reported and shared data, the calculations, and the strengths and weaknesses of the data.
+`001_data_exploration.R`: this is the code used for our initial exploration of the data, when we were trying to understand the reported and shared data, the calculations, and the strengths and weaknesses of the data. This script did not generate any results for the manuscript. Note: script last run on the 26th of Aug, all worked fine, and the R session info is available in "data/data_exploration_R_session.txt"
 
 `002_data_re-extraction.R`: 
 
