@@ -75,7 +75,7 @@ se.to.sd <- function(se,n){
 # Importing datasets
 ##############################################################
 
-# database with the corrected data from our pilot re-extraction
+# database with the corrected data
 stress.data <- read.xlsx("data_re-extraction/clean_data/EyckDev_stress_clean_raw_data_shared_control.xlsx",
                          colNames=T,sheet = 1)
 
@@ -84,7 +84,7 @@ stress.data$sign.inversion.ours<-as.numeric(as.character(stress.data$sign.invers
 
 
 # imputing values for those two SDs that were reported as 0
-# this was found via the outlier exploration we've done based
+# this was found via the outlier exploration we did based
 # on funnel plotting (more info below, see also section
 # "Double-checking outliers")
 stress.data[stress.data$esID==361,"SD.control"] <- 0.14*((sum(se.to.sd(c(0.01,0.02,0.01,0.01),
@@ -158,7 +158,7 @@ stress.data.cohens.sc.red <- stress.data.for.cohens.sc[,c("esID","cohens.biased.
 
 es.list.SMD <- stress.data[!(is.na(stress.data$mean.control)),"esID"]
 
-# Homocedasticity
+# Homocedasticity assumed
 stress.data.SMD<-escalc(measure="SMD", 
                         n1i=N.treat, n2i=N.control, 
                         m1i=mean.treat, m2i=mean.control, 
@@ -175,7 +175,8 @@ stress.data.SMD$SMD.ours <- stress.data.SMD$SMD*stress.data.SMD$sign.inversion.o
 stress.data.SMD.red <- stress.data.SMD[,c("esID","SMD.HE","SMD.ours","SMD.sv")]
 
 
-# Heterocedasticity: heteroscedastic population variances in the two groups (Bonett, 2008, 2009).
+# Heterocedasticity assumed: heteroscedastic population variances 
+# in the two groups (Bonett, 2008, 2009).
 stress.data.SMDH<-escalc(measure="SMDH", 
                          n1i=N.treat, n2i=N.control, 
                          m1i=mean.treat, m2i=mean.control, 
@@ -199,7 +200,7 @@ stress.data.SMDH.red <- stress.data.SMDH[,c("esID","SMDH.HE","SMDH.ours","SMDH.s
 
 es.list.SMD <- stress.data[!(is.na(stress.data$mean.control)),"esID"]
 
-# Homocedasticity
+# Homocedasticity assumed
 stress.data.SMD.sc<-escalc(measure="SMD", 
                            n1i=N.treat, n2i=N.control.sc, 
                            m1i=mean.treat, m2i=mean.control, 
@@ -219,7 +220,8 @@ stress.data.SMD.sc.red <- stress.data.SMD.sc[,c("esID","SMD.sc.HE","SMD.sc.ours"
 
 
 
-# Heterocedasticity: heteroscedastic population variances in the two groups (Bonett, 2008, 2009).
+# Heterocedasticity assumed: heteroscedastic population variances 
+# in the two groups (Bonett, 2008, 2009).
 stress.data.SMDH.sc<-escalc(measure="SMDH", 
                             n1i=N.treat, n2i=N.control.sc, 
                             m1i=mean.treat, m2i=mean.control, 
