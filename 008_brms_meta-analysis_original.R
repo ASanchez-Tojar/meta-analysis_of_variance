@@ -11,12 +11,12 @@
 # Description of script and instructions
 ##############################################################
 
-# This script is to re-analyze the data collected in:
+# This script is to analyze the data collected in:
 
 # Eyck et al. 2019: Effects of developmental stress on animal
 # phenotype and performance: a quantitative review
 
-# We use the R package 'brms' for the analyses
+# We use the R package 'brms' for the analyses.
 
 ##############################################################
 # Packages needed
@@ -50,7 +50,7 @@ thinning <- 2
 # Importing dataset
 ##############################################################
 
-# database with the corrected data from our pilot re-extraction
+# database with the corrected data
 stress.data <- read.xlsx("data_re-extraction/clean_data/EyckDev_stress_clean_effect_sizes_sp_corrected.xlsx",
                          colNames=T,sheet = 1)
 
@@ -118,6 +118,20 @@ round((nrow(stress.data.red[stress.data.red$num.shared.control>1,])/nrow(stress.
 # ### If Rhat is considerably greater than 1 (i.e., > 1.1), the chains have not yet converged and it is necessary to run more iterations and/or set stronger priors. https://cran.r-project.org/web/packages/brms/vignettes/brms_overview.pdf
 # ### weakly non-informative priors = student t-distribution:  student_t(3, 0, 10). We also tested that using a stronger prior (e.g. standard normal distribution: normal(0, 1)) has negligible effects on the model results. https://justincally.github.io/SexualSelection/#
 
+# Note: after running the models, we realized that, due to 
+# the high rate of effect size sign inversion needed (21%)
+# erase/disrupted the mean-var correlation observed at the
+# raw level. This had to consequences: (1) running a bivariate
+# meta-analysis would not provide any additional information
+# as the correlation between lnRR and lnVR was essentially 
+# zero after accounting for the sign inversions, and thus,
+# borrowing of strength would did not take place; (2) interpreting
+# the results of lnVR was very difficult as one cannot tell 
+# whether the effect comes from the mean-var relationship or 
+# an independ effect on total variance. Due to this, we decided
+# not to present the results based on lnVR to avoid any confussion
+# however, we provide the code we originally used in case any one
+# is interested. 
 
 ###########################
 # UNIVARIATE MODELS: lnRR #
@@ -181,7 +195,6 @@ brms.univariate.lnVR <- brm(lnVR.sc | se(sqrt(lnVR.sc.sv)) ~ 1 +
                             data = stress.data.lnVR,
                             family = gaussian(),
                             cov_ranef = list(scientific.name = phylo_cor),
-                            #autocor = cor_fixed(varcovar.studyID.lnRR.ours_0.5), # fixed covariance matrix of the response variable for instance to model multivariate effect sizes in meta-analysis (https://rdrr.io/cran/brms/man/cor_fixed.html)
                             control = list(adapt_delta = adapt_delta_value, max_treedepth = max_treedepth_value),
                             chains = 4, cores = 4, iter = iterations, warmup = burnin, thin = thinning)
 
@@ -191,9 +204,9 @@ save(brms.univariate.lnVR,
      file=filename)
 
 
-###########################
+############################
 # UNIVARIATE MODELS: lnCVR #
-###########################
+############################
 
 # sharedcontrol: 0.9999, 20, 6000, 3000, 2: 6 min (corei7)
 
@@ -215,7 +228,6 @@ brms.univariate.lnCVR <- brm(lnCVR.sc | se(sqrt(lnCVR.sc.sv)) ~ 1 +
                              data = stress.data.lnCVR,
                              family = gaussian(),
                              cov_ranef = list(scientific.name = phylo_cor),
-                             #autocor = cor_fixed(varcovar.studyID.lnRR.ours_0.5), # fixed covariance matrix of the response variable for instance to model multivariate effect sizes in meta-analysis (https://rdrr.io/cran/brms/man/cor_fixed.html)
                              control = list(adapt_delta = adapt_delta_value, max_treedepth = max_treedepth_value),
                              chains = 4, cores = 4, iter = iterations, warmup = burnin, thin = thinning)
 
@@ -250,7 +262,6 @@ brms.univariate.SMDH.ours <- brm(SMDH.sc.ours | se(sqrt(SMDH.sc.sv)) ~ 1 +
                                  data = stress.data.SMDH.ours,
                                  family = gaussian(),
                                  cov_ranef = list(scientific.name = phylo_cor),
-                                 #autocor = cor_fixed(varcovar.studyID.lnRR.ours_0.5), # fixed covariance matrix of the response variable for instance to model multivariate effect sizes in meta-analysis (https://rdrr.io/cran/brms/man/cor_fixed.html)
                                  control = list(adapt_delta = adapt_delta_value, max_treedepth = max_treedepth_value),
                                  chains = 4, cores = 4, iter = iterations, warmup = burnin, thin = thinning)
 
@@ -265,7 +276,7 @@ save(brms.univariate.SMDH.ours,
 ########################################
 
 # This model is run purely to communicate to H.Eyck what changed
-# after we corrected his typos
+# after we corrected the typos found in the dataset
 
 # sharedcontrol: 0.999, 20, 6000, 3000, 2: 9 min (corei7)
 # sharedcontrol: 0.9999, 20, 6000, 3000, 2: 9 min (corei7)
@@ -311,7 +322,7 @@ bf.lnRR.ours <- bf(lnRR.sc.ours | se(sqrt(lnRR.sc.sv)) ~
 bf.lnVR <- bf(lnVR.sc | se(sqrt(lnVR.sc.sv)) ~
                 1 + (1|p|studyID) + (1|q|esID) + (1|a|scientific.name) + (1|d|speciesID))
 
-# By writing |p| and |q| in between we indicate that all varying
+# By writing |p| |q| |a| and |d| in between we indicate that all varying
 # effects of Study and Index should be modeled as correlated.
 # This makes sense since we actually have two model parts, one
 # for lnRR and one for lnVR
@@ -499,6 +510,8 @@ load("models/brms/brms_univariate_SMDH_ours_trait_sharedcontrol_6000iter_3000bur
 #######################
 # EGGER'S REGRESSIONS #
 #######################
+
+# Following Nakagawa and Santos 2012
 
 ########################
 # lnRR (meta-analysis) #
