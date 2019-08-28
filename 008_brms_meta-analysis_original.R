@@ -98,6 +98,16 @@ length(unique(stress.data.red[stress.data.red$num.shared.control>1,"studyID"]))
 round((length(unique(stress.data.red[stress.data.red$num.shared.control>1,"studyID"]))/length(unique(stress.data.red$studyID)))*100,1)
 round((nrow(stress.data.red[stress.data.red$num.shared.control>1,])/nrow(stress.data.red))*100,2)
 
+# counts for traits
+stress.data.metareg.red <- stress.data.metareg[!(is.na(stress.data.metareg$lnRR.sc.ours)) | !(is.na(stress.data.metareg$lnCVR.sc)),]
+stress.data.metareg.red %>% 
+  group_by(trait.class.2) %>% 
+  summarise(count = n_distinct(esID))
+
+stress.data.metareg.red %>% 
+  group_by(trait.class.2) %>% 
+  summarise(count = n_distinct(studyID))
+
 ##############################################################
 # -------------------------- BRMS -------------------------- #
 ##############################################################
