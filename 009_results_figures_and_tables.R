@@ -867,7 +867,7 @@ table1.gt <- table1.red %>%
              Qtest=md("***Q*<sub>test</sub>**"),
              Eggers=md("**Egger's test**")) %>%
   cols_align(align = "right") %>%
-  tab_source_note(source_note = md("k = number of estimates; *I*<sup>2</sup> = heterogeneity; *Q*<sub>test</sub> = Cochrane's *Q* test; NA = not applicable; Obser. = Observational or residual variance; Phylo = Phylogeny. Egger's test = intercept of an Egger's regression following Nakagawa and Santos (2012). Estimates shown correspond to modes and 95% Highest Posterior Density Intervals")) %>%
+  tab_source_note(source_note = md("k = number of estimates; *I*<sup>2</sup> = heterogeneity; *Q*<sub>test</sub> = Cochrane's *Q* test; NA = not applicable; Obser. = Observational or residual variance; Phylo = Phylogeny. Egger's test = intercept of an Egger's regression following Nakagawa and Santos (2012). Estimates shown correspond to modes and 95% Highest Posterior Density Intervals. N = 89 studies.")) %>%
   tab_options(table.width=775)
 
 table1.gt
@@ -896,7 +896,7 @@ tableS1.gt <- table1.SMDH %>%
              Qtest=md("***Q*<sub>test</sub>**"),
              Eggers=md("**Egger's test**")) %>%
   cols_align(align = "right") %>%
-  tab_source_note(source_note = md("k = number of estimates; *I*<sup>2</sup> = heterogeneity; *Q*<sub>test</sub> = Cochrane's *Q* test; NA = not applicable; Obser. = Observational or residual variance; Phylo = Phylogeny. Egger's test = intercept of an Egger's regression (Nakagawa and Santos 2012). Estimates shown correspond to modes and 95% Highest Posterior Density Intervals")) %>%
+  tab_source_note(source_note = md("k = number of estimates; *I*<sup>2</sup> = heterogeneity; *Q*<sub>test</sub> = Cochrane's *Q* test; NA = not applicable; Obser. = Observational or residual variance; Phylo = Phylogeny. Egger's test = intercept of an Egger's regression (Nakagawa and Santos 2012). Estimates shown correspond to modes and 95% Highest Posterior Density Intervals. N = 90 studies.")) %>%
   tab_options(table.width=775)
 
 
@@ -912,12 +912,24 @@ gtsave(tableS1.gt,filename="tableS1_meta-analysis.png", path="./tables/")
 
 # using the package gt to create fancy tables: https://github.com/rstudio/gt
 table.2.column.names <- c("Effect.size.group",
-                          "Estimates","Posterior.mode")
+                          "Estimates","Posterior.mode","N","k")
 
 
 effect.sizes.2.group <- c(rep(paste0("lnRR (k = ",nrow(stress.data.metareg.lnRR.ours),")"),7),
                           rep(paste0("lnRR (k = ",nrow(stress.data.metareg.lnRR.ours),"; time-lag bias test)"),3),
                           rep(paste0("lnCVR (k = ",nrow(stress.data.metareg.lnCVR),")"),7))
+
+studies.group <- as.character(c(stress.data.metareg.lnRR.ours %>% group_by(trait.class.2) %>% summarise(count = n_distinct(studyID)) %>% pull(count),
+                                c("-","-","-","-"),
+                                stress.data.metareg.lnCVR %>% group_by(trait.class.2) %>% summarise(count = n_distinct(studyID)) %>% pull(count),
+                                c("-")))
+
+ks.group <- as.character(c(stress.data.metareg.lnRR.ours %>% group_by(trait.class.2) %>% tally() %>% pull(n),
+                           c("-","-","-","-"),
+                           stress.data.metareg.lnCVR %>% group_by(trait.class.2) %>% tally() %>% pull(n),
+                           c("-")))
+
+
 
 # names of estimates
 estimates <- c("Intercept",
@@ -1039,24 +1051,28 @@ table2 <- data.frame(effect.sizes.2.group,
                      estimates,
                      paste0(sprintf("%.2f",metareg.modes)," [", #sprintf allows to keep the number of digits regardless of 0's
                             sprintf("%.2f",metareg.lower),",",
-                            sprintf("%.2f",metareg.upper),"]"))
+                            sprintf("%.2f",metareg.upper),"]"),
+                     studies.group,
+                     ks.group)
 
 names(table2) <- table.2.column.names
-
 
 
 table2.gt <- table2 %>% 
   gt(groupname_col = "Effect.size.group") %>%
   cols_label(Estimates=md("**Estimates**"),
-             Posterior.mode=md("**Mode [95% HPDI]**")) %>%#,
+             Posterior.mode=md("**Mode [95% HPDI]**"),
+             N=md("**N**"),
+             k=md("**k**")) %>%#,
   cols_align(align = "right",columns=c("Posterior.mode")) %>%
   cols_align(align = "left",columns=c("Estimates")) %>%
+  cols_align(align = "center",columns=c("N","k")) %>%
   text_transform(locations = cells_data(columns = vars(Estimates)),
                  fn = function(x){ifelse(x=="R2marginal",
-                                         md("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>R</em><sup>2</sup><sub> marginal</sub> (%) = "),
+                                         md("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>R</em><sup>2</sup><sub> marginal</sub> (%) = "),
                                          x)}) %>%
-  tab_source_note(source_note = md("k = number of estimates; *R*<sup>2</sup><sub>marginal</sub> = percentage of variance explained by the moderators (Nakagawa and Schielzeth 2013). The reference level (i.e. Intercept) corresponds to \"Behaviour\" (except for the time-lag bias test). Year of publication was z-transformed. Estimates shown correspond to posterior modes and 95% Highest Posterior Density Intervals (HPDI)"))%>%
-  tab_options(table.width=397)
+  tab_source_note(source_note = md("N = number of studies; k = number of estimates; *R*<sup>2</sup><sub>marginal</sub> = percentage of variance explained by the moderators (Nakagawa and Schielzeth 2013). The reference level (i.e. Intercept) corresponds to \"Behaviour\" (except for the time-lag bias test). Year of publication was z-transformed. Estimates shown correspond to posterior modes and 95% Highest Posterior Density Intervals (HPDI)."))%>%
+  tab_options(table.width=445)
 
 table2.gt
 
