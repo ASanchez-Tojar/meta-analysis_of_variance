@@ -803,7 +803,7 @@ ks.group <- as.character(c(stress.data.metareg.lnRR.ours %>% group_by(trait.clas
 
 
 # names of estimates
-estimates <- c("Intercept",
+estimates <- c("Behaviour",
                "Development",
                "Metabolism and Physiology",
                "Morphology",
@@ -813,7 +813,7 @@ estimates <- c("Intercept",
                "Intercept",
                "Year of publication",
                "R2marginal",
-               "Intercept",
+               "Behaviour",
                "Development",
                "Metabolism and Physiology",
                "Morphology",
@@ -823,8 +823,8 @@ estimates <- c("Intercept",
 
 # get_variables(brms.univariate.lnRR.ours.trait)
 # point summaries
-brms.univariate.lnRR.ours.trait %>%
-  spread_draws(c(b_Intercept,
+brms.univariate.lnRR.ours.trait.no.intercept %>%
+  spread_draws(c(b_trait.class.2behavioural,
                  b_trait.class.2development,
                  b_trait.class.2metabolism_and_physiology,
                  b_trait.class.2morphological,
@@ -838,8 +838,8 @@ brms.univariate.lnRR.ours.year %>%
                  b_year.z)) %>%
   mode_hdi() -> point.summaries.univariate.lnRR.ours.year
 
-brms.univariate.lnCVR.trait %>%
-  spread_draws(c(b_Intercept,
+brms.univariate.lnCVR.trait.no.intercept %>%
+  spread_draws(c(b_trait.class.2behavioural,
                  b_trait.class.2development,
                  b_trait.class.2metabolism_and_physiology,
                  b_trait.class.2morphological,
@@ -847,18 +847,9 @@ brms.univariate.lnCVR.trait %>%
                  b_trait.class.2survival)) %>%
   mode_hdi() -> point.summaries.univariate.lnCVR.trait
 
-brms.univariate.SMDH.ours.trait %>%
-  spread_draws(c(b_Intercept,
-                 b_trait.class.2development,
-                 b_trait.class.2metabolism_and_physiology,
-                 b_trait.class.2morphological,
-                 b_trait.class.2reproduction,
-                 b_trait.class.2survival)) %>%
-  mode_hdi() -> point.summaries.univariate.SMDH.ours.trait
-
 
 # meta-analytic modes
-metareg.modes <- round(c(unlist(point.summaries.univariate.lnRR.ours.trait[["b_Intercept"]]),
+metareg.modes <- round(c(unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2behavioural"]]),
                          unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2development"]]),
                          unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2metabolism_and_physiology"]]),
                          unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2morphological"]]),
@@ -868,7 +859,7 @@ metareg.modes <- round(c(unlist(point.summaries.univariate.lnRR.ours.trait[["b_I
                          unlist(point.summaries.univariate.lnRR.ours.year[["b_Intercept"]]),
                          unlist(point.summaries.univariate.lnRR.ours.year[["b_year.z"]]),
                          MCMCglmm::posterior.mode(R2m.lnRR.year),
-                         unlist(point.summaries.univariate.lnCVR.trait[["b_Intercept"]]),
+                         unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2behavioural"]]),
                          unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2development"]]),
                          unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2metabolism_and_physiology"]]),
                          unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2morphological"]]),
@@ -878,7 +869,7 @@ metareg.modes <- round(c(unlist(point.summaries.univariate.lnRR.ours.trait[["b_I
 
 
 # meta-analytic lower 2.5% CrIs (HDI)
-metareg.lower <- round(c(unlist(point.summaries.univariate.lnRR.ours.trait[["b_Intercept.lower"]]),
+metareg.lower <- round(c(unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2behavioural.lower"]]),
                          unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2development.lower"]]),
                          unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2metabolism_and_physiology.lower"]]),
                          unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2morphological.lower"]]),
@@ -888,7 +879,7 @@ metareg.lower <- round(c(unlist(point.summaries.univariate.lnRR.ours.trait[["b_I
                          unlist(point.summaries.univariate.lnRR.ours.year[["b_Intercept.lower"]]),
                          unlist(point.summaries.univariate.lnRR.ours.year[["b_year.z.lower"]]),
                          bayestestR::hdi(R2m.lnRR.year,ci = 0.95)$CI_low,
-                         unlist(point.summaries.univariate.lnCVR.trait[["b_Intercept.lower"]]),
+                         unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2behavioural.lower"]]),
                          unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2development.lower"]]),
                          unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2metabolism_and_physiology.lower"]]),
                          unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2morphological.lower"]]),
@@ -897,7 +888,7 @@ metareg.lower <- round(c(unlist(point.summaries.univariate.lnRR.ours.trait[["b_I
                          bayestestR::hdi(R2m.lnCVR.trait,ci = 0.95)$CI_low),2)
 
 # meta-analytic upper 97.5% CrIs (HDI)
-metareg.upper <- round(c(unlist(point.summaries.univariate.lnRR.ours.trait[["b_Intercept.upper"]]),
+metareg.upper <- round(c(unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2behavioural.upper"]]),
                          unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2development.upper"]]),
                          unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2metabolism_and_physiology.upper"]]),
                          unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2morphological.upper"]]),
@@ -907,7 +898,7 @@ metareg.upper <- round(c(unlist(point.summaries.univariate.lnRR.ours.trait[["b_I
                          unlist(point.summaries.univariate.lnRR.ours.year[["b_Intercept.upper"]]),
                          unlist(point.summaries.univariate.lnRR.ours.year[["b_year.z.upper"]]),
                          bayestestR::hdi(R2m.lnRR.year,ci = 0.95)$CI_high,
-                         unlist(point.summaries.univariate.lnCVR.trait[["b_Intercept.upper"]]),
+                         unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2behavioural.upper"]]),
                          unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2development.upper"]]),
                          unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2metabolism_and_physiology.upper"]]),
                          unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2morphological.upper"]]),
@@ -942,7 +933,7 @@ table2.gt <- table2 %>%
                  fn = function(x){ifelse(x=="R2marginal",
                                          md("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>R</em><sup>2</sup><sub> marginal</sub> (%) = "),
                                          x)}) %>%
-  tab_source_note(source_note = md("N = number of studies; k = number of estimates; *R*<sup>2</sup><sub>marginal</sub> = percentage of variance explained by the moderators (Nakagawa and Schielzeth 2013). The reference level (i.e. Intercept) corresponds to \"Behaviour\" (except for the time-lag bias test). Year of publication was z-transformed. Estimates shown correspond to posterior modes and 95% Highest Posterior Density Intervals (HPDI)."))%>%
+  tab_source_note(source_note = md("N = number of studies; k = number of estimates; *R*<sup>2</sup><sub>marginal</sub> = percentage of variance explained by the moderators (Nakagawa and Schielzeth 2013). Year of publication was z-transformed. Estimates shown correspond to posterior modes and 95% Highest Posterior Density Intervals (HPDI)."))%>%
   tab_options(table.width=445)
 
 table2.gt
