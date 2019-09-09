@@ -959,11 +959,9 @@ tiff("plots/Figure1_meta-analysis.tiff",
 pd <- position_dodgev(height = 0.25)
 
 post <- data.frame(c(rep(" lnRR",nrow(posterior.brms.univariate.lnRR.ours)),
-                     #rep(" lnVR",nrow(posterior.brms.univariate.lnVR)),
                      rep("lnCVR",nrow(posterior.brms.univariate.lnCVR))),
                    #rep("SMDH",nrow(posterior.brms.univariate.SMDH.ours))),
                    c(posterior.brms.univariate.lnRR.ours$b_Intercept,
-                     #posterior.brms.univariate.lnVR$b_Intercept,
                      posterior.brms.univariate.lnCVR$b_Intercept))#,
 #posterior.brms.univariate.SMDH.ours$b_Intercept))
 
@@ -971,7 +969,6 @@ names(post) <- c("es","estimate")
 
 posterior.plot <- post %>% 
   mutate(es = factor(es, levels = c("lnCVR",
-                                    #" lnVR",
                                     " lnRR"))) %>%
   ggplot() + 
   stat_density_ridges(aes(x=estimate, y = es), 
@@ -985,8 +982,6 @@ posterior.plot <- post %>%
   geom_vline(xintercept = 0, linetype = 2, colour = "black") + 
   ylab("")+
   xlab("Effect size")+
-  # scale_fill_manual(values = c("Male" = "#ff7f00", "Female" = "#984ea3", "Both" = "#4daf4a"))+
-  # scale_color_manual(values = c("Male" = "#ff7f00", "Female" = "#984ea3", "Both" = "#4daf4a"))+
   scale_x_continuous(limits = c(-0.35, 0.20), breaks = c(-0.3,-0.2,-0.1,0,0.1,0.2)) +
   theme_bw() +
   theme(panel.spacing = unit(0.1, "lines"),
@@ -1011,7 +1006,6 @@ posterior.plot <- post %>%
 
 #Add the modes as circles with error bars showing the 95% HDI
 p.sum.uni <- data.frame(c(" lnRR",
-                          #"lnVR",
                           "lnCVR"),
                         ks[1:2],
                         meta.modes[1:2],
@@ -1022,14 +1016,12 @@ names(p.sum.uni) <- c("es","k","mode","lower","upper")
 
 both.plots <- posterior.plot + 
   geom_errorbarh(data = p.sum.uni %>% mutate(es = factor(es, levels = c("lnCVR",
-                                                                        #" lnVR",
                                                                         " lnRR"))), 
                  aes(xmin = p.sum.uni$lower,
                      xmax = p.sum.uni$upper, y = es), 
                  height = 0, show.legend = F, position = pd,
                  color=rgb(25/255,100/255,205/255, 0.99))+
   geom_point(data = p.sum.uni %>% mutate(es = factor(es, levels = c("lnCVR",
-                                                                    #" lnVR",
                                                                     " lnRR"))),
              aes(x = mode, y = es, size=2), #k
              shape=21, fill = rgb(25/255,100/255,205/255, 0.99), position = pd, show.legend = F) 
@@ -1043,85 +1035,57 @@ dev.off()
 # FIGURE 2
 ###########
 
-# First thing is to get the data in the right format. Manually  
-# implemented rather than using, for example, marginal_effects()
-
-########################
-# lnRR: point summaries
-########################
-
-# this way allows to extract mode and HPDI for each level 
-newdat.lnRR.ours.trait <- expand.grid(trait.class.2 = levels(as.factor(stress.data.metareg.lnRR.ours$trait.class.2)))
-
-# fixed effects design matrix
-xmat.lnRR.ours.trait <- model.matrix(~trait.class.2,data=newdat.lnRR.ours.trait)
-
-fitmatboth.lnRR.ours.trait <- matrix(NA, 
-                                     ncol = nrow(posterior.brms.univariate.lnRR.ours.trait), 
-                                     nrow = nrow(newdat.lnRR.ours.trait))
-
-posterior.db.lnRR.ours.trait <- matrix(c(posterior.brms.univariate.lnRR.ours.trait$b_Intercept,
-                                         posterior.brms.univariate.lnRR.ours.trait$b_trait.class.2development,
-                                         posterior.brms.univariate.lnRR.ours.trait$b_trait.class.2metabolism_and_physiology,
-                                         posterior.brms.univariate.lnRR.ours.trait$b_trait.class.2morphological,
-                                         posterior.brms.univariate.lnRR.ours.trait$b_trait.class.2reproduction,
-                                         posterior.brms.univariate.lnRR.ours.trait$b_trait.class.2survival),
-                                       ncol = 6)
-
-for(i in 1:nrow(posterior.brms.univariate.lnRR.ours.trait)) {
-  fitmatboth.lnRR.ours.trait[,i] <- xmat.lnRR.ours.trait%*%posterior.db.lnRR.ours.trait[i,]
-}
-
-# getting point summaries
-newdat.lnRR.ours.trait$mode <- round(apply(fitmatboth.lnRR.ours.trait, 1, MCMCglmm::posterior.mode),2)
-
-HPDI.lnRR.ours.trait <- apply(fitmatboth.lnRR.ours.trait, 1, bayestestR::hdi,ci = 0.95)
-
-newdat.lnRR.ours.trait$lower <- round(sapply(HPDI.lnRR.ours.trait, function(x)x[["CI_low"]]),2)
-newdat.lnRR.ours.trait$upper <- round(sapply(HPDI.lnRR.ours.trait, function(x)x[["CI_high"]]),2)
-
-#newdat.lnRR.ours.trait
+# meta-analytic modes
+metareg.modes.fig <- c(unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2behavioural"]]),
+                       unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2development"]]),
+                       unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2metabolism_and_physiology"]]),
+                       unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2morphological"]]),
+                       unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2reproduction"]]),
+                       unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2survival"]]),
+                       unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2behavioural"]]),
+                       unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2development"]]),
+                       unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2metabolism_and_physiology"]]),
+                       unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2morphological"]]),
+                       unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2reproduction"]]),
+                       unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2survival"]]))
 
 
-########################
-# lnCVR: point summaries
-########################
+# meta-analytic lower 2.5% CrIs (HDI)
+metareg.lower.fig <- c(unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2behavioural.lower"]]),
+                       unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2development.lower"]]),
+                       unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2metabolism_and_physiology.lower"]]),
+                       unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2morphological.lower"]]),
+                       unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2reproduction.lower"]]),
+                       unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2survival.lower"]]),
+                       unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2behavioural.lower"]]),
+                       unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2development.lower"]]),
+                       unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2metabolism_and_physiology.lower"]]),
+                       unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2morphological.lower"]]),
+                       unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2reproduction.lower"]]),
+                       unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2survival.lower"]]))
 
-# this way allows to extract mode and HPDI for each level 
-newdat.lnCVR.trait <- expand.grid(trait.class.2 = levels(as.factor(stress.data.metareg.lnCVR$trait.class.2)))
+# meta-analytic upper 97.5% CrIs (HDI)
+metareg.upper.fig <- c(unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2behavioural.upper"]]),
+                       unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2development.upper"]]),
+                       unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2metabolism_and_physiology.upper"]]),
+                       unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2morphological.upper"]]),
+                       unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2reproduction.upper"]]),
+                       unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2survival.upper"]]),
+                       unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2behavioural.upper"]]),
+                       unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2development.upper"]]),
+                       unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2metabolism_and_physiology.upper"]]),
+                       unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2morphological.upper"]]),
+                       unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2reproduction.upper"]]),
+                       unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2survival.upper"]]))
 
-# fixed effects design matrix
-xmat.lnCVR.trait <- model.matrix(~trait.class.2,data=newdat.lnCVR.trait)
 
-fitmatboth.lnCVR.trait <- matrix(NA, 
-                                 ncol = nrow(posterior.brms.univariate.lnCVR.trait), 
-                                 nrow = nrow(newdat.lnCVR.trait))
+# building database of point summaries
+newdat.trait <- data.frame(metareg.modes.fig,
+                           metareg.lower.fig,
+                           metareg.upper.fig,
+                           c(rep(" lnRR",6),rep("lnCVR",6)))
 
-posterior.db.lnCVR.trait <- matrix(c(posterior.brms.univariate.lnCVR.trait$b_Intercept,
-                                     posterior.brms.univariate.lnCVR.trait$b_trait.class.2development,
-                                     posterior.brms.univariate.lnCVR.trait$b_trait.class.2metabolism_and_physiology,
-                                     posterior.brms.univariate.lnCVR.trait$b_trait.class.2morphological,
-                                     posterior.brms.univariate.lnCVR.trait$b_trait.class.2reproduction,
-                                     posterior.brms.univariate.lnCVR.trait$b_trait.class.2survival),
-                                   ncol = 6)
-
-for(i in 1:nrow(posterior.brms.univariate.lnCVR.trait)) {
-  fitmatboth.lnCVR.trait[,i] <- xmat.lnCVR.trait%*%posterior.db.lnCVR.trait[i,]
-}
-
-# getting point summaries
-newdat.lnCVR.trait$mode <- round(apply(fitmatboth.lnCVR.trait, 1, MCMCglmm::posterior.mode),2)
-
-HPDI.lnCVR.trait <- apply(fitmatboth.lnCVR.trait, 1, bayestestR::hdi,ci = 0.95)
-
-newdat.lnCVR.trait$lower <- round(sapply(HPDI.lnCVR.trait, function(x)x[["CI_low"]]),2)
-newdat.lnCVR.trait$upper <- round(sapply(HPDI.lnCVR.trait, function(x)x[["CI_high"]]),2)
-
-#newdat.lnCVR.trait
-
-# full dataset with all point summaries
-newdat.trait <- rbind(newdat.lnRR.ours.trait,newdat.lnCVR.trait)
-newdat.trait$es <- c(rep(" lnRR",6),rep("lnCVR",6))
+names(newdat.trait) <- c("mode","lower","upper","es")
 
 # adding sample sizes to it
 lnRR.ks <- stress.data.metareg.lnRR.ours %>% 
@@ -1137,51 +1101,41 @@ lnCVR.ks <- stress.data.metareg.lnCVR %>%
 newdat.trait$k <- c(lnRR.ks$count,lnCVR.ks$count)
 newdat.trait$trait.colour <- rep(c("#999999","#E69F00","#56B4E9","#009E73","#D55E00","#CC79A7"),2)
 
-# renaming variables and levels for visualization
-newdat.trait <- newdat.trait %>% rename(Trait = trait.class.2)
-newdat.trait <- newdat.trait %>%
-  mutate(Trait = recode(Trait, 
-                        behavioural = "Behaviour",
-                        development = "Development",
-                        metabolism_and_physiology = "Metabolism and Physiology",
-                        morphological = "Morphology",
-                        reproduction = "Reproduction",
-                        survival = "Survival"))
-
-# table(stress.data.metareg.lnRR.ours$trait.class.2)
-# table(stress.data.metareg.lnCVR$trait.class.2)
-
+newdat.trait$Trait <- rep(c("Behaviour","Development",
+                            "Metabolism and Physiology",
+                            "Morphology","Reproduction",
+                            "Survival"),2)
 
 ###########################
 # lnRR and lnCVR: posterior
 ###########################
 
-post.metaregression <- data.frame(c(rep(" lnRR",ncol(fitmatboth.lnRR.ours.trait)*nrow(fitmatboth.lnRR.ours.trait)),
-                                    rep("lnCVR",ncol(fitmatboth.lnCVR.trait)*nrow(fitmatboth.lnCVR.trait))),
-                                  c(rep("Behaviour",length(fitmatboth.lnRR.ours.trait[1,])),
-                                    rep("Development",length(fitmatboth.lnRR.ours.trait[1,])),
-                                    rep("Metabolism and Physiology",length(fitmatboth.lnRR.ours.trait[1,])),
-                                    rep("Morphology",length(fitmatboth.lnRR.ours.trait[1,])),
-                                    rep("Reproduction",length(fitmatboth.lnRR.ours.trait[1,])),
-                                    rep("Survival",length(fitmatboth.lnRR.ours.trait[1,])),
-                                    rep("Behaviour",length(fitmatboth.lnCVR.trait[1,])),
-                                    rep("Development",length(fitmatboth.lnCVR.trait[1,])),
-                                    rep("Metabolism and Physiology",length(fitmatboth.lnCVR.trait[1,])),
-                                    rep("Morphology",length(fitmatboth.lnCVR.trait[1,])),
-                                    rep("Reproduction",length(fitmatboth.lnCVR.trait[1,])),
-                                    rep("Survival",length(fitmatboth.lnCVR.trait[1,]))),
-                                  c(fitmatboth.lnRR.ours.trait[1,],
-                                    fitmatboth.lnRR.ours.trait[2,],
-                                    fitmatboth.lnRR.ours.trait[3,],
-                                    fitmatboth.lnRR.ours.trait[4,],
-                                    fitmatboth.lnRR.ours.trait[5,],
-                                    fitmatboth.lnRR.ours.trait[6,],
-                                    fitmatboth.lnCVR.trait[1,],
-                                    fitmatboth.lnCVR.trait[2,],
-                                    fitmatboth.lnCVR.trait[3,],
-                                    fitmatboth.lnCVR.trait[4,],
-                                    fitmatboth.lnCVR.trait[5,],
-                                    fitmatboth.lnCVR.trait[6,]))
+post.metaregression <- data.frame(c(rep(" lnRR",6*nrow(posterior.brms.univariate.lnRR.ours.trait)),
+                                    rep("lnCVR",6*nrow(posterior.brms.univariate.lnCVR.trait))),
+                                  c(rep("Behaviour",length(posterior.brms.univariate.lnRR.ours.trait[,"b_trait.class.2behavioural"])),
+                                    rep("Development",length(posterior.brms.univariate.lnRR.ours.trait[,"b_trait.class.2development"])),
+                                    rep("Metabolism and Physiology",length(posterior.brms.univariate.lnRR.ours.trait[,"b_trait.class.2metabolism_and_physiology"])),
+                                    rep("Morphology",length(posterior.brms.univariate.lnRR.ours.trait[,"b_trait.class.2morphological"])),
+                                    rep("Reproduction",length(posterior.brms.univariate.lnRR.ours.trait[,"b_trait.class.2reproduction"])),
+                                    rep("Survival",length(posterior.brms.univariate.lnRR.ours.trait[,"b_trait.class.2survival"])),
+                                    rep("Behaviour",length(posterior.brms.univariate.lnCVR.trait[,"b_trait.class.2behavioural"])),
+                                    rep("Development",length(posterior.brms.univariate.lnCVR.trait[,"b_trait.class.2development"])),
+                                    rep("Metabolism and Physiology",length(posterior.brms.univariate.lnCVR.trait[,"b_trait.class.2metabolism_and_physiology"])),
+                                    rep("Morphology",length(posterior.brms.univariate.lnCVR.trait[,"b_trait.class.2morphological"])),
+                                    rep("Reproduction",length(posterior.brms.univariate.lnCVR.trait[,"b_trait.class.2reproduction"])),
+                                    rep("Survival",length(posterior.brms.univariate.lnCVR.trait[,"b_trait.class.2survival"]))),
+                                  c(posterior.brms.univariate.lnRR.ours.trait[,"b_trait.class.2behavioural"],
+                                    posterior.brms.univariate.lnRR.ours.trait[,"b_trait.class.2development"],
+                                    posterior.brms.univariate.lnRR.ours.trait[,"b_trait.class.2metabolism_and_physiology"],
+                                    posterior.brms.univariate.lnRR.ours.trait[,"b_trait.class.2morphological"],
+                                    posterior.brms.univariate.lnRR.ours.trait[,"b_trait.class.2reproduction"],
+                                    posterior.brms.univariate.lnRR.ours.trait[,"b_trait.class.2survival"],
+                                    posterior.brms.univariate.lnCVR.trait[,"b_trait.class.2behavioural"],
+                                    posterior.brms.univariate.lnCVR.trait[,"b_trait.class.2development"],
+                                    posterior.brms.univariate.lnCVR.trait[,"b_trait.class.2metabolism_and_physiology"],
+                                    posterior.brms.univariate.lnCVR.trait[,"b_trait.class.2morphological"],
+                                    posterior.brms.univariate.lnCVR.trait[,"b_trait.class.2reproduction"],
+                                    posterior.brms.univariate.lnCVR.trait[,"b_trait.class.2survival"]))
 
 names(post.metaregression) <- c("es","Trait","estimate")
 
