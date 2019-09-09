@@ -218,12 +218,22 @@ for (i in 1:length(temp)) assign(temp[i], load(paste0("models/brms/",temp[i])))
 # plot(brms.univariate.lnRR.ours.trait)
 # #pairs(brms.univariate.lnRR.ours.trait) # too crowdie
 # brms::pp_check(brms.univariate.lnRR.ours.trait, resp = "lnRR.sc.ours") # graphical posterior predictive check
+#
+# # lnRR no intercept
+# summary(brms.univariate.lnRR.ours.trait.no.intercept) # Rhat = 1.00 at all times, Eff.sample range=(1319,3222)
+# plot(brms.univariate.lnRR.ours.trait.no.intercept)
+# brms::pp_check(brms.univariate.lnRR.ours.trait.no.intercept, resp = "lnRR.sc.ours") # graphical posterior predictive check
 # 
 # # lnCVR
 # summary(brms.univariate.lnCVR.trait) # Rhat = 1.00 at all times, Eff.sample range=(1316,4213)
 # plot(brms.univariate.lnCVR.trait)
 # brms::pp_check(brms.univariate.lnCVR.trait, resp = "lnCVR.sc") # graphical posterior predictive check
 # 
+# # lnCVR no intercept
+# summary(brms.univariate.lnCVR.trait.no.intercept) # Rhat = 1.00 at all times, Eff.sample range=(1714,3834)
+# plot(brms.univariate.lnCVR.trait.no.intercept)
+# brms::pp_check(brms.univariate.lnCVR.trait.no.intercept, resp = "lnCVR.sc") # graphical posterior predictive check
+#
 # # Egger: lnRR
 # summary(brms.Egger.lnRR.ours) # Rhat = 1.00 at all times, Eff.sample range=(4397,5626)
 # plot(brms.Egger.lnRR.ours)
@@ -375,7 +385,8 @@ I2_speciesID.SMDH.ours <- posterior.brms.univariate.SMDH.ours$sd_speciesID__Inte
 #####################
 
 # extracting posterior samples from the model
-posterior.brms.univariate.lnRR.ours.trait <- posterior_samples(brms.univariate.lnRR.ours.trait)
+#posterior.brms.univariate.lnRR.ours.trait <- posterior_samples(brms.univariate.lnRR.ours.trait)
+posterior.brms.univariate.lnRR.ours.trait <- posterior_samples(brms.univariate.lnRR.ours.trait.no.intercept)
 
 
 # building a design matrix for the fixed effects
@@ -400,7 +411,8 @@ R2m.lnRR.trait<-100*(vmVarF/(vmVarF+posterior.brms.univariate.lnRR.ours.trait$sd
 #####################
 
 # extracting posterior samples from the model
-posterior.brms.univariate.lnCVR.trait <- posterior_samples(brms.univariate.lnCVR.trait)
+#posterior.brms.univariate.lnCVR.trait <- posterior_samples(brms.univariate.lnCVR.trait)
+posterior.brms.univariate.lnCVR.trait <- posterior_samples(brms.univariate.lnCVR.trait.no.intercept)
 
 
 # building a design matrix for the fixed effects
@@ -418,31 +430,6 @@ R2m.lnCVR.trait<-100*(vmVarF/(vmVarF+posterior.brms.univariate.lnCVR.trait$sd_es
                                 posterior.brms.univariate.lnCVR.trait$sd_scientific.name__Intercept+
                                 posterior.brms.univariate.lnCVR.trait$sd_speciesID__Intercept+
                                 posterior.brms.univariate.lnCVR.trait$sd_studyID__Intercept))
-
-
-#####################
-# SMDH.trait
-#####################
-
-# extracting posterior samples from the model
-posterior.brms.univariate.SMDH.ours.trait <- posterior_samples(brms.univariate.SMDH.ours.trait)
-
-
-# building a design matrix for the fixed effects
-newdat<-expand.grid(trait.class.2 = stress.data.metareg.SMDH.ours$trait.class.2)
-fixeff.design.matrix<-model.matrix(~trait.class.2,data=newdat)
-
-
-# Estimating R2
-vmVarF<-numeric(1000)
-for(i in 1:1000){
-  Var<-var(as.vector(as.matrix(posterior.brms.univariate.SMDH.ours.trait[i,c(1:6)]) %*% t(fixeff.design.matrix)))
-  vmVarF[i]<-Var}
-
-R2m.SMDH.trait<-100*(vmVarF/(vmVarF+posterior.brms.univariate.SMDH.ours.trait$sd_esID__Intercept+
-                               posterior.brms.univariate.SMDH.ours.trait$sd_scientific.name__Intercept+
-                               posterior.brms.univariate.SMDH.ours.trait$sd_speciesID__Intercept+
-                               posterior.brms.univariate.SMDH.ours.trait$sd_studyID__Intercept))
 
 
 #####################
@@ -678,25 +665,6 @@ speciesID.I2.upper <- round(c(bayestestR::hdi(I2_speciesID.lnRR.ours,ci = 0.95)$
                               #bayestestR::hdi(I2_speciesID.lnVR,ci = 0.95)$CI_high,
                               bayestestR::hdi(I2_speciesID.lnCVR,ci = 0.95)$CI_high,
                               bayestestR::hdi(I2_speciesID.SMDH.ours,ci = 0.95)$CI_high),3)*100
-
-# # bayesian R2 = how much variation in the response variable can be explained by our model using a Bayesian generalization of the R2 coefficient
-# # bayesian R2 modes 
-# bayesian.R2.modes <- round(c(MCMCglmm::posterior.mode(bayes_R2(brms.univariate.lnRR.ours,summary = FALSE)),
-#                              MCMCglmm::posterior.mode(bayes_R2(brms.univariate.lnVR,summary = FALSE)),
-#                              MCMCglmm::posterior.mode(bayes_R2(brms.univariate.lnCVR,summary = FALSE)),
-#                              MCMCglmm::posterior.mode(bayes_R2(brms.univariate.SMDH.ours,summary = FALSE))),3)*100
-# 
-# # bayesian R2 lower 2.5% CrIs (HDI)
-# bayesian.R2.lower <- round(c(bayestestR::hdi(bayes_R2(brms.univariate.lnRR.ours,summary = FALSE),ci = 0.95)$CI_low,
-#                              bayestestR::hdi(bayes_R2(brms.univariate.lnVR,summary = FALSE),ci = 0.95)$CI_low,
-#                              bayestestR::hdi(bayes_R2(brms.univariate.lnCVR,summary = FALSE),ci = 0.95)$CI_low,
-#                              bayestestR::hdi(bayes_R2(brms.univariate.SMDH.ours,summary = FALSE),ci = 0.95)$CI_low),3)*100
-# 
-# # bayesian R2 upper 97.5% CrIs (HDI)
-# bayesian.R2.upper <- round(c(bayestestR::hdi(bayes_R2(brms.univariate.lnRR.ours,summary = FALSE),ci = 0.95)$CI_high,
-#                              bayestestR::hdi(bayes_R2(brms.univariate.lnVR,summary = FALSE),ci = 0.95)$CI_high,
-#                              bayestestR::hdi(bayes_R2(brms.univariate.lnCVR,summary = FALSE),ci = 0.95)$CI_high,
-#                              bayestestR::hdi(bayes_R2(brms.univariate.SMDH.ours,summary = FALSE),ci = 0.95)$CI_high),3)*100
 
 # Q tests
 Qtests <- round(c(lnRR.ours.Q,lnCVR.Q,SMDH.ours.Q),0)
