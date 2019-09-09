@@ -155,7 +155,6 @@ stress.data <- read.xlsx("data_re-extraction/clean_data/EyckDev_stress_clean_eff
 
 # subsets
 stress.data.lnRR.ours <- stress.data[!(is.na(stress.data$lnRR.sc.ours)),]
-#stress.data.lnVR <- stress.data[!(is.na(stress.data$lnVR.sc.sv)),]
 stress.data.lnCVR <- stress.data[!(is.na(stress.data$lnCVR.sc.sv)),]
 stress.data.SMDH.ours <- stress.data[!(is.na(stress.data$SMDH.sc.ours)),]
 
@@ -167,9 +166,7 @@ stress.data.metareg <- merge(stress.data,trait.database.red,by="esID",all.x=T)
 
 # subsets needed
 stress.data.metareg.lnRR.ours <- stress.data.metareg[!(is.na(stress.data.metareg$lnRR.sc.ours)),]
-#stress.data.metareg.lnVR <- stress.data.metareg[!(is.na(stress.data.metareg$lnVR.sc)),]
 stress.data.metareg.lnCVR <- stress.data.metareg[!(is.na(stress.data.metareg$lnCVR.sc)),]
-stress.data.metareg.SMDH.ours <- stress.data.metareg[!(is.na(stress.data.metareg$SMDH.sc.ours)),]
 
 # loading phylogenetic matrix "phylo_cor"
 load("data_re-extraction/clean_data/phylo_cor.Rdata") #phylo_cor
@@ -195,12 +192,6 @@ for (i in 1:length(temp)) assign(temp[i], load(paste0("models/brms/",temp[i])))
 # pairs(brms.univariate.lnRR.ours)
 # brms::pp_check(brms.univariate.lnRR.ours, resp = "lnRR.sc.ours") # graphical posterior predictive check
 # 
-# # lnVR
-# summary(brms.univariate.lnVR) # Rhat <= 1.01 at all times (only species ID has an Rhat = 1.01), Eff.sample range=(1255,3701)
-# plot(brms.univariate.lnVR)
-# pairs(brms.univariate.lnVR)
-# brms::pp_check(brms.univariate.lnVR, resp = "lnVR.sc") # graphical posterior predictive check
-# 
 # # lnCVR
 # summary(brms.univariate.lnCVR) # Rhat = 1.00 at all times, Eff.sample range=(1319,4206)
 # plot(brms.univariate.lnCVR)
@@ -219,12 +210,6 @@ for (i in 1:length(temp)) assign(temp[i], load(paste0("models/brms/",temp[i])))
 # pairs(brms.univariate.cohens.biased.HE)
 # brms::pp_check(brms.univariate.cohens.biased.HE, resp = "cohens.biased.HE") # graphical posterior predictive check
 # 
-# # lnRR,lnVR (bivariate)
-# summary(brms.bivariate.lnRR.ours.lnVR) # Rhat = 1.00 at all times, Eff.sample range=(606,4232)
-# plot(brms.bivariate.lnRR.ours.lnVR)
-# brms::pp_check(brms.bivariate.lnRR.ours.lnVR, resp = "lnRRscours") # graphical posterior predictive check
-# brms::pp_check(brms.bivariate.lnRR.ours.lnVR, resp = "lnVRsc") # graphical posterior predictive check
-# 
 # ##################
 # # Meta-regressions
 # 
@@ -234,40 +219,20 @@ for (i in 1:length(temp)) assign(temp[i], load(paste0("models/brms/",temp[i])))
 # #pairs(brms.univariate.lnRR.ours.trait) # too crowdie
 # brms::pp_check(brms.univariate.lnRR.ours.trait, resp = "lnRR.sc.ours") # graphical posterior predictive check
 # 
-# # lnVR
-# summary(brms.univariate.lnVR.trait) # Rhat = 1.00 at all times, Eff.sample range=(1398,4256)
-# plot(brms.univariate.lnVR.trait)
-# brms::pp_check(brms.univariate.lnVR.trait, resp = "lnVR.sc") # graphical posterior predictive check
-# 
 # # lnCVR
 # summary(brms.univariate.lnCVR.trait) # Rhat = 1.00 at all times, Eff.sample range=(1316,4213)
 # plot(brms.univariate.lnCVR.trait)
 # brms::pp_check(brms.univariate.lnCVR.trait, resp = "lnCVR.sc") # graphical posterior predictive check
-# 
-# # SMDH
-# summary(brms.univariate.SMDH.ours.trait) # Rhat = 1.00 at all times, Eff.sample range=(688,4458)
-# plot(brms.univariate.SMDH.ours.trait)
-# brms::pp_check(brms.univariate.SMDH.ours.trait, resp = "SMDH.sc.ours") # graphical posterior predictive check
 # 
 # # Egger: lnRR
 # summary(brms.Egger.lnRR.ours) # Rhat = 1.00 at all times, Eff.sample range=(4397,5626)
 # plot(brms.Egger.lnRR.ours)
 # brms::pp_check(brms.Egger.lnRR.ours, resp = "zMAR") # graphical posterior predictive check
 # 
-# # Egger: lnRR.trait
-# summary(brms.Egger.lnRR.ours.trait) # Rhat = 1.00 at all times, Eff.sample range=(3434,5905)
-# plot(brms.Egger.lnRR.ours.trait)
-# brms::pp_check(brms.Egger.lnRR.ours.trait, resp = "zMAR") # graphical posterior predictive check
-# 
 # # Egger: SMDH
 # summary(brms.Egger.SMDH.ours) # Rhat = 1.00 at all times, Eff.sample range=(5332,5700)
 # plot(brms.Egger.SMDH.ours)
 # brms::pp_check(brms.Egger.SMDH.ours, resp = "zMAR") # graphical posterior predictive check
-# 
-# # Egger: SMDH.trait
-# summary(brms.Egger.SMDH.ours.trait) # Rhat = 1.00 at all times, Eff.sample range=(5129,5629)
-# plot(brms.Egger.SMDH.ours.trait)
-# brms::pp_check(brms.Egger.SMDH.ours.trait, resp = "zMAR") # graphical posterior predictive check
 # 
 # # Time-lag: lnRR
 # summary(brms.univariate.lnRR.ours.year) # Rhat = 1.00 at all times, Eff.sample range=(1193,5390)
@@ -325,43 +290,6 @@ I2_phylo.lnRR.ours <- posterior.brms.univariate.lnRR.ours$sd_scientific.name__In
 
 # speciesID I2
 I2_speciesID.lnRR.ours <- posterior.brms.univariate.lnRR.ours$sd_speciesID__Intercept/total_var.lnRR.ours
-
-
-# #####################
-# # lnVR
-# #####################
-# 
-# # extracting the posterior distributions from our models
-# posterior.brms.univariate.lnVR <- posterior_samples(brms.univariate.lnVR)
-# 
-# # WI = weight
-# WI.lnVR <- na.omit(1/stress.data.lnVR$lnVR.sc.sv)
-# 
-# # s2I = measurement error variance = sigma2m
-# s2I.lnVR <- sum(WI.lnVR*(length(WI.lnVR)-1))/(sum(WI.lnVR)^2-sum(WI.lnVR^2))
-# 
-# # total variance, including measurement error variance
-# total_var.lnVR <- posterior.brms.univariate.lnVR$sd_esID__Intercept +
-#   posterior.brms.univariate.lnVR$sd_scientific.name__Intercept +
-#   posterior.brms.univariate.lnVR$sd_speciesID__Intercept +
-#   posterior.brms.univariate.lnVR$sd_studyID__Intercept +
-#   s2I.lnVR
-# 
-# # total heterogeneity I2
-# I2_total.lnVR <- (total_var.lnVR-s2I.lnVR)/total_var.lnVR
-# 
-# # observational level I2
-# I2_esiD.lnVR <- posterior.brms.univariate.lnVR$sd_esID__Intercept/total_var.lnVR
-# 
-# # studyID I2
-# I2_studyID.lnVR <- posterior.brms.univariate.lnVR$sd_studyID__Intercept/total_var.lnVR
-# 
-# # phylogeny I2: notice that s2I is substracted from this calculation as phylogenetic
-# # relatedness is a "fixed random effect"
-# I2_phylo.lnVR <- posterior.brms.univariate.lnVR$sd_scientific.name__Intercept/(total_var.lnVR-s2I.lnVR)
-# 
-# # speciesID I2
-# I2_speciesID.lnVR <- posterior.brms.univariate.lnVR$sd_speciesID__Intercept/total_var.lnVR
 
 
 #####################
@@ -465,31 +393,6 @@ R2m.lnRR.trait<-100*(vmVarF/(vmVarF+posterior.brms.univariate.lnRR.ours.trait$sd
                                posterior.brms.univariate.lnRR.ours.trait$sd_scientific.name__Intercept+
                                posterior.brms.univariate.lnRR.ours.trait$sd_speciesID__Intercept+
                                posterior.brms.univariate.lnRR.ours.trait$sd_studyID__Intercept))
-
-# #####################
-# # lnVR.trait
-# #####################
-# 
-# # extracting posterior samples from the model
-# posterior.brms.univariate.lnVR.trait <- posterior_samples(brms.univariate.lnVR.trait)
-# 
-# 
-# # building a design matrix for the fixed effects
-# newdat<-expand.grid(trait.class.2 = stress.data.metareg.lnVR$trait.class.2)
-# fixeff.design.matrix<-model.matrix(~trait.class.2,data=newdat)
-# 
-# 
-# # Estimating R2
-# vmVarF<-numeric(1000)
-# for(i in 1:1000){
-#   Var<-var(as.vector(as.matrix(posterior.brms.univariate.lnVR.trait[i,c(1:6)]) %*% t(fixeff.design.matrix)))
-#   vmVarF[i]<-Var}
-# 
-# R2m.lnVR.trait<-100*(vmVarF/(vmVarF+posterior.brms.univariate.lnVR.trait$sd_esID__Intercept+
-#                                posterior.brms.univariate.lnVR.trait$sd_scientific.name__Intercept+
-#                                posterior.brms.univariate.lnVR.trait$sd_speciesID__Intercept+
-#                                posterior.brms.univariate.lnVR.trait$sd_studyID__Intercept))
-# 
 
 
 #####################
