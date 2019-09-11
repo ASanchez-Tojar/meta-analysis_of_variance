@@ -1,8 +1,3 @@
-# meta-analysis_of_variance
-
-This repository contains all R code and data used for a project on the use of meta-analysis of both means and variance in ecology and evolution.
-
-
 # Meta-analysing variances alongside means
 
 This repository contains the R scripts and code use in the following study:
