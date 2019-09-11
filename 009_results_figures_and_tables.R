@@ -754,6 +754,8 @@ gtsave(table1.gt,filename="table1_meta-analysis.png", path="./tables/")
 # reducing table for main manuscript
 table1.SMDH <- table1[3,]
 
+write.csv(table1.SMDH,"tables/tableS1_supplements_data.csv",row.names=FALSE)
+
 tableS1.gt <- table1.SMDH %>% 
   gt() %>% 
   cols_label(Effect.size=md("**Effect size**"),
