@@ -1,0 +1,165 @@
+---
+title: Illustrating the importance of meta-analysing variances alongside means in ecology and evolution
+author: Alfredo Sánchez-Tójar, Nicholas P. Moran, Rose E. O’Dea, Klaus Reinhold, Shinichi Nakagawa
+date: "2019"
+output:
+  html_document:
+    code_download: true
+    code_folding: hide
+    theme: united
+    toc: yes
+    toc_float: yes
+  pdf_document:
+    toc: yes
+
+subtitle: Electronic Supplementary Information
+---
+
+```{r,echo=FALSE, cache=FALSE}
+## numbers >= 10^5 will be denoted in scientific notation, and rounded to 2 digits
+options(digits = 2)
+```
+
+```{r setup, echo = FALSE, eval = TRUE}
+rm(list=ls())
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, eval = TRUE)
+pacman::p_load(tidyverse,ggplot2,openxlsx,dplyr,treebase,gt)
+
+# Author's information: 
+# Alfredo Sanchez-Tojar (@ASanchez_Tojar)
+# Profile: https://goo.gl/PmpPEB
+# Department of Evolutionary Biology, Bielefeld University (GER) 
+# Email: alfredo.tojar@gmail.com
+# Script first created on the 11th of Sep 2019
+```
+
+```{r,results="hide"}
+# importing the extracted data after fulltext screening
+data.ref <- read.table("literature_review/Nakagawa_et_al_2015/Nakagawa_et_al_2015_citing_references_fulltext_screening.csv",header=T,sep=",")
+
+# subsetting those included in the database
+data.ref.included <- data.ref[data.ref$fulltext_decision=="yes" | data.ref$fulltext_decision=="yes_but_no_lnCVR",]
+data.ref.included <- data.ref.included[!(is.na(data.ref.included$fulltext_decision)),]
+```
+## 1. Meta-analysis of variance in ecology and evolution
+We counted how many meta-analyses of variance have been conducted since Nakagawa et al. (2015) to provide an overview of the use of meta-analysis of variance in ecology and evolution. On the 20th of August 2019, we extracted all the references citing Nakagawa et al. (2015) according to Web of Science (n = `r nrow(data.ref)`) - search performed from Bielefeld University. Titles and abstracts of all those references were screened using the software Rayyan (Ouzzani et al. 2016), and references from fields other than ecology and evolution were excluded (n = `r table(data.ref$t.and.a_decision)[1]` excluded). The full-text of all studies that passed the title-and-abstract screening (n = `r table(data.ref$t.and.a_decision)[2]` records) were subsequently evaluated for inclusion in the final database. Our search showed that at least `r nrow(data.ref.included)` meta-analyses of variance have been conducted in ecology and evolution since Nakagawa et al. (2015; Figure S1). 
+
+```{r}
+# counting number of studies per year for the plot
+barplot <- data.ref.included %>% 
+  group_by(year) %>% 
+  summarise(count = n())
+
+p<-ggplot(data=barplot, aes(x=year, y=count)) +
+  geom_bar(stat="identity", fill="steelblue")+
+  ylab("Number of meta-analyses of variance")+
+  xlab("Year")+
+  theme_bw() +
+  theme(panel.spacing = unit(0.1, "lines"),
+        text = element_text(size=16),
+        panel.border= element_blank(),
+        axis.line=element_line(), 
+        axis.ticks.y = element_blank(),
+        panel.grid.major.x = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        panel.grid.minor.x = element_blank(), 
+        legend.text = element_text(size=16), 
+        legend.title=element_text(size=16, face = "bold"),
+        axis.title.x = element_text(hjust = 0.5, size = 13, face = "bold"),
+        axis.title.y = element_text(size = 13, hjust = 0.5, margin = margin(r=8),face = "bold"),
+        axis.text.y = element_text(angle = 0,color="black",hjust=0),
+        axis.text.x = element_text(color="black"),
+        plot.title = element_text(size = 16))
+p
+```
+
+**Figure S1**. Number of meta-analyses of variance conducted each year in ecology and evolution since Nakagawa et al. (2015). 
+
+```{r,results="hide"}
+# estimating the rate of typos purely affecting means, sds, and ns
+db.typos <- read.xlsx("data_re-extraction/re-extracted/001_EyckDev.stress_Data_FULL_TABLE_all_raw_data_re-extracted_VISUAL_manual_comp_typos.xlsx",colNames=T,sheet = 1)
+
+# database with the corrected data
+stress.data <- read.xlsx("data_re-extraction/clean_data/EyckDev_stress_clean_effect_sizes_sp_corrected.xlsx",colNames=T,sheet = 1)
+missing.sign <- stress.data[is.na(stress.data$sign.inversion.ours),]
+```
+## 2. Data information
+We used the data from Eyck et al. (2019) as a case example. While most data were made available with the original publication, the authors kindly shared a version of the dataset with us containing the raw data (means, SDs, and sample sizes) for the final subset analyzed in their study, which we used for our analyses. Before using the dataset, two observers (AST and NPM) performed a data quality check for the shared dataset, which consisted of reading the original publications and confirming the extracted means, SDs and sample sizes. Overall, we found that `r round((table(db.typos$mistake)[2]/nrow(db.typos))*100,0)`% of the control-treatment comparisons in the shared dataset required some correction(s). Furthermore, due to some inconsistencies in how traits were categorized in the shared dataset, we decided to reclassify those traits following Acasuso-Rivero et al. (2019), who used six levels (behaviour, development, metabolism and physiology, morphology, reproduction, and survival) instead of the five levels (behaviour, physiology, morphology, reproduction, and performance) used in Eyck et al. (2019). This reclassification was performed by a single observer (AST). Based on the list of traits available, we found our classification easier. Importantly, our decision to reclassify the traits was taken before any meta-regression was conducted. Last, we also recoded the direction of some of the effect sizes. As in Eyck et al. (2019), effect sizes were coded such that negative values indicate that developmental stress negatively affects fitness. This process was performed by one observer (AST), and consisted of going through the list of available traits identifying those for which a clear decision on the direction could be made, and those for which more information was needed. For the latter group, the observer revisited the definition and predictions available in the original publications before making a decision. Of these, `r nrow(missing.sign)` effect sizes from `r length(unique(missing.sign$studyID))` studies could not be assigned a direction based on the information provided in the original publications or other available information, therefore they were excluded when calculating mean (but not variance) effect sizes. Those `r nrow(missing.sign)` effect sizes included organ to body/other organ ratios (e.g. hippocampus weight to brain weight ratio), thermal preference tests, and counts of specific cell types in the brain (e.g. total granule cell number in the brain; more details in the R script ‘003_data_preparation.R’ and the data available Sanchez-Tojar et al. 2019). Overall, we inverted the direction of `r round((table(stress.data$sign.inversion.ours)[1]/nrow(stress.data))*100,1)`% of all effect sizes in our dataset compared to the `r round((table(stress.data$sign.inversion.HE)[1]/nrow(stress.data))*100,1)`% observed in the shared dataset.
+
+```{r}
+load("data_re-extraction/clean_data/tree_random.Rdata")
+plot(tree_random, cex=.5, label.offset =.1, no.margin = TRUE)
+``` 
+
+**Figure S2**. Phylogeny used to model the phylogenetic relationships among the animal species studied. This phylogeny was retrieved from the Open Tree of Life (Hinchliff et al. 2015; see section ‘Random effects’ in main text).
+
+```{r}
+# function that calculates biased (used in the original meta-analysis)
+# and unbiased cohen's d, and their sampling variances
+cohensD <- function(mean_control,mean_treatment,sd_control,sd_treatment,n_control,n_treatment,append=T,data){
+  sd_pooled <- sqrt(((data[,n_treatment]-1)*data[,sd_treatment]^2+(data[,n_control]-1)*data[,sd_control]^2)/(data[,n_control]+data[,n_treatment]-2))
+  correction <- sqrt((data[,n_treatment]+data[,n_control]-2)/(data[,n_treatment]+data[,n_control]))
+  cohens.biased <- (data[,mean_treatment]-data[,mean_control])/(sd_pooled*correction)
+  cohens.biased.sv <- (((data[,n_control]+data[,n_treatment])/(data[,n_control]*data[,n_treatment]))+((cohens.biased^2)/(2*(data[,n_control]+data[,n_treatment]))))
+  cohens.unbiased <- (data[,mean_treatment]-data[,mean_control])/sd_pooled
+  cohens.unbiased.sv <- (((data[,n_control]+data[,n_treatment])/(data[,n_control]*data[,n_treatment]))+((cohens.unbiased^2)/(2*(data[,n_control]+data[,n_treatment]))))
+  if(append){
+    return(cbind(data,cohens.biased,cohens.biased.sv,cohens.unbiased,cohens.unbiased.sv))
+  } else{
+    return(as.data.frame(cbind(data,cohens.biased,cohens.biased.sv,cohens.unbiased,cohens.unbiased.sv)))
+  }
+}
+```
+## 3. Standardized Mean Difference
+Eyck et al. (2019) used a version of Cohen’s d as the effect size statistic (equation available in the code above). For comparison, we present here the mean level results based on a standard mean difference that accounts for heteroscedasticity (SMDH; Bonett 2008, 2009). We used (and recommend using) the SMDH rather than other commonly used variants of standardized mean difference effect size statistics, such as Cohen’s d (Cohen 1988) or Hedges’ g (Hedges 1981), because we expected and found unequal variances between experimental and control treatments (i.e. we found heteroscedasticity). 
+
+Our results based on SMDH confirmed a moderate (following the benchmarks outlined by Cohen 1988) and negative effect of developmental stress on mean trait values (Table S1). However, in contrast to the original study, the uncertainty around the mean effect was rather large (Table S1). This large uncertainty was likely because we additionally accounted for shared control and phylogenetic non-independence (see section ‘Methods’), but it might have also been due to the differences between the datasets used (see section ‘Data information’). As in the case of lnRR (see main text), heterogeneity was large, and the results of the Egger’s regression test showed that publication bias might be present in this dataset (Table S1).
+
+
+**Table S1**. Results of the multilevel meta-analysis using a heteroscedasticity-corrected standardized mean difference to test the effect of developmental stress on mean trait values. The results of the Egger’s regression test are also shown (see section ‘Publication bias’ in the main text).
+
+```{r}
+table1.SMDH <- read.table("tables/tableS1_supplements_data.csv",header=T,sep=",")
+tableS1.gt <- table1.SMDH %>% 
+  gt() %>% 
+  cols_label(Effect.size=md("**Effect size**"),
+             K=md("**k**"),
+             Metaanalytic.mean=md("**Meta-analytic mean**"),
+             Observational=md("***I*<sup>2</sup><sub>Obser.</sub> (%)**"),
+             Study=md("***I*<sup>2</sup><sub>Study</sub> (%)**"),
+             Species=md("***I*<sup>2</sup><sub>Species</sub> (%)**"),
+             Phylogeny=md("***I*<sup>2</sup><sub>Phylo</sub> (%)**"),
+             Total=md("***I*<sup>2</sup><sub> Total</sub> (%)**"),
+             Qtest=md("***Q*<sub>test</sub>**"),
+             Eggers=md("**Egger's test**")) %>%
+  cols_align(align = "right") %>%
+  tab_source_note(source_note = md("k = number of estimates; *I*<sup>2</sup> = heterogeneity; *Q*<sub>test</sub> = Cochrane's *Q* test; NA = not applicable; Obser. = Observational or residual variance; Phylo = Phylogeny. Egger's test = intercept of an Egger's regression (Nakagawa and Santos 2012). Estimates shown correspond to modes and 95% Highest Posterior Density Intervals. N = 90 studies.")) %>%
+  tab_options(table.width=775)
+
+tableS1.gt
+```
+
+
+## References
+Acasuso-Rivero, C., Murren, C.J., Schlichting, C.D., Steiner, U.K., 2019. Adaptive phenotypic plasticity for life-history and less fitness-related traits. Proc. R. Soc. B Biol. Sci. 286, 20190653. https://doi.org/10.1098/rspb.2019.0653
+
+Bonett, D.G., 2009. Meta-analytic interval estimation for standardized and unstandardized mean differences. Psychol. Methods 14, 225–238. https://doi.org/10.1037/a0016619
+
+Bonett, D.G., 2008. Confidence intervals for standardized linear contrasts of means. Psychol. Methods 13, 99–109. https://doi.org/10.1037/1082-989X.13.2.99
+
+Cohen, J., 1988. Statistical power analysis for the behavioral sciences, 2nd ed. ed. L. Erlbaum Associates, Hillsdale, N.J.
+
+Eyck, H.J.F., Buchanan, K.L., Crino, O.L., Jessop, T.S., 2019. Effects of developmental stress on animal phenotype and performance: a quantitative review. Biol. Rev. 94, 1143–1160. https://doi.org/10.1111/brv.12496
+
+Hedges, L.V., 1981. Distribution Theory for Glass’s Estimator of Effect size and Related Estimators. J. Educ. Stat. 6, 107–128. https://doi.org/10.3102/10769986006002107
+
+Hinchliff, C.E., Smith, S.A., Allman, J.F., Burleigh, J.G., Chaudhary, R., Coghill, L.M., Crandall, K.A., Deng, J., Drew, B.T., Gazis, R., Gude, K., Hibbett, D.S., Katz, L.A., Laughinghouse, H.D., McTavish, E.J., Midford, P.E., Owen, C.L., Ree, R.H., Rees, J.A., Soltis, D.E., Williams, T., Cranston, K.A., 2015. Synthesis of phylogeny and taxonomy into a comprehensive tree of life. Proc. Natl. Acad. Sci. 112, 12764–12769. https://doi.org/10.1073/pnas.1423041112
+
+Nakagawa, S., Poulin, R., Mengersen, K., Reinhold, K., Engqvist, L., Lagisz, M., Senior, A.M., 2015. Meta-analysis of variation: ecological and evolutionary applications and beyond. Methods Ecol. Evol. 6, 143–152. https://doi.org/10.1111/2041-210X.12309
+
+Nakagawa, S., Santos, E.S.A., 2012. Methodological issues and advances in biological meta-analysis. Evol. Ecol. 26, 1253–1274. https://doi.org/10.1007/s10682-012-9555-5
+
+Ouzzani, M., Hammady, H., Fedorowicz, Z., Elmagarmid, A., 2016. Rayyan—a web and mobile app for systematic reviews. Systematic Reviews 5, 210. https://doi.org/10.1186/s13643-016-0384-4
+
+Sánchez-Tójar, A., Moran, N.P., O’Dea, R.E., Reinhold, K., Nakagawa, S., 2019. Materials for “Illustrating the importance of meta-analysing variances alongside means in ecology and evolution.” Open Sci. Framew. https://doi.org/10.17605/OSF.IO/YJUA8
