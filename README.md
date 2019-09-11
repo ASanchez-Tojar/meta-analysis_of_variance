@@ -1,12 +1,13 @@
 # meta-analysis_of_variance
+
 This repository contains all R code and data used for a project on the use of meta-analysis of both means and variance in ecology and evolution.
 
 
-# Meta-analysis of variance: a case study
+# Meta-analysing variances alongside means
 
-This repository contains the R scripts use in the following study:
+This repository contains the R scripts and code use in the following study:
 
-Sánchez-Tójar, A., Moran, N.P., O'Dea, R.E., Reinhold, K., Nakagawa, S. In preparation. *Meta-analysing means and variances*
+Alfredo Sánchez-Tójar, Nicholas P. Moran, Rose E. O'Dea, Klaus Reinhold, Shinichi Nakagawa. 2019. *Illustrating the importance of meta-analysing variances alongside means in ecology and evolution* EcoEvoRxiv (tba)
 
 More information and materials available at the [OSF project](https://osf.io/yjua8/). For any further information, please contact: [Alfredo Sánchez-Tójar](https://scholar.google.co.uk/citations?hl=en&user=Sh-Rjq8AAAAJ&view_op=list_works&sortby=pubdate), email: alfredo.tojar@gmail.com
 
