@@ -2,7 +2,7 @@
 
 This repository contains the R scripts and code use in the following study:
 
-Alfredo Sánchez-Tójar, Nicholas P. Moran, Rose E. O'Dea, Klaus Reinhold, Shinichi Nakagawa. 2019. *Illustrating the importance of meta-analysing variances alongside means in ecology and evolution* EcoEvoRxiv (tba)
+Alfredo Sánchez-Tójar, Nicholas P. Moran, Rose E. O'Dea, Klaus Reinhold, Shinichi Nakagawa. 2019. *Illustrating the importance of meta-analysing variances alongside means in ecology and evolution* EcoEvoRxiv https://doi.org/10.32942/osf.io/yhfvk
 
 More information and materials available at the [OSF project](https://osf.io/yjua8/). For any further information, please contact: [Alfredo Sánchez-Tójar](https://scholar.google.co.uk/citations?hl=en&user=Sh-Rjq8AAAAJ&view_op=list_works&sortby=pubdate), email: alfredo.tojar@gmail.com
 
