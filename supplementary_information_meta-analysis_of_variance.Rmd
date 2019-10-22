@@ -1,17 +1,20 @@
 ---
-title: Illustrating the importance of meta-analysing variances alongside means in ecology and evolution
-author: "Alfredo Sanchez-Tojar, Nicholas P. Moran, Rose E. O'Dea, Klaus Reinhold, Shinichi Nakagawa"
-date: "2019"
+title: Illustrating the importance of meta-analysing variances alongside means in
+  ecology and evolution
+author: Alfredo Sanchez-Tojar, Nicholas P. Moran, Rose E. O'Dea, Klaus Reinhold, Shinichi
+  Nakagawa
+date: '2019'
 output:
   html_document:
-    code_download: true
+    code_download: yes
     code_folding: hide
     theme: united
     toc: yes
     toc_float: yes
   pdf_document:
     toc: yes
-
+  word_document:
+    toc: yes
 subtitle: Electronic Supplementary Information
 ---
 
