@@ -1,6 +1,6 @@
 # Meta-analysing variances alongside means
 
-This repository contains the R scripts and code use in the following study:
+This repository contains the R scripts and data used in the following study:
 
 Alfredo Sánchez-Tójar, Nicholas P. Moran, Rose E. O'Dea, Klaus Reinhold, Shinichi Nakagawa. 2019. *Illustrating the importance of meta-analysing variances alongside means in ecology and evolution* EcoEvoRxiv https://doi.org/10.32942/osf.io/yhfvk
 
