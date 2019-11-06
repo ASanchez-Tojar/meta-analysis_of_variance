@@ -428,6 +428,7 @@ save(brms.univariate.lnCVR.trait.no.intercept,
 
 load("models/brms/brms_univariate_lnRR_ours_sharedcontrol_6000iter_3000burnin_2thin_0.9999delta_20treedepth.RData")
 load("models/brms/brms_univariate_SMDH_ours_sharedcontrol_6000iter_3000burnin_2thin_0.9999delta_20treedepth.RData")
+load("models/brms/brms_univariate_lnCVR_sharedcontrol_6000iter_3000burnin_2thin_0.9999delta_20treedepth.RData")
 
 #######################
 # EGGER'S REGRESSIONS #
@@ -474,6 +475,48 @@ brms.Egger.lnRR.ours <- brm(zMAR ~ precision,
 proc.time() - ptm # checking the time needed to run the model
 
 save(brms.Egger.lnRR.ours,
+     file=filename)
+
+
+#########################
+# lnCVR (meta-analysis) #
+#########################
+
+# model predictions
+stress.data.lnCVR$prediction<-predict(brms.univariate.lnCVR)[,1]
+
+# precision
+stress.data.lnCVR$precision<-sqrt(1/stress.data.lnCVR$lnCVR.sc.sv)
+
+# meta-analytic residuals
+stress.data.lnCVR$MAR<-stress.data.lnCVR$lnCVR.sc.sv-stress.data.lnCVR$prediction # meta-analytic residual!
+
+# mar adjusted by precision
+stress.data.lnCVR$zMAR<-stress.data.lnCVR$MAR*stress.data.lnCVR$precision
+
+
+ptm <- proc.time() # checking the time needed to run the model
+
+
+# filename for saving the model, this avoids having to change the
+# text every time
+filename <- paste0("models/brms/brms_Egger_lnCVR_",
+                   "sharedcontrol_",
+                   iterations,"iter_",
+                   burnin,"burnin_",
+                   thinning,"thin_",
+                   adapt_delta_value,"delta_",
+                   max_treedepth_value,"treedepth.RData")
+
+brms.Egger.lnCVR <- brm(zMAR ~ precision,
+                        data = stress.data.lnCVR,
+                        family = gaussian(),
+                        control = list(adapt_delta = adapt_delta_value, max_treedepth = max_treedepth_value),
+                        chains = 4, cores = 4, iter = iterations, warmup = burnin, thin = thinning)
+
+proc.time() - ptm # checking the time needed to run the model
+
+save(brms.Egger.lnCVR,
      file=filename)
 
 
