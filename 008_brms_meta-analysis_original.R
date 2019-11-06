@@ -602,6 +602,41 @@ save(brms.univariate.lnRR.ours.year,
 
 
 ########
+# lnCVR #
+########
+
+# z-transforming year
+stress.data.lnCVR$year.z <- scale(stress.data.lnCVR$year)
+
+ptm <- proc.time() # checking the time needed to run the model
+
+# filename for saving the model, this avoids having to change the
+# text every time
+filename <- paste0("models/brms/brms_univariate_lnCVR_year_",
+                   "sharedcontrol_",
+                   iterations,"iter_",
+                   burnin,"burnin_",
+                   thinning,"thin_",
+                   adapt_delta_value,"delta_",
+                   max_treedepth_value,"treedepth.RData")
+
+brms.univariate.lnCVR.year <- brm(lnCVR.sc | se(sqrt(lnCVR.sc.sv)) ~ 
+                                    1 + year.z +
+                                    (1|studyID) + (1|esID) +
+                                    (1|scientific.name) + (1|speciesID),
+                                  data = stress.data.lnCVR,
+                                  family = gaussian(),
+                                  cov_ranef = list(scientific.name = phylo_cor),
+                                  control = list(adapt_delta = adapt_delta_value, max_treedepth = max_treedepth_value),
+                                  chains = 4, cores = 4, iter = iterations, warmup = burnin, thin = thinning)
+
+proc.time() - ptm # checking the time needed to run the model
+
+save(brms.univariate.lnCVR.year,
+     file=filename)
+
+
+########
 # SMDH #
 ########
 
