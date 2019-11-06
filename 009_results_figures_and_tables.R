@@ -238,6 +238,11 @@ for (i in 1:length(temp)) assign(temp[i], load(paste0("models/brms/",temp[i])))
 # summary(brms.Egger.lnRR.ours) # Rhat = 1.00 at all times, Eff.sample range=(4397,5626)
 # plot(brms.Egger.lnRR.ours)
 # brms::pp_check(brms.Egger.lnRR.ours, resp = "zMAR") # graphical posterior predictive check
+#
+# # Egger: lnCVR
+# summary(brms.Egger.lnCVR) # Rhat = 1.00 at all times, Eff.sample range=(5093,5444)
+# plot(brms.Egger.lnCVR)
+# brms::pp_check(brms.Egger.lnCVR, resp = "zMAR") # graphical posterior predictive check
 # 
 # # Egger: SMDH
 # summary(brms.Egger.SMDH.ours) # Rhat = 1.00 at all times, Eff.sample range=(5332,5700)
@@ -456,6 +461,32 @@ R2m.lnRR.year<-100*(vmVarF/(vmVarF+posterior.brms.univariate.lnRR.ours.year$sd_e
                               posterior.brms.univariate.lnRR.ours.year$sd_scientific.name__Intercept+
                               posterior.brms.univariate.lnRR.ours.year$sd_speciesID__Intercept+
                               posterior.brms.univariate.lnRR.ours.year$sd_studyID__Intercept))
+
+
+#####################
+# lnCVR.year
+#####################
+
+# extracting posterior samples from the model
+posterior.brms.univariate.lnCVR.year <- posterior_samples(brms.univariate.lnCVR.year)
+
+
+# building a design matrix for the fixed effects
+stress.data.lnCVR$year.z <- scale(stress.data.lnCVR$year)
+newdat<-expand.grid(year.z = stress.data.lnCVR$year.z)
+fixeff.design.matrix<-model.matrix(~year.z,data=newdat)
+
+
+# Estimating R2
+vmVarF<-numeric(1000)
+for(i in 1:1000){
+  Var<-var(as.vector(as.matrix(posterior.brms.univariate.lnCVR.year[i,c(1:2)]) %*% t(fixeff.design.matrix)))
+  vmVarF[i]<-Var}
+
+R2m.lnCVR.year<-100*(vmVarF/(vmVarF+posterior.brms.univariate.lnCVR.year$sd_esID__Intercept+
+                               posterior.brms.univariate.lnCVR.year$sd_scientific.name__Intercept+
+                               posterior.brms.univariate.lnCVR.year$sd_speciesID__Intercept+
+                               posterior.brms.univariate.lnCVR.year$sd_studyID__Intercept))
 
 
 #####################
