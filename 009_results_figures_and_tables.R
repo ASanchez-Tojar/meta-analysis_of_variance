@@ -825,17 +825,18 @@ table.2.column.names <- c("Effect.size.group",
 
 effect.sizes.2.group <- c(rep(paste0("lnRR (k = ",nrow(stress.data.metareg.lnRR.ours),")"),7),
                           rep(paste0("lnRR (k = ",nrow(stress.data.metareg.lnRR.ours),"; time-lag bias test)"),3),
-                          rep(paste0("lnCVR (k = ",nrow(stress.data.metareg.lnCVR),")"),7))
+                          rep(paste0("lnCVR (k = ",nrow(stress.data.metareg.lnCVR),")"),7),
+                          rep(paste0("lnCVR (k = ",nrow(stress.data.metareg.lnCVR),"; time-lag bias test)"),3))
 
 studies.group <- as.character(c(stress.data.metareg.lnRR.ours %>% group_by(trait.class.2) %>% summarise(count = n_distinct(studyID)) %>% pull(count),
                                 c("-","-","-","-"),
                                 stress.data.metareg.lnCVR %>% group_by(trait.class.2) %>% summarise(count = n_distinct(studyID)) %>% pull(count),
-                                c("-")))
+                                c("-","-","-","-")))
 
 ks.group <- as.character(c(stress.data.metareg.lnRR.ours %>% group_by(trait.class.2) %>% tally() %>% pull(n),
                            c("-","-","-","-"),
                            stress.data.metareg.lnCVR %>% group_by(trait.class.2) %>% tally() %>% pull(n),
-                           c("-")))
+                           c("-","-","-","-")))
 
 
 
@@ -856,6 +857,9 @@ estimates <- c("Behaviour",
                "Morphology",
                "Reproduction",
                "Survival",
+               "R2marginal",
+               "Intercept",
+               "Year of publication",
                "R2marginal")
 
 # get_variables(brms.univariate.lnRR.ours.trait)
@@ -884,6 +888,11 @@ brms.univariate.lnCVR.trait.no.intercept %>%
                  b_trait.class.2survival)) %>%
   mode_hdi() -> point.summaries.univariate.lnCVR.trait
 
+brms.univariate.lnCVR.year %>%
+  spread_draws(c(b_Intercept,
+                 b_year.z)) %>%
+  mode_hdi() -> point.summaries.univariate.lnCVR.year
+
 
 # meta-analytic modes
 metareg.modes <- round(c(unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2behavioural"]]),
@@ -902,7 +911,10 @@ metareg.modes <- round(c(unlist(point.summaries.univariate.lnRR.ours.trait[["b_t
                          unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2morphological"]]),
                          unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2reproduction"]]),
                          unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2survival"]]),
-                         MCMCglmm::posterior.mode(R2m.lnCVR.trait)),2)
+                         MCMCglmm::posterior.mode(R2m.lnCVR.trait),
+                         unlist(point.summaries.univariate.lnCVR.year[["b_Intercept"]]),
+                         unlist(point.summaries.univariate.lnCVR.year[["b_year.z"]]),
+                         MCMCglmm::posterior.mode(R2m.lnCVR.year)),2)
 
 
 # meta-analytic lower 2.5% CrIs (HDI)
@@ -922,7 +934,10 @@ metareg.lower <- round(c(unlist(point.summaries.univariate.lnRR.ours.trait[["b_t
                          unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2morphological.lower"]]),
                          unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2reproduction.lower"]]),
                          unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2survival.lower"]]),
-                         bayestestR::hdi(R2m.lnCVR.trait,ci = 0.95)$CI_low),2)
+                         bayestestR::hdi(R2m.lnCVR.trait,ci = 0.95)$CI_low,
+                         unlist(point.summaries.univariate.lnCVR.year[["b_Intercept.lower"]]),
+                         unlist(point.summaries.univariate.lnCVR.year[["b_year.z.lower"]]),
+                         bayestestR::hdi(R2m.lnCVR.year,ci = 0.95)$CI_low),2)
 
 # meta-analytic upper 97.5% CrIs (HDI)
 metareg.upper <- round(c(unlist(point.summaries.univariate.lnRR.ours.trait[["b_trait.class.2behavioural.upper"]]),
@@ -941,7 +956,10 @@ metareg.upper <- round(c(unlist(point.summaries.univariate.lnRR.ours.trait[["b_t
                          unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2morphological.upper"]]),
                          unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2reproduction.upper"]]),
                          unlist(point.summaries.univariate.lnCVR.trait[["b_trait.class.2survival.upper"]]),
-                         bayestestR::hdi(R2m.lnCVR.trait,ci = 0.95)$CI_high),2)
+                         bayestestR::hdi(R2m.lnCVR.trait,ci = 0.95)$CI_high,
+                         unlist(point.summaries.univariate.lnCVR.year[["b_Intercept.upper"]]),
+                         unlist(point.summaries.univariate.lnCVR.year[["b_year.z.upper"]]),
+                         bayestestR::hdi(R2m.lnCVR.year,ci = 0.95)$CI_high),2)
 
 
 
