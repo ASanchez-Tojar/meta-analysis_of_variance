@@ -596,6 +596,10 @@ brms.Egger.lnRR.ours %>%
   spread_draws(b_Intercept) %>%
   mode_hdi() -> point.summaries.brms.Egger.lnRR.ours
 
+brms.Egger.lnCVR %>%
+  spread_draws(b_Intercept) %>%
+  mode_hdi() -> point.summaries.brms.Egger.lnCVR
+
 brms.Egger.SMDH.ours %>%
   spread_draws(b_Intercept) %>%
   mode_hdi() -> point.summaries.brms.Egger.SMDH.ours
@@ -704,19 +708,19 @@ Qtests <- round(c(lnRR.ours.Q,lnCVR.Q,SMDH.ours.Q),0)
 # Egger's regression intercept modes
 eggers.modes <- round(c(unlist(point.summaries.brms.Egger.lnRR.ours[["b_Intercept"]]),
                         #NA,
-                        NA,
+                        unlist(point.summaries.brms.Egger.lnCVR[["b_Intercept"]]),
                         unlist(point.summaries.brms.Egger.SMDH.ours[["b_Intercept"]])),2)
 
 # Egger's regression intercept lower 2.5% CrIs (HDI)
 eggers.lower <- round(c(unlist(point.summaries.brms.Egger.lnRR.ours[[".lower"]]),
                         #NA,
-                        NA,
+                        unlist(point.summaries.brms.Egger.lnCVR[[".lower"]]),
                         unlist(point.summaries.brms.Egger.SMDH.ours[[".lower"]])),2)
 
 # Egger's regression intercept upper 97.5% CrIs (HDI)
 eggers.upper <- round(c(unlist(point.summaries.brms.Egger.lnRR.ours[[".upper"]]),
                         #NA,
-                        NA,
+                        unlist(point.summaries.brms.Egger.lnCVR[[".upper"]]),
                         unlist(point.summaries.brms.Egger.SMDH.ours[[".upper"]])),2)
 
 
@@ -750,8 +754,8 @@ table1 <- data.frame(effect.sizes,
 
 names(table1) <- table.column.names
 
-# some tweaking for the table to look nice
-table1[table1$Eggers=="NA [NA,NA]","Eggers"] <- NA
+# # some tweaking for the table to look nice
+# table1[table1$Eggers=="NA [NA,NA]","Eggers"] <- NA
 
 # reducing table for main manuscript
 table1.red <- table1[1:2,]
