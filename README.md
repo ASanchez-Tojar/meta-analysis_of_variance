@@ -31,3 +31,5 @@ More information and materials available at the [OSF project](https://osf.io/yju
 ### Notes:
 
 26th of August, 2019: all R scripts were run on this day simply to make sure that all commands worked, and to find and fix any potential malfunction. That said, the outputs (e.g. datasets, plots) were not changed, and thus remained as originally. *PS: the missing 007 script was an attempt to compute variance-covariance matrices for the sampling errors that we had to discard for this project due to computational limitations.* 
+
+See details of the licence of this repository in [LICENSE.txt](https://github.com/ASanchez-Tojar/meta-analysis_of_variance/blob/master/LICENSE.txt)
