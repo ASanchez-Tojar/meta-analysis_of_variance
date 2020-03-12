@@ -1154,7 +1154,7 @@ lnCVR.ks <- stress.data.metareg.lnCVR %>%
   select(count)
 
 newdat.trait$k <- c(lnRR.ks$count,lnCVR.ks$count)
-newdat.trait$trait.colour <- rep(c("#999999","#E69F00","#56B4E9","#009E73","#D55E00","#CC79A7"),2)
+newdat.trait$trait.colour <- rep(c("#999999","#E6D300","#56B4E9","#009E73","#D55E00","#CC79A7"),2)
 
 newdat.trait$Trait <- rep(c("Behaviour","Development",
                             "Metabolism and Physiology",
@@ -1222,7 +1222,7 @@ posterior.metaregression.plot <- post.metaregression %>%
   geom_vline(xintercept = 0, linetype = 2, colour = "black") + 
   ylab("")+
   xlab("Effect size")+
-  scale_fill_manual(values = c("Behaviour" = "#999999", "Development" = "#E69F00", "Metabolism and Physiology" = "#56B4E9",
+  scale_fill_manual(values = c("Behaviour" = "#999999", "Development" = "#E6D300", "Metabolism and Physiology" = "#56B4E9",
                                "Morphology" = "#009E73", "Reproduction" = "#D55E00", "Survival" = "#CC79A7"))+
   scale_x_continuous(limits = c(-0.45, 0.45), breaks = c(-0.4,-0.2,0,0.2,0.4)) +
   theme_bw() +
@@ -1269,7 +1269,7 @@ both.plots <- posterior.metaregression.plot +
                                                                               "Behaviour"))),
              aes(x = mode, y = es, size = k, fill = Trait),
              shape=21, color = "grey20", position = pd) +
-  scale_color_manual(values = c("Behaviour" = "#999999", "Development" = "#E69F00", "Metabolism and Physiology" = "#56B4E9",
+  scale_color_manual(values = c("Behaviour" = "#999999", "Development" = "#E6D300", "Metabolism and Physiology" = "#56B4E9",
                                 "Morphology" = "#009E73", "Reproduction" = "#D55E00", "Survival" = "#CC79A7"))+
   guides(fill = guide_legend(reverse=F, override.aes = list(size = 2)))+
   scale_size(guide = 'none')+
