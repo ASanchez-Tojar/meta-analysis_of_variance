@@ -26,7 +26,7 @@ options(digits = 2)
 ```{r setup, results="hide"}
 rm(list=ls())
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, eval = TRUE)
-pacman::p_load(tidyverse,ggplot2,openxlsx,dplyr,treebase,gt,revtools) #packages loaded using pacman
+pacman::p_load(tidyverse,ggplot2,openxlsx,dplyr,treebase,gt,revtools,ggpubr) #packages loaded using pacman
 
 # Coder's information: 
 #    Alfredo Sanchez-Tojar (@ASanchez_Tojar)
@@ -147,6 +147,135 @@ tableS1.gt <- table1.SMDH %>%
 tableS1.gt
 ```
 
+## 4. Mean-Variance relationship
+
+```{r}
+# first, adding the corrected trait classes
+trait.database <- read.xlsx("data_re-extraction/clean_data/EyckDev_stress_clean_effect_sizes_sp_corrected_trait_modification.xlsx",colNames=T,sheet = 1)
+
+# reducing database to only the unique identifier and the trait classs
+trait.database.red <- trait.database[,c("esID","trait.class.2")]
+
+# and adding those corrected trait classes to the database
+stress.data.2 <- merge(stress.data,trait.database.red,by="esID",all.x=T)
+
+# then, reducing dataset to ratio scale data only
+stress.data.ratio.scale <- stress.data.2[!(is.na(stress.data.2$lnRR.ours)),]
+
+# theme for the plots
+tm <- theme(panel.background = element_blank(),
+            axis.line = element_line(size = 0.75),
+            axis.text = element_text(size = 10, colour = "black"),
+            axis.title = element_text(size = 12),
+            plot.title = element_text(size = 16, hjust = 0.5))
+
+# are ln(mean) and ln(sd) correlated in each group? are ln(mean) and ln(sd) correlated in for each trait in each group?
+# control
+#cor.control <- round(cor(log(stress.data.ratio.scale$mean.control),log(stress.data.ratio.scale$SD.control)),2)
+cor.control <- cor.test(log(stress.data.ratio.scale$mean.control),log(stress.data.ratio.scale$SD.control))
+
+# estimating each cor per trait
+cor.control.trait.name <- c()
+cor.control.trait.cor <- c()
+cor.control.trait.cor.lower <- c()
+cor.control.trait.cor.upper <- c()
+cor.control.trait.n <- c()
+
+for(i in levels(factor(stress.data.ratio.scale$trait.class.2))){
+  x <- stress.data.ratio.scale[stress.data.ratio.scale$trait.class.2==i,]
+  
+  cor.control.trait.name <- c(cor.control.trait.name,i)
+  
+  cor.trait <- round(cor(log(x$mean.control),log(x$SD.control)),3)
+  cor.control.trait.cor <- c(cor.control.trait.cor,cor.trait)
+  
+  lower.trait <- cor.test(log(x$mean.control),log(x$SD.control))$conf.int[1]
+  cor.control.trait.cor.lower <- c(cor.control.trait.cor.lower,round(lower.trait,3))
+  
+  upper.trait <- cor.test(log(x$mean.control),log(x$SD.control))$conf.int[2]
+  cor.control.trait.cor.upper <- c(cor.control.trait.cor.upper,round(upper.trait,3))
+  
+  cor.control.trait.n <- c(cor.control.trait.n,nrow(x))
+  
+}
+
+correlations.control <- as.data.frame(cbind(cor.control.trait.name,cor.control.trait.cor,cor.control.trait.cor.lower,cor.control.trait.cor.upper,cor.control.trait.n))
+
+# treatment
+cor.treatment <- cor.test(log(stress.data.ratio.scale$mean.treat),log(stress.data.ratio.scale$SD.treat))
+
+# estimating each cor per trait
+cor.treatment.trait.name <- c()
+cor.treatment.trait.cor <- c()
+cor.treatment.trait.cor.lower <- c()
+cor.treatment.trait.cor.upper <- c()
+cor.treatment.trait.n <- c()
+
+for(i in levels(factor(stress.data.ratio.scale$trait.class.2))){
+  x <- stress.data.ratio.scale[stress.data.ratio.scale$trait.class.2==i,]
+  
+  cor.treatment.trait.name <- c(cor.treatment.trait.name,i)
+  
+  cor.trait <- round(cor(log(x$mean.treat),log(x$SD.treat)),3)
+  cor.treatment.trait.cor <- c(cor.treatment.trait.cor,cor.trait)
+  
+  lower.trait <- cor.test(log(x$mean.treat),log(x$SD.treat))$conf.int[1]
+  cor.treatment.trait.cor.lower <- c(cor.treatment.trait.cor.lower,round(lower.trait,3))
+  
+  upper.trait <- cor.test(log(x$mean.treat),log(x$SD.treat))$conf.int[2]
+  cor.treatment.trait.cor.upper <- c(cor.treatment.trait.cor.upper,round(upper.trait,3))
+  
+  cor.treatment.trait.n <- c(cor.treatment.trait.n,nrow(x))
+  
+}
+
+correlations.treatments <- as.data.frame(cbind(cor.treatment.trait.name,cor.treatment.trait.cor,cor.treatment.trait.cor.lower,cor.treatment.trait.cor.upper,cor.treatment.trait.n))
+
+# we are plotting each group (i.e. control and treatment), separately
+
+# first, renaming trait levels
+stress.data.ratio.scale <- stress.data.ratio.scale %>% mutate(trait.class.2=recode(trait.class.2,behavioural="Behaviour",
+                                                                                   development="Development",
+                                                                                   metabolism_and_physiology="Metabolism\nand Physiology",
+                                                                                   morphological="Morphology",
+                                                                                   reproduction="Reproduction",
+                                                                                   survival="Survival"))
+
+control.plot <- ggplot(stress.data.ratio.scale, aes(x = log(mean.control), y = log(SD.control), colour = trait.class.2)) +
+  geom_point(alpha = 0.25) + tm + labs(x = "ln(mean)", y = "ln(SD)") +
+  geom_smooth(method=lm, se=FALSE) + 
+  scale_color_manual(name = "Trait class",values = c("Behaviour" = "#999999", "Development" = "#E6D300", "Metabolism\nand Physiology" = "#56B4E9",
+                                "Morphology" = "#009E73", "Reproduction" = "#D55E00", "Survival" = "#CC79A7")) +
+  #annotate(geom="text", x=-2.5, y=10.5, label=paste0("Overall r = ",cor.control),size=4)+
+  annotate(geom="text", x=8, y=10.5, label="A: Control",size=4)+
+  theme(legend.position = c(0.85, 0.25),
+        legend.title = element_text(size = 9),
+        legend.text = element_text(size = 8),
+        legend.key = element_rect(fill = alpha("white", 0.0)))
+
+treatment.plot <- ggplot(stress.data.ratio.scale, aes(x = log(mean.treat), y = log(SD.treat), colour = trait.class.2)) +
+  geom_point(alpha = 0.25) + tm + labs(x = "ln(mean)", y = "ln(SD)") +
+  geom_smooth(method=lm, se=FALSE) + 
+  scale_color_manual(name = "Trait class",values = c("Behaviour" = "#999999", "Development" = "#E6D300", "Metabolism\nand Physiology" = "#56B4E9",
+                                "Morphology" = "#009E73", "Reproduction" = "#D55E00", "Survival" = "#CC79A7")) +
+  #annotate(geom="text", x=-2.5, y=10.5, label=paste0("Overall r = ",cor.treatment),size=4)+
+  annotate(geom="text", x=8, y=10.5, label="B: Treatment",size=4)+
+  theme(legend.position = c(0.85, 0.25),
+        legend.title = element_text(size = 9),
+        legend.text = element_text(size = 8),
+        legend.key = element_rect(fill = alpha("white", 0.0)))
+
+
+# multipannel plot
+ggarrange(control.plot, treatment.plot,
+          heights = c(1.5,1.5),
+          widths = c(4,4),
+          ncol = 2, nrow = 1)
+
+
+```
+
+**Figure S3**. Evidence for a mean-variance relationship in the dataset. Data shown for each trait class in control (A) and treatment groups (B). Lines correspond to linear regressions between log sample means 'ln(mean)' and log sample standard deviations 'ln(SD)'. Data used correspond to ratio scale data only. 
 
 ## References
 Acasuso-Rivero, C., Murren, C.J., Schlichting, C.D., Steiner, U.K., 2019. Adaptive phenotypic plasticity for life-history and less fitness-related traits. Proc. R. Soc. B Biol. Sci. 286, 20190653. https://doi.org/10.1098/rspb.2019.0653
