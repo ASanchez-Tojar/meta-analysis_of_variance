@@ -3,7 +3,7 @@ title: Illustrating the importance of meta-analysing variances alongside means i
   ecology and evolution
 author: Alfredo Sanchez-Tojar, Nicholas P. Moran, Rose E. O'Dea, Klaus Reinhold, Shinichi
   Nakagawa
-date: '2019'
+date: 'Last updated: `r format(Sys.time(), "%d %B, %Y")`'
 output:
   html_document:
     code_download: yes
