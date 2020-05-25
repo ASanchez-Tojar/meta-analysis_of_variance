@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/195809400.svg)](https://zenodo.org/badge/latestdoi/195809400)
+
 # Meta-analysing variances alongside means
 
 This repository contains the R scripts and data used in the following study:
