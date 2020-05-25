@@ -26,7 +26,7 @@ options(digits = 2)
 ```{r setup, results="hide"}
 rm(list=ls())
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, eval = TRUE)
-pacman::p_load(tidyverse,ggplot2,openxlsx,dplyr,treebase,gt,revtools,ggpubr) #packages loaded using pacman
+pacman::p_load(tidyverse,ggplot2,openxlsx,dplyr,treebase,gt,revtools,ggpubr,pander) #packages loaded using pacman
 
 # Coder's information: 
 #    Alfredo Sanchez-Tojar (@ASanchez_Tojar)
@@ -276,6 +276,14 @@ ggarrange(control.plot, treatment.plot,
 ```
 
 **Figure S3**. Evidence for a mean-variance relationship in the dataset. Data shown for each trait class in control (A) and treatment groups (B). Lines correspond to linear regressions between log sample means 'ln(mean)' and log sample standard deviations 'ln(SD)'. Data used correspond to ratio scale data only. 
+
+## R Session Information
+
+R session information detailing the versions and packages used in this script for reproducibility purposes.
+
+```{r}
+sessionInfo() %>% pander()
+```
 
 ## References
 Acasuso-Rivero, C., Murren, C.J., Schlichting, C.D., Steiner, U.K., 2019. Adaptive phenotypic plasticity for life-history and less fitness-related traits. Proc. R. Soc. B Biol. Sci. 286, 20190653. https://doi.org/10.1098/rspb.2019.0653
