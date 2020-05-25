@@ -6,7 +6,7 @@ Alfredo Sánchez-Tójar, Nicholas P. Moran, Rose E. O'Dea, Klaus Reinhold, Shini
 
 The **electronic supplementary material** is available online at: http://asanchez-tojar.github.io/meta-analysis_of_variance/SupplementaryMaterial
 
-More information and materials available at the [OSF project](https://osf.io/yjua8/). For any further information, please contact: [Alfredo Sánchez-Tójar](https://scholar.google.co.uk/citations?hl=en&user=Sh-Rjq8AAAAJ&view_op=list_works&sortby=pubdate), email: alfredo.tojar@gmail.com
+More information and materials available at the [OSF project](https://osf.io/yjua8/). DOI for this repository available via Zenodo (see above). For any further information, please contact: [Alfredo Sánchez-Tójar](https://scholar.google.co.uk/citations?hl=en&user=Sh-Rjq8AAAAJ&view_op=list_works&sortby=pubdate), email: alfredo.tojar@gmail.com
 
 ## Scripts:
 
