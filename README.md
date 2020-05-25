@@ -28,6 +28,8 @@ More information and materials available at the [OSF project](https://osf.io/yju
 
 `010_additional_calculations_figures_and_data.R`: this code was used to make a final calculations, including the review showing the use of meta-analysis of variance in ecology and evolution. R session info is available [here](https://github.com/ASanchez-Tojar/meta-analysis_of_variance/blob/master/literature_review/additional_R_session.txt).
 
+`supplementary_information_meta-analysis_of_variance.Rmd`: this .Rmd file corresponds to the supplementary material, which output can be found here: http://asanchez-tojar.github.io/meta-analysis_of_variance/SupplementaryMaterial
+
 ### Notes:
 
 26th of August, 2019: all R scripts were run on this day simply to make sure that all commands worked, and to find and fix any potential malfunction. That said, the outputs (e.g. datasets, plots) were not changed, and thus remained as originally. *PS: the missing 007 script was an attempt to compute variance-covariance matrices for the sampling errors that we had to discard for this project due to computational limitations.* 
