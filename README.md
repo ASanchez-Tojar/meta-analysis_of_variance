@@ -4,7 +4,11 @@
 
 This repository contains the R scripts and data used in the following study:
 
-Alfredo Sánchez-Tójar, Nicholas P. Moran, Rose E. O'Dea, Klaus Reinhold, Shinichi Nakagawa. *In press*. **Illustrating the importance of meta-analysing variances alongside means in ecology and evolution**. Journal of Evolutionary Biology. (preprint: https://doi.org/10.32942/osf.io/yhfvk)
+---
+
+Alfredo Sánchez-Tójar, Nicholas P. Moran, Rose E. O'Dea, Klaus Reinhold, Shinichi Nakagawa. 2020. Illustrating the importance of meta-analysing variances alongside means in ecology and evolution. Journal of Evolutionary Biology, 33(9):1216-1223. [DOI: 10.1111/jeb.13661](https://doi.org/10.1111/jeb.13661)
+
+---
 
 The **electronic supplementary material** is available online at: http://asanchez-tojar.github.io/meta-analysis_of_variance/SupplementaryMaterial
 
